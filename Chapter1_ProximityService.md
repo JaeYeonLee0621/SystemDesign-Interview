@@ -41,7 +41,7 @@ A) Let's assume a user's moving speed is slow and we don't need to constantly re
 - Assume we have 100 million daily active users and 200 million businesses
 - Seconds in a day = 24 x 60 x 60 = 86,400 (round it up to 10^5)
 - Assume a user makes 5 search queries per day
-- Search QPS = 100million x 5 / 10^5 = 5,
+- Search QPS = 100million x 5 / 10^5 = 5,000
 
 <br/>
 
