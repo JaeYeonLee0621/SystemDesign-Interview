@@ -1,5 +1,9 @@
 # A Proximity Service : Discover nearby places
 
++) [FAANG System Design Interview: Design A Location Based Service (Yelp, Google Places)](https://www.youtube.com/watch?v=M4lR_Va97cQ)
+
+<br/>
+
 ![IMG_2696](https://github.com/JaeYeonLee0621/SystemDesign-Interview/assets/32635539/0e7fc48d-30ef-4d3f-8220-618809ca0a0f)
 
 <br/>
@@ -81,6 +85,14 @@ A) Let's assume a user's moving speed is slow and we don't need to constantly re
 - Some discrepandy between data read and data written to the primary database
 - This inconsistency is usually `not an issue` because business information doesn't need to be updated in real-time
 
++) Sharding (One method of partitioning)
+
+<img width="272" alt="Screenshot 2024-03-06 at 10 27 45 AM" src="https://github.com/JaeYeonLee0621/SystemDesign-Interview/assets/32635539/2facb95f-65ac-4a4f-ba26-c515491fdbac">
+
++) Vertifcal partitioning
+
+<img width="300" alt="Screenshot 2024-03-06 at 10 40 32 AM" src="https://github.com/JaeYeonLee0621/SystemDesign-Interview/assets/32635539/e5b7e0ba-13d7-4551-b1c8-e234c14ad8fd">
+
 <br/>
 
 # Algorithms to fetch nearby businesses
@@ -95,12 +107,14 @@ A) Let's assume a user's moving speed is slow and we don't need to constantly re
 
 
 ```sql
-SELECT business_id, latitude, longtitude
-FROM business
+SELECT
+  business_id, latitude, longtitude
+FROM
+  business
 WHERE 
-(latitude BETWEEN {:my_lat} - radius AND {:my_lat} + radius) 
+  (latitude BETWEEN {:my_lat} - radius AND {:my_lat} + radius) 
 AND
-(latitude BETWEEN {:my_long} - radius AND {:my_long} + radius) 
+  (latitude BETWEEN {:my_long} - radius AND {:my_long} + radius) 
 ```
 
 - We need to perform an intersect operation on those two datasets
@@ -218,7 +232,7 @@ What should we do if there are not enough businesses returned from the current g
 
 **+) Why 1/3 of leaf nodes are internal nodes?**
 
-
+<img width="200" alt="Screenshot 2024-03-06 at 10 20 26 AM" src="https://github.com/JaeYeonLee0621/SystemDesign-Interview/assets/32635539/af785a06-edc7-4984-983a-aae1eb11f620">
 
 **+) 832 byte**
 
@@ -236,7 +250,15 @@ What should we do if there are not enough businesses returned from the current g
 - The time complexity to build the tree = `(n/100)log(n/100) (n: number of businesses)`
 - It might take `a few minutes` to build the whole quatree with 200 million businesses
 
+**+) Why the time complexity to build the tree is O(nlogn)?**
+
+<img width="300" alt="Screenshot 2024-03-06 at 10 03 19 AM" src="https://github.com/JaeYeonLee0621/SystemDesign-Interview/assets/32635539/8dc3b501-0562-4031-abae-e2ce58711839">
+
 <br/>
+
+<img width="305" alt="Screenshot 2024-03-06 at 10 07 28 AM" src="https://github.com/JaeYeonLee0621/SystemDesign-Interview/assets/32635539/16545996-0e23-4ccc-a28d-21726aa979c8">
+
+<br/><br/>
 
 ### The operational implications of such a long server start-up time
 - We should toll out a new release of the server incrementally to a small subset of servers at a time
