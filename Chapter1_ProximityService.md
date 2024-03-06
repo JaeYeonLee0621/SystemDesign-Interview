@@ -4,7 +4,7 @@
 
 <br/>
 
-![IMG_2696](https://github.com/JaeYeonLee0621/SystemDesign-Interview/assets/32635539/0e7fc48d-30ef-4d3f-8220-618809ca0a0f)
+<img width="1000" alt="IMG_2696" src="https://github.com/JaeYeonLee0621/SystemDesign-Interview/assets/32635539/0e7fc48d-30ef-4d3f-8220-618809ca0a0f">
 
 <br/>
 
@@ -103,7 +103,7 @@ A) Let's assume a user's moving speed is slow and we don't need to constantly re
 
 ## Option 1: Two-dimensional search
 
-![IMG_2698](https://github.com/JaeYeonLee0621/SystemDesign-Interview/assets/32635539/4379a554-2faf-4789-a2bf-cd681947cbb0)
+<img width="300" alt="IMG_2698" src="https://github.com/JaeYeonLee0621/SystemDesign-Interview/assets/32635539/4379a554-2faf-4789-a2bf-cd681947cbb0">
 
 
 ```sql
@@ -146,13 +146,13 @@ ex) There could be lots of business in downtown in NewYork
 
 **1. Divide the planet into four quadrants along with the prime meridian and equator**
 
-![IMG_2700](https://github.com/JaeYeonLee0621/SystemDesign-Interview/assets/32635539/3caab1e3-1d95-4388-ae63-5fef26f00bb3)
+<img width="300" alt="IMG_2700" src="https://github.com/JaeYeonLee0621/SystemDesign-Interview/assets/32635539/3caab1e3-1d95-4388-ae63-5fef26f00bb3">
 
 <br/>
 
 **2. Second, divide each grid into four smaller grides**
 
-![IMG_2701](https://github.com/JaeYeonLee0621/SystemDesign-Interview/assets/32635539/74410e82-14a2-4232-9435-a1f016f75de4)
+<img width="300" alt="IMG_2701" src="https://github.com/JaeYeonLee0621/SystemDesign-Interview/assets/32635539/74410e82-14a2-4232-9435-a1f016f75de4">
 
 <br/>
 
@@ -166,7 +166,7 @@ ex) length=6 : `01001 10110 01001 10000 11011 11010` (base32 in binary) -> 9q9hv
 
 - We are only interested in geohashes with lengths between `4 and 6`
 
-![IMG_2703](https://github.com/JaeYeonLee0621/SystemDesign-Interview/assets/32635539/07b8e3c1-bbd6-4b78-9b48-613ea4baa45a)
+<img width="300" alt="IMG_2703" src="https://github.com/JaeYeonLee0621/SystemDesign-Interview/assets/32635539/07b8e3c1-bbd6-4b78-9b48-613ea4baa45a">
 
 <br/>
 
@@ -176,13 +176,13 @@ ex) length=6 : `01001 10110 01001 10000 11011 11010` (base32 in binary) -> 9q9hv
 
 ex) prefix : 9q8zn
 
-![IMG_2704](https://github.com/JaeYeonLee0621/SystemDesign-Interview/assets/32635539/374e62cc-9dd0-4da0-82bf-c3f22ff272c2)
+<img width="300" alt="IMG_2704" src="https://github.com/JaeYeonLee0621/SystemDesign-Interview/assets/32635539/374e62cc-9dd0-4da0-82bf-c3f22ff272c2">
 
 <br/>
 
 **1-1) Two locations can be very close but have no shared prefix at all**
 
-![IMG_2705](https://github.com/JaeYeonLee0621/SystemDesign-Interview/assets/32635539/beefdd6c-3476-42b8-a850-86c26f8c9f87)
+<img width="300" alt="IMG_2705" src="https://github.com/JaeYeonLee0621/SystemDesign-Interview/assets/32635539/beefdd6c-3476-42b8-a850-86c26f8c9f87">
 
 - Two close locations on either side of the equator or prime meridian belong to different halves of the world
 - A simple prefix SQL query would fail to fetch all nearby businesses
@@ -195,7 +195,7 @@ SELECT * FROM geohash_index WHERE geohash LIKE '9q9zn%'
 
 **1-2) Two positions can have a long shared prefix, but they belong to different geohashs as shown**
 
-![IMG_2706](https://github.com/JaeYeonLee0621/SystemDesign-Interview/assets/32635539/9d396a12-d46c-495c-b87f-808e0f6b3c27)
+<img width="300" alt="IMG_2706" src="https://github.com/JaeYeonLee0621/SystemDesign-Interview/assets/32635539/9d396a12-d46c-495c-b87f-808e0f6b3c27">
 
 - A common solution is to fetch all business not only within the current grid but also from its neighbors
 
@@ -215,7 +215,7 @@ What should we do if there are not enough businesses returned from the current g
 - Another popular solution
 - A quadtree is a data structure that is commonly used to partition a two-dimensional space by recursively subdividing it into `four quadrants until the contents of the grids meet certain criteria`
 
-![IMG_2708](https://github.com/JaeYeonLee0621/SystemDesign-Interview/assets/32635539/ffdba74d-56d9-4998-93f6-af1764e4e7fe)
+<img width="300" alt="IMG_2708" src="https://github.com/JaeYeonLee0621/SystemDesign-Interview/assets/32635539/ffdba74d-56d9-4998-93f6-af1764e4e7fe">
 
 - Quadtree is an `in-memory data structure` and it is not a database solution
 - It runs on each LBS server and the data structure is `built at server start-up time`
@@ -232,15 +232,15 @@ What should we do if there are not enough businesses returned from the current g
 
 **+) Why 1/3 of leaf nodes are internal nodes?**
 
-<img width="200" alt="Screenshot 2024-03-06 at 10 20 26 AM" src="https://github.com/JaeYeonLee0621/SystemDesign-Interview/assets/32635539/af785a06-edc7-4984-983a-aae1eb11f620">
+<img width="350" alt="Screenshot 2024-03-06 at 10 20 26 AM" src="https://github.com/JaeYeonLee0621/SystemDesign-Interview/assets/32635539/af785a06-edc7-4984-983a-aae1eb11f620">
 
 **+) 832 byte**
 
-![IMG_2709](https://github.com/JaeYeonLee0621/SystemDesign-Interview/assets/32635539/39e07b4d-916b-4f09-80e5-645184560ee5)
+<img width="300" alt="IMG_2709" src="https://github.com/JaeYeonLee0621/SystemDesign-Interview/assets/32635539/39e07b4d-916b-4f09-80e5-645184560ee5">
 
 **+) 64 byte**
 
-![IMG_2710](https://github.com/JaeYeonLee0621/SystemDesign-Interview/assets/32635539/f39bbe33-216a-4cbd-95c7-9c8d74803f7f)
+<img width="300" alt="IMG_2710" src="https://github.com/JaeYeonLee0621/SystemDesign-Interview/assets/32635539/f39bbe33-216a-4cbd-95c7-9c8d74803f7f">
 
 - The quadtree index doesn't take too much memory and can easily fit in one server
 
@@ -252,11 +252,11 @@ What should we do if there are not enough businesses returned from the current g
 
 **+) Why the time complexity to build the tree is O(nlogn)?**
 
-<img width="300" alt="Screenshot 2024-03-06 at 10 03 19 AM" src="https://github.com/JaeYeonLee0621/SystemDesign-Interview/assets/32635539/8dc3b501-0562-4031-abae-e2ce58711839">
+<img width="400" alt="Screenshot 2024-03-06 at 10 03 19 AM" src="https://github.com/JaeYeonLee0621/SystemDesign-Interview/assets/32635539/8dc3b501-0562-4031-abae-e2ce58711839">
 
 <br/>
 
-<img width="305" alt="Screenshot 2024-03-06 at 10 07 28 AM" src="https://github.com/JaeYeonLee0621/SystemDesign-Interview/assets/32635539/16545996-0e23-4ccc-a28d-21726aa979c8">
+<img width="250" alt="Screenshot 2024-03-06 at 10 07 28 AM" src="https://github.com/JaeYeonLee0621/SystemDesign-Interview/assets/32635539/16545996-0e23-4ccc-a28d-21726aa979c8">
 
 <br/><br/>
 
@@ -285,7 +285,7 @@ ex) Google, Tinder etc
 - Two points that are close to each other on the Hilbert curve are close in 1D space
 - Search on 1D space is much more efficient than on 2D
 
-![IMG_2711](https://github.com/JaeYeonLee0621/SystemDesign-Interview/assets/32635539/a94fab5e-8c59-463b-ac01-e83f14326037)
+<img width="300" alt="IMG_2711" src="https://github.com/JaeYeonLee0621/SystemDesign-Interview/assets/32635539/a94fab5e-8c59-463b-ac01-e83f14326037">
 
 <br/>
 
@@ -294,11 +294,11 @@ ex) Google, Tinder etc
 **1. It can cover arbitrary areas with varing levels**
 - Geofencing allows us to define perimeters that surround the areas of interest and to send notifications to users who are out of the areas
 
-![IMG_2712](https://github.com/JaeYeonLee0621/SystemDesign-Interview/assets/32635539/142f06d3-6233-40dc-9546-a173c4b8564f)
+<img width="300" alt="IMG_2712" src="https://github.com/JaeYeonLee0621/SystemDesign-Interview/assets/32635539/a94fab5e-8c59-463b-ac01-e83f14326037">
 
 **2. We can specify min level, max level and max cells**
 
 <hr/>
 
-![IMG_2713](https://github.com/JaeYeonLee0621/SystemDesign-Interview/assets/32635539/b85290f4-bc22-4f8d-b15e-032d7e94a2cd)
+<img width="300" alt="IMG_2713" src="https://github.com/JaeYeonLee0621/SystemDesign-Interview/assets/32635539/b85290f4-bc22-4f8d-b15e-032d7e94a2cd">
 
