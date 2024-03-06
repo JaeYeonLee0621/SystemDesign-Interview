@@ -53,17 +53,17 @@ A) Let's assume a user's moving speed is slow and we don't need to constantly re
 
 ## Data model
 
-1. LBS (Location-Based Service)
-2. Business-Related Service
-
-## LBS (Location-Based Service)
-- `Read-heavy` service with no write requests
-- `QPS is high`, especially during peak hours in dense areas
-- Stateless, easy to scale horizontally
+1. Business-Related Service
+2. LBS (Location-Based Service)
 
 ## Business Service
 - Business Owner create, update, or delete businesses
 - QPS is high during peak hours
+  
+## LBS (Location-Based Service) ⭐
+- `Read-heavy` service with no write requests
+- `QPS is high`, especially during peak hours in dense areas
+- Stateless, easy to scale horizontally
 
 <br/>
 
@@ -78,33 +78,40 @@ A) Let's assume a user's moving speed is slow and we don't need to constantly re
 
 <br/>
 
-
 ## Database cluster
+
+- The standard solution for alleviating the volume of reading
+
+### Database Replication
+
 - `Primary` database : Write operations
 - `Secondary` database : Read operations
 - Some discrepandy between data read and data written to the primary database
 - This inconsistency is usually `not an issue` because business information doesn't need to be updated in real-time
 
-+) Sharding (One method of partitioning)
+### Partitioning
+
+**1. Horizontal Partitioning (=Sharding)**
 
 <img width="272" alt="Screenshot 2024-03-06 at 10 27 45 AM" src="https://github.com/JaeYeonLee0621/SystemDesign-Interview/assets/32635539/2facb95f-65ac-4a4f-ba26-c515491fdbac">
 
-+) Vertifcal partitioning
+<img width="415" alt="download" src="https://github.com/JaeYeonLee0621/SystemDesign-Interview/assets/32635539/ecb94a01-3dfd-4ee6-b0c0-3e5f403f00f7">
+
+**2. Vertifcal partitioning**
 
 <img width="300" alt="Screenshot 2024-03-06 at 10 40 32 AM" src="https://github.com/JaeYeonLee0621/SystemDesign-Interview/assets/32635539/e5b7e0ba-13d7-4551-b1c8-e234c14ad8fd">
 
-<br/>
+<br/><hr/>
 
 # Algorithms to fetch nearby businesses
 
-+) Companies might use existing geospatial databases such as Geohas in Redis or Postgres wit hPostGIS extension
++) Companies might use existing geospatial databases such as Geohas in Redis or Postgres with PostGIS extension
 
 <br/>
 
 ## Option 1: Two-dimensional search
 
 <img width="300" alt="IMG_2698" src="https://github.com/JaeYeonLee0621/SystemDesign-Interview/assets/32635539/4379a554-2faf-4789-a2bf-cd681947cbb0">
-
 
 ```sql
 SELECT
@@ -117,7 +124,7 @@ AND
   (latitude BETWEEN {:my_long} - radius AND {:my_long} + radius) 
 ```
 
-- We need to perform an intersect operation on those two datasets
+- We need to perform an `intersect operation` on those two datasets
 - Not efficient because we need to `scan the whole table`
 
 <br/>
@@ -215,7 +222,8 @@ What should we do if there are not enough businesses returned from the current g
 - Another popular solution
 - A quadtree is a data structure that is commonly used to partition a two-dimensional space by recursively subdividing it into `four quadrants until the contents of the grids meet certain criteria`
 
-<img width="300" alt="IMG_2708" src="https://github.com/JaeYeonLee0621/SystemDesign-Interview/assets/32635539/ffdba74d-56d9-4998-93f6-af1764e4e7fe">
+<img width="300" alt="Screenshot 2024-03-06 at 11 38 49 AM" src="https://github.com/JaeYeonLee0621/SystemDesign-Interview/assets/32635539/2e719ec8-7006-402e-b1d5-0a316a875e9c">
+
 
 - Quadtree is an `in-memory data structure` and it is not a database solution
 - It runs on each LBS server and the data structure is `built at server start-up time`
@@ -237,6 +245,8 @@ What should we do if there are not enough businesses returned from the current g
 **+) 832 byte**
 
 <img width="300" alt="IMG_2709" src="https://github.com/JaeYeonLee0621/SystemDesign-Interview/assets/32635539/39e07b4d-916b-4f09-80e5-645184560ee5">
+
+- 16byte : longitude & latitude
 
 **+) 64 byte**
 
@@ -281,7 +291,7 @@ ex) Google, Tinder etc
 
 <br/>
 
-**The Hilbert curve**
+### The Hilbert curve
 - Two points that are close to each other on the Hilbert curve are close in 1D space
 - Search on 1D space is much more efficient than on 2D
 
@@ -291,14 +301,13 @@ ex) Google, Tinder etc
 
 ### Advantages
 
+<img width="300" alt="GeoFence" src="https://github.com/JaeYeonLee0621/SystemDesign-Interview/assets/32635539/1690e1de-4b11-4b04-a1b2-0111f21047dd">
+
 **1. It can cover arbitrary areas with varing levels**
 - Geofencing allows us to define perimeters that surround the areas of interest and to send notifications to users who are out of the areas
-
-<img width="300" alt="IMG_2712" src="https://github.com/JaeYeonLee0621/SystemDesign-Interview/assets/32635539/a94fab5e-8c59-463b-ac01-e83f14326037">
 
 **2. We can specify min level, max level and max cells**
 
 <hr/>
 
-<img width="300" alt="IMG_2713" src="https://github.com/JaeYeonLee0621/SystemDesign-Interview/assets/32635539/b85290f4-bc22-4f8d-b15e-032d7e94a2cd">
-
+<img width="1000" alt="IMG_2713" src="https://github.com/JaeYeonLee0621/SystemDesign-Interview/assets/32635539/b85290f4-bc22-4f8d-b15e-032d7e94a2cd">
