@@ -177,9 +177,9 @@ ex) length=6 : `01001 10110 01001 10000 11011 11010` (base32 in binary) -> 9q9hv
 
 <br/>
 
-### Issues
+## Issues
 
-#### 1. Boundary Issues
+### 1. Boundary Issues
 
 ex) prefix : 9q8zn
 
@@ -208,7 +208,7 @@ SELECT * FROM geohash_index WHERE geohash LIKE '9q9zn%'
 
 <br/>
 
-#### 2. Not enough Business
+### 2. Not enough Business
 
 What should we do if there are not enough businesses returned from the current grid and all the neighbors combined?
 
