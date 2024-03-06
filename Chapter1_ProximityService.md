@@ -79,7 +79,7 @@ A) Let's assume a user's moving speed is slow and we don't need to constantly re
 - `Primary` database : Write operations
 - `Secondary` database : Read operations
 - Some discrepandy between data read and data written to the primary database
-- This inconsistency is usually `not an issue` because business informatino doesn't need to be updated in real-time
+- This inconsistency is usually `not an issue` because business information doesn't need to be updated in real-time
 
 <br/>
 
@@ -209,7 +209,7 @@ What should we do if there are not enough businesses returned from the current g
 
 <br/>
 
-### How much memory does it need to store the whold quadtree?
+### How much memory does it need to store the whole quadtree?
 
 - Each grid can store a maximal of 100 businesses
 - Number of leaf nodes = ~200 million / 100 = ~2 million
@@ -240,7 +240,7 @@ What should we do if there are not enough businesses returned from the current g
 
 ### The operational implications of such a long server start-up time
 - We should toll out a new release of the server incrementally to a small subset of servers at a time
-- `Blue/Gree deployment` can also be used, but an entire cluster of new servers fetching 200 million businesses at the same time from the database service can put a lot of strain on the system
+- `Blue/Green deployment` can also be used, but an entire cluster of new servers fetching 200 million businesses at the same time from the database service can put a lot of strain on the system
 
 <br/>
 
