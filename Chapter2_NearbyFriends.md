@@ -124,7 +124,7 @@ I: For simplicity, don't worry about it for now.
 
 # Periodic location update
 
-<img src="https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/79221b32-c8af-4079-82b6-c2442e777ce2" alt="IMG_2718" width="300"/>
+<img src="https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/79221b32-c8af-4079-82b6-c2442e777ce2" alt="IMG_2718" width="500"/>
 
 1. The mobile client sends a location update to the load balancer
 2. The load balancer forwards the location update to the persistent conneciton on the Websocket server for that client
@@ -209,7 +209,7 @@ I: For simplicity, don't worry about it for now.
 
 ## Nearby random person
 
-<img src="https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/87d79161-d33a-41c0-a33d-5bbb6e80307c" alt="IMG_2722" width="300"/>
+<img src="https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/87d79161-d33a-41c0-a33d-5bbb6e80307c" alt="IMG_2722" width="500"/>
 
 1. User 2 updates their location, the WebSocket connection handler computes the user's geohash ID and sends the location to the channel for that geohash
 2. Anyone nearby who subscribes to the channel will receive a location update message
