@@ -1,6 +1,6 @@
 # Chapter 2. Nearby Friends
 
-- nearby griends since it looks similar to proximity services
+- Nearby friends since it looks similar to proximity services
 - You will find major differences : It's more dynamic than static location, due to change user locations frequently
 
 # Step 1. Understand the Problem and Establish Design Scope
@@ -9,21 +9,31 @@ C: How geographically close is considered to be nearby?
 
 I: 5 miles
 
+<br/>
+
 C: Can i assume the distance is calculated as the straight-line distance between two users?
 
 I: Yes, that's a reasonable assumption
+
+<br/>
 
 C: How many users does the app have? Can I assumes 1 billion users and 10% of them use the nearby friends feature?
 
 I: Yes, that's a reasonble assumption
 
+<br/>
+
 C: Do we need to store location history?
 
 I: Location history can be valuable for different purposes such as machine learning.
 
+<br/>
+
 C: Could we assume if a friend is inactive for more than 10 minutes, that friend will disappear from the nearby friend list?
 
 I: We can assume inactive friends will no longer be shown.
+
+<br/>
 
 C: Do we need to worry about privacy and data laws such as GDPR or CCPA?
 
@@ -55,14 +65,14 @@ I: For simplicity, don't worry about it for now.
 - Users report their locations every 30 seconds
 - Location update QPS = 10 million / 30 ~= 334,000
 
-# Step 2- Propose high-Level Design and Get Buy-in
+# Step 2. Propose high-Level Design and Get Buy-in
 
 ## High-level design
 - It could in theory be done `purely peer-to-peer`, that is, a user could maintain `a persistent connetion` to every other active friend in the vicinity.
 
 ## Shared backend
 
-<img src="https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/2210e8da-cb6d-4e01-a862-dc4cd7da6b6c" alt="IMG_2715" width="200"/>
+<img src="https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/2210e8da-cb6d-4e01-a862-dc4cd7da6b6c" alt="IMG_2715" width="500"/>
 
 - Receive location updates from all active users
 - For each location update, find all the active friends who should receive it and forward it to those users' devices
@@ -73,22 +83,20 @@ I: For simplicity, don't worry about it for now.
 <br/>
 
 - Active users : 10 million 
-- Each user updateing the location information : every 30 seconds
+- Each user updating the location information : every 30 seconds
 
 > 333K updates per second
 
 <br/>
 
-- Average nmber of user's friends : 400 friends
+- Average number of user's friends : 400 friends
 - Online and nearby friends : 10%
 
 > Every second : 333K x 400 x 10% = 13 million
 
 ## Proposed design
 
-<img src="https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/9d368d5f-334c-48d4-8e40-a0f3c011e17f" alt="IMG_2716" width="300"/>
-
-- Optimize the design for scale
+<img src="https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/9d368d5f-334c-48d4-8e40-a0f3c011e17f" alt="IMG_2716" width="500"/>
 
 ## Load Balancer
 
@@ -148,15 +156,16 @@ I: For simplicity, don't worry about it for now.
 - The Redis server will have to handle 334K updates per second
 - This is likely a little too high
 
-> This cache data is easy to shard, and location data for each user is independent, and we can evenly spread the load among several Redis servers
+> This cache data is easy to shard, and location data for each user is independent, 
+> We can evenly spread the load among several Redis servers
 
 ## Redis pub/sub server
 
 - Routing layer to direct message from one user to all the online firends
-- Very lightweight to create new channels
+- `Very lightweight` to create new `channels
 - A new channel is created when someone subscribes to it
 - If a message is published to a channel that has no subscribers, the message is dropped
-- When a channel is created Redis uses a small amount of memory to maintain a hash table and  a linked list to track the subscribers
+- When a channel is created Redis uses a small amount of memory to maintain `a hash table` and  `a linked list` to track the subscribers
 
 ## How many Redis pub/sub servers do we need?
 
@@ -169,42 +178,34 @@ I: For simplicity, don't worry about it for now.
 
 ### CPU usage
 - the pubsub server pushes about 13million updates per second to subscribers
-- It is safe to assume that a single Redis server will not be able to handle that load. So let's assume one redis server could handle 100,000 subscribers pushes per second.
-- Total : 13million / 100,000 = 130 Redis
+- It is safe to assume that a single Redis server will not be able to handle that load. 
+- So let's assume one redis server could handle 100,000 subscribers pushes per second.
+
+> Total : 13million / 100,000 = 130 Redis
 
 ## Distributed Redis pub/sub server cluster
 
-<img src="https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/60d70f54-cbaa-4173-b8b8-659fb8b902f4" alt="IMG_2719" width="300"/>
+<img src="https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/60d70f54-cbaa-4173-b8b8-659fb8b902f4" alt="IMG_2719" width="500"/>
 
 - The channels are independent of each other
-- multiple pub/sub servers by sharding, based on the publisher's user ID
+- Multiple pub/sub servers by sharding, based on the publisher's user ID
 
 **[Service discovery component]**
 1. The ability to keep a list of servers in the service discovery component and a simple UI or API to update it
 2. The ability for clients to subscribe to any updates to the "Value"
 
-<img src="https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/f8a71912-47d5-44ca-8bb4-87eeec6c511c" alt="IMG_2720" width="300"/>
+<img src="https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/f8a71912-47d5-44ca-8bb4-87eeec6c511c" alt="IMG_2720" width="500"/>
 
 1. The WebSocket server consults the hash ring to determine the Redis pub/sub server to write to
 2. WebSocket server publishes the location update to the user's channel on that Redis pub/sub server
 
 ## Scaling considerations for Redis pub/sub servers
 
-<img src="https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/54c4acf5-68ce-4ef3-b4b6-c747a6254cb4" alt="IMG_2720" width="300"/>
-
-- When we resice a cluster, many channels will be moved to different servers on the hash ring
-- When the service discovery component notifies all the Websocket servers of the has ring update, there will be a ton of resubscription requeusts
-- during these mass resubscription events, some location updates might be missed by the clients
-- Because of the potential interruptions, resizing should be done when usage is at its lowest in the day
-
-### How is resizing actually done?
-
-- Determine the new ring size, and if scaling up, provision enough new servers
-- Update the keys of the has ring with the new content
-- Monitor your dashboard. There should be some spike in SPU usage in the WebSocket cluster
-
-## Operational considerations for Redis pub/sub servers
-- The operational risk of replacint an existing Redis pub/sub server is much, much lower
+- When we resize a cluster, many channels will be moved to different servers on the hash ring
+- When the service discovery component notifies all the Websocket servers of the hash ring update, 
+- There will be a ton of `resubscription requeusts`
+- During these mass resubscription events, some location updates might be missed by the clients
+- Because of the potential interruptions, resizing should be done when usage is at its `the lowest in the day
 
 ## Nearby random person
 
