@@ -244,6 +244,11 @@ I: For simplicity, don't worry about it for now.
 1. The WebSocket server consults the hash ring to determine the Redis pub/sub server to write to
 2. WebSocket server publishes the location update to the user's channel on that Redis pub/sub server
 
+### +) Service Discovery
+
+- A `microservices-based application` typically runs in virtualized or containerized environments. The number of instances of a service and its `locations changes dynamically`.
+- The Service Discovery mechanism helps us know `where each instance is located`. In this way, a Service Discovery component acts as a registry in which `the addresses of all instances are tracked.`
+
 ### +) Server Side Discovery
 
 <img src="https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/b0778d68-b2fa-414a-ad8a-7d6281817af3" alt="IMG_2720" width="500"/>
