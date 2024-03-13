@@ -126,8 +126,6 @@ I: For simplicity, don't worry about it for now.
 ### +) Polling
 - half-duplex 
 
-### +) TCP connection
-
 ## Redis location cache
 
 - Time To Live (TTL) : the most recent data for each active user
