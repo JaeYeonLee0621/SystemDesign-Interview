@@ -105,6 +105,8 @@ I: For simplicity, don't worry about it for now.
 
 ## Websocket servers
 
+<img src="https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/b90177f0-4bed-4167-9a25-b0ce334666a1" alt="IMG_2716" width="500"/>
+
 - This is a cluster of stateful servers
 
 1. Each client maintains one persistent WebSocket connection to one of these servers
@@ -233,7 +235,7 @@ I: For simplicity, don't worry about it for now.
 - The channels are independent of each other
 - Multiple pub/sub servers by sharding, based on the publisher's user ID
 
-**[Service discovery component]**
+### Service discovery component
 1. The ability to keep a list of servers in the service discovery component and a simple UI or API to update it
 2. The ability for clients to subscribe to any updates to the "Value"
 
@@ -241,6 +243,10 @@ I: For simplicity, don't worry about it for now.
 
 1. The WebSocket server consults the hash ring to determine the Redis pub/sub server to write to
 2. WebSocket server publishes the location update to the user's channel on that Redis pub/sub server
+
+### +) Server Side Discovery
+
+<img src="https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/b0778d68-b2fa-414a-ad8a-7d6281817af3" alt="IMG_2720" width="500"/>
 
 ## Scaling considerations for Redis pub/sub servers
 
