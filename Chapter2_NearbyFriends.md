@@ -110,6 +110,24 @@ I: For simplicity, don't worry about it for now.
 1. Each client maintains one persistent WebSocket connection to one of these servers
 2. Handling client initialization for the "nearby friends" features
 
+### +) What is [WebSocket](https://en.wikipedia.org/wiki/WebSocket)
+
++) [RFC 6455](https://datatracker.ietf.org/doc/html/rfc6455)
+
+- WebSocket protocol enables `full-duplex interaction`
+- A computer communication protocol providing simultaneous two-way communication channels over a single TCP (Transmission Control Protocol)
+- Although HTTP and WebSocket are different, WebSocket is designed to `work over HTTP ports 443 and 80` as well to support HTTP proxies and intermediaries
+- It is beneficial for environments that block non-web internet connections using a firewall
+- To achieve compatibility, the WebSocket handshake uses the HTTP Upgrade Header
+- Once handshake is successfully completed, the data exchanged between the client and server is no longer encapsulated within HTTP packet. `Switching to TCP communication`
+
++) [What is a Network Load Balancer?](https://docs.aws.amazon.com/elasticloadbalancing/latest/network/introduction.html)
+
+### +) Polling
+- half-duplex 
+
+### +) TCP connection
+
 ## Redis location cache
 
 - Time To Live (TTL) : the most recent data for each active user
@@ -131,8 +149,8 @@ I: For simplicity, don't worry about it for now.
 3. The WebSocket server saves the location data to the location history database
 4. The WebSocket server updates the new location in the location cache. The update refershes the TTL.
 5. The WebSocket server publishes the new location to the user's channel in the Redis pub/sub server
-6. When Redis pub/sub receives a location update on a channel, it broadcasts the update to all the subscri bers. In this case the subscribers are all the online friends of the user sending the update.
-7. In receiving the mssage, the WebSocket server, on which the connection handelr lives, computes the distance between the user sending the new location and the subscriber.
+6. When Redis pub/sub receives a location update on a channel, it broadcasts the update to all the subscribers. In this case the subscribers are all the online friends of the user sending the update.
+7. In receiving the mssage, the WebSocket server, on which the connection handler lives, computes the distance between the user sending the new location and the subscriber.
 
 # Step 3. Design Deep Dive
 
@@ -142,6 +160,33 @@ I: For simplicity, don't worry about it for now.
 - We can mark a node as "draining" at the load balancer so that no new WebSocket connections will be routed to the draining server
 - Once all the existing connections are closed, the server is then removed
 - Most cloud load balancers handle this job very well
+
+### +) stateful? stateless?
+
+**[stateless]**
+- A communication protocol in which the receivers must not retain session state from previous requests
+
+**[stateful]**
+- the receiver may retain session state from previous requests
+
+### +) TCP
+- session management : sender and receiver maintain state information about the session, which includes sequence numbers, acknowledgements and window size among other things
+
+<img src="https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/5ffca82e-8acf-4254-9fc1-6bc12dbf28ac" alt="IMG_2718" width="500"/>
+
+### +) UDP
+- There is no need for the server to store session information in memory
+
++) [Chapter 10. Networks](https://tldp.org/LDP/tlk/net/net.html)
+
+### +) Theologically, how many connection can be establish?
+
+**Session Information**
+- Protocol
+- Client IP Address, Clinet Port Number
+- Server IP Address, Server Port Number
+
+> Port range = 2^16 = 65,353
 
 ## Location Cache
 
@@ -162,7 +207,7 @@ I: For simplicity, don't worry about it for now.
 ## Redis pub/sub server
 
 - Routing layer to direct message from one user to all the online firends
-- `Very lightweight` to create new `channels
+- `Very lightweight` to create new `channels`
 - A new channel is created when someone subscribes to it
 - If a message is published to a channel that has no subscribers, the message is dropped
 - When a channel is created Redis uses a small amount of memory to maintain `a hash table` and  `a linked list` to track the subscribers
