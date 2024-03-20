@@ -289,7 +289,7 @@ s = No SQL key-value database / column-oriented DB
 - input for live traffic data
 - Logging this information into a message queue, such as Kafka
 
-+) Kafka
+### +) [Kafka](https://www.designgurus.io/course-play/grokking-the-advanced-system-design-interview/doc/636d08a12d344b9f0c7d9ea0)
 - A unified low-latency
 - High throughput data streaming platform designed for real-time data feeds
 
