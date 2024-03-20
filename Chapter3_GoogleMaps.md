@@ -253,3 +253,168 @@ ex) Pelias geocoder > Mapzen Search
 - Load balancer forwards the request to the map tile service
 - The map tile service takes the client's location and zoom level as inputs and returns 9 URLs of the tiles to the cliient
 - The mobile client downloads tiles from the CDN
+
+# Step 3. Design Deep Dive
+
+# Data Model
+
+## Precomputed images of the world map
+- Precomputing images at different zoom levels and store them on a CDN, which is backed by cloud storage such as Amazon S3
+
+# Services
+
+## Location Service
+- 1 million location updates every second
+- necessarity to have a database that supports fast write
+s = No SQL key-value database / column-oriented DB
+- User's location is continuously changing and becomes stale as soon as a new update arrives
+- Availiability and Partition Tolerance
+
++) CAP Theroem
+
+![CAP](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/20ada1ac-507c-4fcb-b54d-8a71c156d1e0)
+
+- Availiability, Consistency, Partition Tolerance
+
++) Cassandra
+- Handling our scale with a strong availability gurantee
+
+### How do we use the user location data?
+
+![KakaoTalk_Photo_2024-03-20-11-14-01 001](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/0ce692c4-548d-4e4b-b048-e802e676afa6)
+
+- one of the inputs to improve the accuracy of our map over time
+- input for live traffic data
+- Logging this information into a message queue, such as Kafka
+
++) Kafka
+- A unified low-latency
+- High throughput data streaming platform designed for real-time data feeds
+
+# Rendering map
+
+![KakaoTalk_Photo_2024-03-20-11-14-07 005](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/baf186c3-8a27-4752-a4f5-f65b355cafc0)
+
+## Pre-compute tiles
+- Google Maps uses 21 zoom levels
+- With each increment, the entire set of tiles has 4x as many pixels as the previous level
+- The increased pixel count provides an increasing level of detail to the user
+- This allows the client to render the map at the best granularities depending on the client's zoom level, without consuming excessive bandwidth to download tiles in excessive detail
+
+## Optimization: user vectors
+- The client draws the paths and polygons from the vector information
+- vector data compress much better than images do : The bandwidth saving is substantial
+
++) [Vector Graphics](https://www.coreldraw.com/en/learn/guide-to-vector-design/how-do-vector-graphics-work/)
+
+![Bitmap_VS_SVG svg](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/8f1247cd-6125-4a98-8d9d-a4df59820e9b)
+
+- Digital images created from a series of geometrically defined points, lines and shapes
+
+![vector image](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/047bf344-d61c-4f9d-ba40-4f91805b32c1)
+
+- When saving an image in a vector file format, it turns into mathmetical data that describe the various points, lines, curves and polygons
+
+## Navigation service
+
+![KakaoTalk_Photo_2024-03-20-11-14-07 006](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/f19431ba-e86a-4a5c-9efb-2398e1a8aad9)
+
+## Shortest-path Service
+
+![KakaoTalk_Photo_2024-03-20-11-14-01 003](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/fcee5ba0-4bf5-4813-b493-f6fe30e4e237)
+
+- Reciving the origin and the destination in latitude/longitude pairs and returns the top-k shortest paths without considering traffic or current conditions
+- The shortest-path service runs a variation of A* pathfinding algorithms against the routing tiles in object storage
+
+### Overview
+
+- The algorithm receives the origin and destination in latitude/longitude paris
+- The lat/lng pairs are converted to geohashes which are then used to load the start and end-points of routing tiles
+
+<br/>
+
+![a_-search-algorithm-2](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/dc8850ac-d7dc-4a0d-ba63-57f9ef4e155b)
+
+1. The algorithm start from the origin routing tile
+2. Traverses the graph data structure, and hydrates additional tiles from the object store as it expands the search area
+
+<br/>
+
++) [A* pathfinding algorithms](https://www.geeksforgeeks.org/a-search-algorithm/)
+
+## ETA Service
+
+- The route planner receives a list of possible shortest paths, it calls the ETA service for each possible route and gets a time estimate
+- ETA service uses machine learning to predict the ETAs based on the current traffic and historical data
+
+## Ranker Service
+- Ranking the possible routes from fastest to slowest and returns top-k results to the navigation service
+
+## Update Services
+- These services tap into the Kafka location update stream and asynchronously update some of the important databases to keep them up-to-date
+- Routing tile processing service : Transforming the road dataset with newly found roads and road closures into a continuously updated set of routing tiles
+- Traffic update service : Extracts traffic conditions from the streams of location updates sent by the active users
+- This enables the ETA service to provide more accurate estimates
+
+## Improvement: Adaptive ETA and rerouting
+- The server needs to keep track of all the active navigating users and update them on continuously, whenever traffic conditions change
+
+- n : the number of rows in the table
+- m : the average length of the naviation route
+
+> time complexity : O(n x m)
+
+![KakaoTalk_Photo_2024-03-20-11-14-07 004](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/9df086cb-99fb-448d-83fb-5bcbf5f8a747)
+
+- To find out if a user is affected by the traffic change, we need only check if a routing tile is inside the last routing tile of a row in the database
+- Keep track of all possible routes for a navigating user, recalculate the TEAs regularly and notify the user if a new route with a shorter ETA is found
+
+## Delivery Protocol
+- During navigation, route conditions can change and the server needs a reliable way to push data to mobile clients
+- options : mobile push notification, long polling, Websocket, Server-Sent Events (SSE)
+
+<br/>
+
+### Mobile Push Notification
+- not a great option
+- payload size is very limited
+- doesn't support web applications
+
++) [XMPP (Extensible Messaging and Presence Protocol)](https://en.wikipedia.org/wiki/XMPP)
+- Using XML Message, using TCP Socket
+- XML Stream : Data encapsulation to exchange data
+
+![091105_xmpp3](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/c259a826-89a3-43b5-8f86-4a88d1f0c934)
+
++) [Firebase Cloud Messaging XMPP protocol ](https://firebase.google.com/docs/cloud-messaging/xmpp-server-ref)
+
+### Long Polling
+
+![Long polling](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/48650ca6-9222-42db-bf07-e533535a038c)
+
+- come with a latench overhead because it requires several hops between servers and devices
+- reliable message ordering can be an issue with long polling because it is possible for multiple HTTP requests from the same client to be in flight simultaneously
+
+### Websocket
+
+![WebSockets](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/47b943e1-c0a8-4495-8aca-1383c0281c6f)
+
+### [Server Sent Events (SSE)](https://web.dev/articles/eventsource-basics)
+- A server can push data to your app whenever it wants, without the need to make an initial request
+- Data doesn't need to be sent from the client
+- Sent over traditional HTTP, do not require a special protocl or server implementation
+- Automatic reconnection, event ID, send arbitary data
+
+```
+Content-Type: text/event-stream
+```
+
+```
+data: {"msg": "First message"}\n\n
+event: userlogon\n
+data: {"username": "John123"}\n\n
+event: update\n
+data: {"username": "John123", "emotion": "happy"}\n\n
+```
+
+> Pick Web Socket
