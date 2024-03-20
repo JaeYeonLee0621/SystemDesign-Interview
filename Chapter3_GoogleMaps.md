@@ -289,9 +289,32 @@ s = No SQL key-value database / column-oriented DB
 - input for live traffic data
 - Logging this information into a message queue, such as Kafka
 
-### +) [Kafka](https://www.designgurus.io/course-play/grokking-the-advanced-system-design-interview/doc/636d08a12d344b9f0c7d9ea0)
-- A unified low-latency
-- High throughput data streaming platform designed for real-time data feeds
+## +) [Kafka](https://www.designgurus.io/course-play/grokking-the-advanced-system-design-interview/doc/636d08a12d344b9f0c7d9ea0)
+- Open-source publish-subscribe-based message syatem
+- distributed, durable, fault-tolerant, highly scalable
+
+### Background
+1. Reliably storing a huge amount of data
+2. Enabling high throughput of message transfer between different entities
+3. Streaming real-time data
+
+### 1. Publish-Subscribe
+![image](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/8a2a1633-ac32-4683-8e9f-ae645058f56a)
+
+### 2. Queuing
+![image](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/8c1b52b6-46d6-4637-8b47-ceee53b2db63)
+- Queuing allows for data processing to be distributed across many consumer instances
+- Traditional queues aren't multi-subscriber
+
+### Commit Log
+- Also known as a Write-Ahead log, Transaction Log
+- append-only data structure
+
+<img width="401" alt="Screenshot 2024-03-20 at 12 57 59 PM" src="https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/86d41e19-9de5-43ca-8f04-b0d796237d72">
+
++) What are the differences between Apache Kafka vs RabbitMQ?
+
+<img width="849" alt="Screenshot 2024-03-20 at 1 03 01 PM" src="https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/692f2d55-bef3-4bb4-bfce-045249f85dbd">
 
 # Rendering map
 
