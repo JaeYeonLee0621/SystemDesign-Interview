@@ -274,7 +274,9 @@ s = No SQL key-value database / column-oriented DB
 
 ![CAP](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/20ada1ac-507c-4fcb-b54d-8a71c156d1e0)
 
-- Availiability, Consistency, Partition Tolerance
+- `Availiability` : Every request receives a response, without the guarantee that it contains the most recent write
+- `Consistency` : Every read receives the most recent write or an error
+- `Partition Tolerance` : The system continues to operate despite an arbitrary number of messages being dropped by the network between nodes
 
 +) Cassandra
 - Handling our scale with a strong availability gurantee
@@ -331,16 +333,14 @@ s = No SQL key-value database / column-oriented DB
 - The algorithm receives the origin and destination in latitude/longitude paris
 - The lat/lng pairs are converted to geohashes which are then used to load the start and end-points of routing tiles
 
-<br/>
-
 ![a_-search-algorithm-2](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/dc8850ac-d7dc-4a0d-ba63-57f9ef4e155b)
 
 1. The algorithm start from the origin routing tile
 2. Traverses the graph data structure, and hydrates additional tiles from the object store as it expands the search area
 
-<br/>
-
 +) [A* pathfinding algorithms](https://www.geeksforgeeks.org/a-search-algorithm/)
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/9/98/AstarExampleEn.gif">
 
 ## ETA Service
 
@@ -399,7 +399,7 @@ s = No SQL key-value database / column-oriented DB
 
 ![WebSockets](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/47b943e1-c0a8-4495-8aca-1383c0281c6f)
 
-### [Server Sent Events (SSE)](https://web.dev/articles/eventsource-basics)
+### [Server Sent Events (SSE)](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events)
 - A server can push data to your app whenever it wants, without the need to make an initial request
 - Data doesn't need to be sent from the client
 - Sent over traditional HTTP, do not require a special protocl or server implementation
@@ -416,5 +416,14 @@ data: {"username": "John123"}\n\n
 event: update\n
 data: {"username": "John123", "emotion": "happy"}\n\n
 ```
+
+**Cons**
+- When not used over HTTP/2, SSE suffers from a limitation to the maximum number of open connections
+- The limit is per browser and is set tho a very low number (6)
+- This issue has been marked as "Won't fix" in Chrome and Firefox
+- This limistaion is per browser + domain
+- User can open 6 SSE connections across all the tabs to www.example.com
+
++) Using HTTP/2, the maximum number of simultaneous HTTP streams is negotiated between the server and the client (`defaults to 100`)
 
 > Pick Web Socket
