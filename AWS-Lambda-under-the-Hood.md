@@ -16,8 +16,6 @@
 ## Asynchronous invoke
 - queueing the request, followed by executin at a different timeline through poller systems
 
-+) poller systems
-
 # Invoke Request Routing
 
 ![Invoke Request Routing](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/1e558b7f-1c28-452b-b776-385dcdc64996)
@@ -46,6 +44,12 @@
 1. Pre-existing sandbox upon frontend request : leading to smooth "warm invokes"
 2. The sbsence of a sandbos : initiates a slower path involving placement to create a new one
 
++) [Pre-existing sandbox predictions]
+1. Usage Pattern
+2. Predictive Analytics
+3. Proactive Warm-Up : such as during periods of expected high traffic or in preparation for scheduled events
+4. Dynamic Scaling
+
 ![Lambda Architecture](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/3225c7f9-32d6-48e4-8acc-069ec88134a5)
 
 - `Worker manager` : responsible for tracking sandboxes, posed challenges due to to its reliance on in-memory storage, leading to potential data loss in case of host failure
@@ -64,7 +68,11 @@
 - By encapsulating each execution environment in a micro VM, ensures strong data isolation, allowing diverse accounts to coexist on the same worker securely
 - Notable reduction in the cost of creating new execution environments
 - `VM Snapshot` : distributing snapshots between workers, ensuring fast VM resumption, and maintaining strong security measures
-- `Copy-On-Read` : Address potential security threats associated with shared memeory
+- `Copy-On-Read` ~= `Copy-On-Write`
+
++) [Copy-On-Write]
+- The system allows multiple processes to share access to the same data without creating a seperate copy
+- If any process attempts to modify the data, the system creates a seperate copy before allowing the modification to occur
 
 # Snapshot Distribution
 
