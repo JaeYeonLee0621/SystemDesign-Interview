@@ -84,7 +84,8 @@
 
 # Step 2. Propose High-Level Design and Get Buy-In
 
-<image: Producer-produce-message queue-subsribe/consumer-consumers>
+![KakaoTalk_Photo_2024-03-26-09-20-25 001](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/b29ab5a2-657f-45b2-a044-239abe6590e4)
+
 
 1. Producer : sends messages to a message queue
 2. Consumer : subscribes to a queue and consumes the subscribed messages
@@ -95,7 +96,8 @@
 ## Point to Point
 - Each message can only be consumed by a single consumer
 
-<image: Point to Point consumer>
+![KakaoTalk_Photo_2024-03-26-09-20-26 002](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/8978d817-8731-4834-ae81-02a95530e610)
+
 
 - Once the consumer acknowledges that a message is consumed, it is removed from the queue
 - There is not data retention in the point to point model
@@ -107,7 +109,8 @@
 - Have a name that is unique across the entire message queue service
 - Messages are sent to and read from a specific topic
 
-<image: Publish-Subscriber>
+![KakaoTalk_Photo_2024-03-26-09-20-26 003](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/2426b1d2-ac9b-417a-86a1-46f67ee0eb4d)
+
 
 ## Topics, partitions, and brokers
 
@@ -115,7 +118,8 @@
 
 ### Partitions (Sharding)
 
-<image: Partitions>
+
+![KakaoTalk_Photo_2024-03-26-09-20-26 004](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/0f50300f-5354-44f0-ace2-f3818d235180)
 
 - Partition as a small subset of the messages for a topic
 - Divide a topic into partitions and deliver messages evenly across partitions
@@ -133,7 +137,8 @@
 
 ## Procedure
 
-<image: Message queue cluster>
+![KakaoTalk_Photo_2024-03-26-09-20-26 005](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/73338fd8-5a97-4b6f-ba9b-13a4a29ec4e5)
+
 
 - When a message is sent by a producer
 - It is actually sent to one of the paritions for the topic
@@ -145,7 +150,8 @@
 - A set of consumers, working together to consume messages from topics
 - Each consumer group can subscribe to multiple topics and maintain its own consuming offsets
 
-<image: Consumer Group>
+![KakaoTalk_Photo_2024-03-26-09-20-26 006](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/36515fba-0e5e-48d4-9aee-37df0657a668)
+
 
 ### One Problem
 - Reading data in parallel improves the throughput, but `the consumption order of messages in the same partition cannot be guaranteed`
@@ -159,7 +165,8 @@ ex) Consumer 1, 2 both read from partition 1
 
 ## High-Level Architecture
 
-<image: High-Level Architecture>
+![KakaoTalk_Photo_2024-03-26-09-20-26 007](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/7682f8a4-e4e9-42aa-bc40-335823ccb5fa)
+
 
 ### Core service and storage
 `Broker`
@@ -201,14 +208,16 @@ ex) Consumer 1, 2 both read from partition 1
 
 ### Segment
 
-<image: append new messages>
+![KakaoTalk_Photo_2024-03-26-09-20-26 008](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/7e3c782d-b7fe-48c2-86db-1cecfedbbc4a)
+
 
 - A file cannot grow infinitely, so it is a good idea to divide it into segments
 - New messages are appended only to the active segment file
 - When the active segment reaches a certain size, a new active segment is created to receive new messages and the currently active segment becomes in active
 - Old non-active segment files can be truncated if they exceed the retention or capacity limit
 
-<image: segment file name>
+
+![KakaoTalk_Photo_2024-03-26-09-20-26 009](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/1d97f5fe-0792-4d00-beeb-6b43e1c5b981)
 
 ex) Partition-{:partition_id}
 
@@ -256,7 +265,8 @@ ex) Partition-{:partition_id}
 
 ## A routing layer
 
-<image: Routing layer>
+![KakaoTalk_Photo_2024-03-26-09-20-26 010](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/03b8dd6d-a3bc-4183-83d6-7599208b9751)
+
 
 - All messages sent to the routing layer are routed to the correct broker
 - If the brokers are replicated, the correct broker is the leader replica
@@ -269,17 +279,20 @@ ex) Partition-{:partition_id}
 
 +) Why we need both leader and follower replicas : Fault tolerance
 
-<image: Improved design of 2 brokers and Producer which have buffer and routing feature>
+![KakaoTalk_Photo_2024-03-26-09-20-26 011](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/4ade763a-9ed3-486c-a0d9-d1ec29dcda87)
+
 
 - Fewer network hops mean lower latency
 - Producers can have their own logic to determine which partition the message should be sent to 
 - Batching buffers messages in memory and sends out larger batches in a single request. This increases throughput
 
-<image: The choice of batch size>
+![KakaoTalk_Photo_2024-03-26-09-20-26 012](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/1a62402f-b761-4aee-9899-ea3e8123ecd9)
+
 
 # Consumer flow
 
-<image: consumer flow>
+![KakaoTalk_Photo_2024-03-26-09-20-26 013](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/9d141bd1-328c-4dc6-a334-c76af3b311b9)
+
 
 ## Push model
 
@@ -304,7 +317,8 @@ Cons
 
 ### How to pull the data
 
-<image: Pull model>
+![KakaoTalk_Photo_2024-03-26-09-20-26 014](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/12f46809-63b1-4a1d-9d49-9cc2d00f382b)
+
 
 1. A new consumer wants to join group 1 and subscribes to topic A
 2. It finds the corresponding broker node by hashing the group name
@@ -323,7 +337,8 @@ Cons
 - One of the brokers responsible for communicating with consumers to achieve consumer rebalancing
 - The coordinator receives heartbeat from consumers and manages their offset on the partition
 
-<image: Coordinator of consumer groups>
+![KakaoTalk_Photo_2024-03-26-09-20-26 015](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/a9164fe6-128d-463b-967c-475dc0d74ad6)
+
 
 - Each consumer belongs to a group, It finds the dedicated coordinator by hashing the group name
 - All consumers from the same group are connected to the same coordinator
@@ -334,7 +349,8 @@ Cons
 
 <br/>
 
-<image: Consumer rebalance>
+![KakaoTalk_Photo_2024-03-26-09-20-26 016](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/635faee3-5f87-4bd6-89fa-786782dca743)
+
 
 - When coordinator will no longer have heartbeats from consumers, the coordinator will trigger a rebalance process to redispatch the partitions
 
@@ -342,19 +358,22 @@ Cons
 
 **[New Consumer Joins]**
 
-<image: New consumer joins>
+![KakaoTalk_Photo_2024-03-26-09-20-26 017](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/8d219ca6-9ce0-4e4a-b0c2-c662df007316)
+
 
 <br/>
 
 **[Existing consumer leaves]**
 
-<image: Existing consumer leaves>
+![KakaoTalk_Photo_2024-03-26-09-20-26 018](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/d8315f5a-5e46-43a6-b67f-dcc4cc65391d)
+
 
 <br/>
 
 **[Existing consumer crashes]**
 
-<image: Existing consumer crashes>
+![KakaoTalk_Photo_2024-03-26-09-20-26 019](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/967b4263-a901-496a-ac55-402a68fc6784)
+
 
 ## State storage
 
@@ -363,7 +382,8 @@ The state storage stores
 - The mapping between partitions and consumers
 - The last consumed offsets of consumer groups for each partition
 
-<image: Last consumed offset of consumer groups>
+![KakaoTalk_Photo_2024-03-26-09-20-26 020](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/56d4ffa8-c07d-41cc-a846-a17bcacea46b)
+
 
 The data access patterns for consumer states are
 
@@ -388,7 +408,8 @@ The metadata storage stores
 
 - It is an essential service for distributed systems offering a hierarchical key-value store
 
-<image: Zookeeper>
+![KakaoTalk_Photo_2024-03-26-09-20-27 021](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/7a5492ce-bfb4-4cf8-af79-b2217430de5e)
+
 
 - Metadata and state storage are moved to Zookeeper
 - The broker now only needs to maintain the data storage for messages
@@ -403,7 +424,7 @@ The metadata storage stores
 
 ### What is enough mean?
 
-<image: Replication>
+![KakaoTalk_Photo_2024-03-26-09-20-27 022](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/0e64c246-5ae2-40a2-a30c-c0d6974666b7)
 
 - Replica distribution plan
 - One of the broker nodes is elected as the leader
@@ -421,7 +442,7 @@ The metadata storage stores
 
 ### How ISR works?
 
-<image: How ISR work?>
+![KakaoTalk_Photo_2024-03-26-09-20-27 023](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/3a0419bc-3688-4efa-95d3-26e97789c689)
 
 +) Committed offset : All messages before and at this offset are already synchronized to all the replicas in ISR
 
@@ -438,14 +459,16 @@ The metadata storage stores
 
 ### ACK=all
 
-<image: ACK=all>
+![KakaoTalk_Photo_2024-03-26-09-20-27 024](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/d23ddab3-141d-4a68-b808-aeb8fea3e447)
+
 
 - The producer gets an ACK when all ISRs have received the message
 - This means it takes a longer time to send a message because we need to wait for the slowest ISR, but it gives the strongest message durability
 
 ### ACK=1
 
-<image: ACK=1>
+![KakaoTalk_Photo_2024-03-26-09-20-27 025](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/ef149d99-f156-49e5-aaa4-1ad8f9ffbe10)
+
 
 - The producer receives an ACK once the leader persists the message
 - The latench is improved by not waiting for data synchronization
@@ -453,7 +476,8 @@ The metadata storage stores
 
 ### ACK=0
 
-<image: ACK=0>
+![KakaoTalk_Photo_2024-03-26-09-20-27 026](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/b5baeb4c-994d-4cfb-8977-870779376996)
+
 
 - The producer keeps sending messages to the leader without waiting for any acknowledgment, and it never retries
 
@@ -485,7 +509,8 @@ The metadata storage stores
 
 ### Broker node crashes
 
-<image: Broker node crashes>
+![KakaoTalk_Photo_2024-03-26-09-20-27 027](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/d3b07bd5-2108-4195-8293-7432c179db19)
+
 
 - To make the broker fault-tolerant, here are addtional consideration
 
@@ -498,7 +523,8 @@ The metadata storage stores
 
 ### Add new broker node
 
-<image: Add new broker node>
+![KakaoTalk_Photo_2024-03-26-09-20-27 028](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/c5188537-3fb1-4283-bf2d-1740d65dbca5)
+
 
 - The broker controller can temporarily allow more replicas in the system than the number of replicas in the config file
 - When the newly added broker catches up, we can remove the ones that are no longer needed
@@ -507,14 +533,16 @@ The metadata storage stores
 
 - When the number of partitions changes, the producer will be notified after it communicates with any broker, and the consumer will trigger consumer rebalancing
 
-<image: Partition Increase>
+![KakaoTalk_Photo_2024-03-26-09-20-27 029](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/a53ac73f-18b7-45a4-a2c0-653f66c1edfb)
+
 
 - Persisted messages are still in the old partitions, so there's no data migration
 - After the new partition is added, new messages will be persisted in all new partitions
 
 ### Decrease the number of partitions
 
-<image: Partition decrease>
+![KakaoTalk_Photo_2024-03-26-09-20-27 030](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/7d4cde05-792b-4814-9a8b-b7d2a2db93a4)
+
 
 - The decommissioned partition cannot be removed immediately because data might be currently consumed by consumers for a certain amount of time
 - Only after the configured retention period passes, data can be truncated and storage space is freed up
@@ -548,7 +576,8 @@ ex) ACK=0
 
 ### Solution 2
 
-<image: Tag message>
+![KakaoTalk_Photo_2024-03-26-09-20-34 001](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/883d137a-cd4e-4817-98a0-d474497d3e6c)
+
 
 - On the broker side so that consumers will only get messages they care about
 - If data filtering requires data decryption or deserialization, it will degrade the performance of the brokers
@@ -558,7 +587,8 @@ ex) ACK=all, ACK=1
 
 ## Delayed messages & Scheduled messages
 
-<image: Delayed message>
+![KakaoTalk_Photo_2024-03-26-09-20-35 002](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/207e4898-6bf9-475c-990a-98f840158447)
+
 	
 - We can send delayed messages to temporary storage on the broker side instead of the topics immediately
 - Deliver them to the topics when time's up
