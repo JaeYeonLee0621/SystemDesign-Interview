@@ -49,16 +49,11 @@ ex)
 
 1. Only `text message` is allowed in the message queue (Message size is in the KB range)
 2. Messages can be repeatedly consumed by different consumers
-
 3. Messages should be consumed `in the same order they were produced`
-
 4. `Data retention` is 2 weeks
-
 5. The producers and consumers are going to suppport, the more the better
-
-5. At `least-once data` delivery semantic need to support
-
-6. Support high throughtput for use cases (ex) log aggregation) & low latency delivery for more traditional message queue use cases
+6. At `least-once data` delivery semantic need to support
+7. Support high throughtput for use cases (ex) log aggregation) & low latency delivery for more traditional message queue use cases
 
 ## Non-functional requirements
 
@@ -145,7 +140,23 @@ ex)
 
 +) If the message key is absent, the message is randomly sent to one of the partitions
 
-+) What is difference between the topic and the mssage key :question:
+### Difference between topic and message key
+
+**Topic**
+- Choose one category
+- There are multiple partitions to allow for scalable and parallel processing of messages
+
+**Message Key**
+- The messaging system uses the key to determine which partition of the topic to send the mssage to
+
+### Message Key is defined by Producer
+
+**Producer**
+- determining whether to include a message key and for ensuring that messages are sent to the appropriate partition
+- ensuring that messages that need to be processed together or in a specific order are sent to the same partition
+
+**Broker**
+- Storing messages in their repective partitions, managing the partitions themselves and facilitating message consumption by clients
 
 ## Consumer Group
 - A set of consumers, working together to consume messages from topics
@@ -191,8 +202,6 @@ ex) Consumer 1, 2 both read from partition 1
 - No update or delete operations
 - Predominantly sequential read/write access
 
-+) Read-heavy :question:
-
 ## Option 1. Database
 
 - `Relational database` : create a topic table and write messages to the table as rows
@@ -209,6 +218,21 @@ ex) Consumer 1, 2 both read from partition 1
 - WAL has a pure `sequential read/write` access pattern
 - Rotational disks have large capacity and they are pretty affordable
 - The easiest option is to use the line number of the log file as the offset
+
+### +) WAL (Write-Ahead Log)
+
+- Providing atomicity and durability in database system
+- Used for crash and transactino recovery
+- All modifications are written to a log before they are applied
+- Usually both redo and undo information is sotred in the log
+- Allow the page cache to buffer updates to disk-resident pages while ensuring durability semantics in the larger context of a database system
+- Persist all operations on disk until the cached copies of pages affected by these operations are synchronized on disk
+
+### +) Kafka's Commit Log
+- Each broker in a Kafka cluster maintains its own set of logs
+- `The leader broker` : maintaining the active log to which new messages are written
+- `The follower broker` : Replicating this log almost in real-time, maintaining copies of the leader
+- s log to ensure data redundancy and fault tolerance
 
 <br/>
 
@@ -249,18 +273,51 @@ ex) Partition-{:partition_id}
 - The payload of a message
 - It can be plain text or a compressed binary block
 
-### +) CRC (Cycle Redundancy Check) :question:
+### +) CRC (Cycle Redundancy Check)
+
+![image](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/127a3ed4-4235-401f-a16b-f696e4a4f2c6)
+
+- Encoding messages by adding a fixed-length check value, for the purpose of error detection in communication network
 - Generate a short, fixed-length binary sequence, known as a CRC code or checksum from a block of data
-- This checksum is then used to verify the integrity of the data during transmission or storage
 
 <br/>
 
 ## Batching
+
 - It is critical to the performance of the system
 - It allows the OS to group messages together in a single network request and amortizes the cost of expensive network round trips
 - The broker writes messages to the append logs in large chunks, which leads to larger blocks of sequential writes and larger contiguous blocks of disk cache, maintained by the OS
 
-### +) Larger blocks of sequential wries and larger continuous blocks of disk cache :question:
+### +) Why larger blocks of sequential writes and larger continuous blocks in disk cache is efficient
+
+![image](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/0eb74dd0-7921-4072-b290-3980f42877fa)
+
+1. Reduced Seek time for HDDs
+2. Optimized I/O Operations : Reducing the overhead of multiple write operations, prefetching larger blocks of data that are likely to be accessed soon can significantly reduce I/O wait times
+3. Efficient Use of disk Cache
+- larger chunk of data can be read from or sritten to the disk in a single operation
+4. Reduced File System Fragmentation
+5. Enhanced Throughput
+
+### File System Fragmentation
+
+- File system to lay out the contents of files non-continuously to allow in-place modification of their contents
+- File system fragmentation negatively impacts seek time in spinning storage media
+
+![image](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/bac6aad6-b28b-4efb-bec8-4c0b3a4bb7af)
+
+- Each file is using 10 blocks (4KB) of space
+- If the file B is deleted, a second region of 10 blocks of free space is created
+- a new file called F, which requires 7 blocks of space, also another new file called G, which needs only 3 blocks
+- F needs to be expanded
+
+1. Adding a new block somewhere else and indicating that F has a second extent ✔️
+2. Moving files in the way of the expansion elsewhere, to allow F to remain contiguous : impratical for performance
+3. Moving file F so it can be one contiguous file of the new, larger size : no single contiguous free space large enough to hold the new file
+
+### How Disk Cache works
+
+![image](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/a1cb6053-a97a-41dc-954d-9e79694f3dd3)
 
 <br/>
 
@@ -554,6 +611,8 @@ The metadata storage stores
 
 # Data delivery semantics
 
+![image](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/02a812b7-43df-4fa1-a5d2-417135216b54)
+
 ## At-most once
 - A message will be delivered not more than once
 - Messages may belost but are not redelivered
@@ -565,10 +624,11 @@ ex) ACK=0
 - Consumer fetches the message and commits the offest only after the data is successfully processed
 - A message might be delivered more than once to the brokers and consumers
 
-## Exactly once
+## [Exactly once](https://exactly-once.github.io/posts/exactly-once-delivery/)
 - The most difficult delivery sementic to implement
+- It is a popular concept and a desirable
++) [Kafka that claim to support exactly-once semantics.](https://kafka.apache.org/documentation/#semantics)
 
-+) How could we ensure the exactly once :question:
 
 <br/>
 
