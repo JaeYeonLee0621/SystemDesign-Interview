@@ -27,19 +27,9 @@
 1. Only `text message` is allowed in the message queue (Message size is in the KB range)
 2. Messages can be repeatedly consumed by different consumers
 
-> +) Traditional Distributed Message Queue
-- Does not retain a message once it has been successfully delivered to a consumer
-- A message cannot be `repeatedly consumed`
-
 3. Messages should be consumed `in the same order they were produced`
 
-> +) Traditional Distributed Message Queue :question:
-- Does not usually guarantee delivery orders
-
 4. `Data retention` is 2 weeks
-
-+) Traditional Distirbuted Message Queue
-- Does not retain messages
 
 5. The producers and consumers are going to suppport, the more the better
 
@@ -47,21 +37,20 @@
 
 6. Support high throughtput for use cases (ex) log aggregation) & low latency delivery for more traditional message queue use cases
 
-<br/>
-
 ## Non-functional requirements
 
 - High throughput or low latency
 - Scalable : the system should be distributed in nature
 - Persistent and durable : data should be persisted on disk and replicated across multiple nodes
 
-## Adjustments for traditional
+<br/>
+
+## Adjustments for Traditional
 
 ### Message Queues
 
 1. Do not have strong retention
 2. Retain message in memory just long enough for them to be consumed
-- They provide on-disk overflow capacity which is several orders of magnitude smaller than the capacity required for event streaming platforms
 3. Do not typically maintain message ordering
 4. The messages can be consumed in a different order than they were produced
 
@@ -80,39 +69,42 @@
 
 ![KakaoTalk_Photo_2024-03-26-09-20-26 002](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/8978d817-8731-4834-ae81-02a95530e610)
 
-
 - Once the consumer acknowledges that a message is consumed, it is removed from the queue
-- There is not data retention in the point to point model
+- There is `no data retention` in the point to point model
 
 ## Publish-Subscribe
 
+![KakaoTalk_Photo_2024-03-26-09-20-26 003](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/2426b1d2-ac9b-417a-86a1-46f67ee0eb4d)
+
 ### Topic
+
 - The categories used to organize messages
 - Have a name that is unique across the entire message queue service
 - Messages are sent to and read from a specific topic
 
-![KakaoTalk_Photo_2024-03-26-09-20-26 003](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/2426b1d2-ac9b-417a-86a1-46f67ee0eb4d)
+# What if the data volume in a topic is too large for `a single server to handle`
 
-## What if the data volume in a topic is too large for a single server to handle
-
-### Partitions (Sharding)
+## Partitions (Sharding)
 
 ![KakaoTalk_Photo_2024-03-26-09-20-26 004](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/0f50300f-5354-44f0-ace2-f3818d235180)
 
-- Partitions within a distributed messaging system as playing a role similar to a load balancer,
+- Partitions within a distributed messaging system as playing a role similar to a load balancer
 - Partition as a small subset of the messages for a topic
+- Each subset of the messages is independent
 - Divide a topic into partitions and deliver messages `evenly across partitions`
 
-### Broker
+## Broker
 
+- `The server` that hold partitions
 - Partitions are evenly distributed across the servers in the message queue cluster
-- The server that hold partitions
 
-### Offset
+## Offset
 
-- The position of a message
+- The `position` of a message
 - Each topic partition operated in the form of a queue with the `FIFO mechanism`
 - We can `keep the order of messages` inside a partition
+
++) Offset is for ensuring the order of messages :question:
 
 <br/>
 
@@ -132,6 +124,8 @@
 
 +) If the message key is absent, the message is randomly sent to one of the partitions
 
++) What is difference between the topic and the mssage key :question:
+
 ## Consumer Group
 - A set of consumers, working together to consume messages from topics
 - Each consumer group can subscribe to multiple topics and maintain its own consuming offsets
@@ -144,11 +138,9 @@
 ex) Consumer 1, 2 both read from partition 1
 -> Not be able to guarantee the message consumption order
 
-+) But what if message having same message key is divided in the multiple partitions, they will go to the same consumer :question:
-
 ### Solution
 
-- We can fix this by adding a constraint : A single partition can only be consumed by one consumer in the same group
+- We can fix this by adding a constraint : `A single partition` can only be consumed `by one consumer` in the same group
 
 ## High-Level Architecture
 
@@ -178,10 +170,12 @@ ex) Consumer 1, 2 both read from partition 1
 - No update or delete operations
 - Predominantly sequential read/write access
 
++) Read-heavy :question:
+
 ## Option 1. Database
 
-- Relational database : create a topic table and write messages to the table as rows
-- NoSQL database : create a collection as a topic and write messages as documents
+- `Relational database` : create a topic table and write messages to the table as rows
+- `NoSQL database` : create a collection as a topic and write messages as documents
 
 <br/>
 
@@ -210,13 +204,13 @@ ex) Consumer 1, 2 both read from partition 1
 
 ex) Partition-{:partition_id}
 
-<br/>
-
 ### A note on disk performance
 
 - Only the case for random, the rotational disks are slow
 - `The mordern disk drives` in a RAID configuration could comfortably achieve several hundred MB/sec of read and write speed
 - `A modern OS caches disk` data in main memory very aggressively so much, so that it would happily use all available free memory to cache disk data
+
+<br/>
 
 ## Message Data Structure
 
@@ -238,6 +232,8 @@ ex) Partition-{:partition_id}
 - Generate a short, fixed-length binary sequence, known as a CRC code or checksum from a block of data
 - This checksum is then used to verify the integrity of the data during transmission or storage
 
+<br/>
+
 ## Batching
 - It is critical to the performance of the system
 - It allows the OS to group messages together in a single network request and amortizes the cost of expensive network round trips
@@ -251,6 +247,8 @@ ex) Partition-{:partition_id}
 - If the system latency might be more important, the system could be tuned to use a smaller batch size
 
 ![KakaoTalk_Photo_2024-03-26-09-20-26 012](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/1a62402f-b761-4aee-9899-ea3e8123ecd9)
+
+<br/>
 
 # Producer Flow
 
@@ -280,6 +278,8 @@ ex) Partition-{:partition_id}
 - `Fewer network hops` mean lower latency
 - Producers can have their own logic to determine which partition the message should be sent to 
 - `Batching buffers messages` in memory and sends out larger batches in a single request. This increases throughput
+
+<br/>
 
 # Consumer flow
 
@@ -325,6 +325,8 @@ ex) Partition-{:partition_id}
 5. Consumer fetches messages from the last consumed offset, which is managed by the state storage
 6. Consumer processes messages and commits the offset to the broker
 
+<br/>
+
 ## Consumer Rebalancing
 
 - The coordinator plays an important role
@@ -349,23 +351,19 @@ ex) Partition-{:partition_id}
 
 - When coordinator will no longer have heartbeats from consumers, the coordinator will trigger a rebalance process to redispatch the partitions
 
-<br/>
-
 ### New Consumer Joins
 
 ![KakaoTalk_Photo_2024-03-26-09-20-26 017](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/8d219ca6-9ce0-4e4a-b0c2-c662df007316)
-
-<br/>
 
 ### Existing consumer leaves
 
 ![KakaoTalk_Photo_2024-03-26-09-20-26 018](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/d8315f5a-5e46-43a6-b67f-dcc4cc65391d)
 
-<br/>
-
 ### Existing consumer crashes
 
 ![KakaoTalk_Photo_2024-03-26-09-20-26 019](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/967b4263-a901-496a-ac55-402a68fc6784)
+
+<br/>
 
 ## State storage
 
@@ -395,6 +393,8 @@ The metadata storage stores
 - Metadata and state storage are moved to Zookeeper
 - The broker now only needs to maintain the data storage for messages
 - Zookeeper helps with the leader election of the broker cluster
+
+<br/>
 
 ## Replication
 
@@ -472,6 +472,8 @@ The metadata storage stores
 ### How does ISR determine if a replica is ISR or not
 - The leader for every partition tracks `the ISR list by computing the lag of every replica from itself
 
+<br/>
+
 # Scalability
 
 ## Producer
@@ -505,6 +507,8 @@ The metadata storage stores
 
 - The broker controller can temporarily allow more replicas in the system than the number of replicas in the config file
 - When the newly added broker catches up, we can remove the ones that are no longer needed
+
+<br/>
 
 # Partition
 
@@ -543,6 +547,10 @@ ex) ACK=0
 ## Exactly once
 - The most difficult delivery sementic to implement
 
++) How could we ensure the exactly once :question:
+
+<br/>
+
 # Advanced features
 
 ## Message filtering
@@ -561,6 +569,8 @@ ex) ACK=0
 - So it's better to attach tag and the messages can be filtered in multiple dimensions
 
 ex) ACK=all, ACK=1
+
+<br/>
 
 # Delayed messages & Scheduled messages
 
