@@ -7,12 +7,10 @@
 - Better performance : Asynchronous communication easy. Producers can add messages to a queue without waiting for the response and consumers consume message whenever they are available.
 
 ## Message queue vs event streaming platforms
-- Strictly speaking, Apache Kafka and Pulsar are not message queues
-
-<br/>
-
 - `Message Queue` : RocketMQ, ActiveMQ, RabbitMQ, ZeroMQ etc
 - `Event streaming` : Kafka, Pulsar
+
++) Strictly speaking, Apache Kafka and Pulsar are not message queues
 
 ## [Difference between the message queue and event streaming](https://thenewstack.io/choosing-between-message-queues-and-event-streams/)
 
