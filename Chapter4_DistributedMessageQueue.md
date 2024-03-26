@@ -127,8 +127,6 @@ ex)
 - Each topic partition operated in the form of a queue with the `FIFO mechanism`
 - We can `keep the order of messages` inside a partition
 
-+) Offset is for ensuring the order of messages :question:
-
 <br/>
 
 1. Ensuring the order of messages
