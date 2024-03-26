@@ -14,19 +14,6 @@
 - `Message Queue` : RocketMQ, ActiveMQ, RabbitMQ, ZeroMQ etc
 - `Event streaming` : Kafka, Pulsar
 
-<br/>
-
-### RabbitMQ
-- Typical Message queue
-- added an optional streams feature to allow repeated message consumption and long message retention
-- implementation uses and append-only log
-
-### Apache Pulsar
-- a Kafka competitor
-- Flexible and performant enough to be used as a typical distibuted message queue
-
-<br/>
-
 +) What is the differences between Message Queue and Event Streaming :question:
 
 <br/>
