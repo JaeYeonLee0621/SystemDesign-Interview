@@ -14,7 +14,30 @@
 - `Message Queue` : RocketMQ, ActiveMQ, RabbitMQ, ZeroMQ etc
 - `Event streaming` : Kafka, Pulsar
 
-+) What is the differences between Message Queue and Event Streaming :question:
+## [Difference between the message queue and event streaming](https://thenewstack.io/choosing-between-message-queues-and-event-streams/)
+
+<img width="326" alt="Screenshot 2024-03-26 at 11 37 41 AM" src="https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/ab09522f-8bc9-4ea2-92dd-d93fb0c7abd3">
+
+### Message Queue
+
+![image](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/b9130820-eb9e-4c9b-ab16-1b7b9a2934c6)
+
+ex)
+1. Communication between components written in different languages and "speaking" different protocols
+2. Require complex message routing
+3. Handling consumers that frequently disconnect
+
+### Event Streaming
+
+![image](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/9968b1ec-86d2-450e-a780-31ed7301f697)
+
+- Continuous flow of event messages
+- Messages can be stored in order for longer periods of time
+
+ex)
+1. Collecting, persisting and transmitting large volumes of event streams
+2. Continuously processing and analyzing data
+3. Log aggregation use cases
 
 <br/>
 
