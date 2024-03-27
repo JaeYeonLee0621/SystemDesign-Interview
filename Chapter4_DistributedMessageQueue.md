@@ -129,6 +129,8 @@ ex) Rabbit MQ
 - Each subset of the messages is independent
 - Divide a topic into partitions and deliver messages `evenly across partitions`
 
++) Key based partitioning
+
 ## Broker
 
 - `The server` that hold partitions
@@ -142,30 +144,51 @@ ex) Rabbit MQ
 
 <br/>
 
+ex)
+- Order 123 (Partition 0, Offset 0): Order Placed
+- Order 123 (Partition 0, Offset 1): Payment Processed
+- Order 124 (Partition 1, Offset 0): Order Placed
+- Order 123 (Partition 0, Offset 2): Shipped
+
+<br/>
+
 1. Ensuring the order of messages
 2. Enabling Message Replayability
 3. Supporting Fault Tolerance
 4. Facilitating Scalability and Load Balancing
 
-## Procedure
+<br/>
 
++) What if multiple consumer groups subscribe to a single partition, which includes messages, ensuring their order
+
+- `Each partition of a topic is consumed by exactly one consumer within a consumer group` at any given time. This ensures that messages within a partition are processed in order by that consumer.
+- The partition is defined by the message key. Therefore, if messages share the same message key, they will be directed to the same partition and consumed by the same consumer within a consumer group. This ensures that users can maintain the order of the messages.
+- Multiple consumer groups can independently subscribe to the same topic (and thus the same partitions), but `each group manages its own offset tracking.` This means that while all groups can consume all messages, the consumption within each group is isolated from the others.
+- But it does not inherently synchronize message processing order across multiple consumer groups. So `maintaining order across groups requires external mechanisms or reconsideration of the system design.`
+- If strict ordering of messages is a critical requirement for your application, such as in a financial services scenario where transaction order must be preserved, `ensuring that only one consumer group subscribes to each partition` is a common approach
+
+## Procedure
+  
 ![KakaoTalk_Photo_2024-03-26-09-20-26 005](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/73338fd8-5a97-4b6f-ba9b-13a4a29ec4e5)
 
 - When a message is sent by a producer
 - It is actually sent to one of the paritions for the topic
 - Each message has an optional `message key`
-- All messages for the same message key are sent to the same partition
+- All messages for the same `message key` are sent to the `same partition`
 
 +) If the message key is absent, the message is randomly sent to one of the partitions
 
 ### Difference between topic and message key
 
 **Topic**
-- Choose one category
+- Defines the Logical Grouping (doesn't directly define the server, but rather the logical grouping of related messages)
+- Each topic can consist of one or more partitions.
 - There are multiple partitions to allow for scalable and parallel processing of messages
 
 **Message Key**
-- The messaging system uses the key to determine which partition of the topic to send the mssage to
+- The messaging system uses the key to determine which `partition` of the topic to send the mssage to
+
+<br/>
 
 ### Message Key is defined by Producer
 
@@ -175,12 +198,20 @@ ex) Rabbit MQ
 
 **Broker**
 - Storing messages in their repective partitions, managing the partitions themselves and facilitating message consumption by clients
+- It is `a single instance of a server` that stores and manages one or more partitions.
+
+<br/>
 
 ## Consumer Group
 - A set of consumers, working together to consume messages from topics
-- Each consumer group can subscribe to multiple topics and maintain its own consuming offsets
+- Each consumer group can subscribe to multiple topics and `maintain its own consuming offsets`
 
 ![KakaoTalk_Photo_2024-03-26-09-20-26 006](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/36515fba-0e5e-48d4-9aee-37df0657a668)
+
+### +) How to handle the offset
+- Offset committing : Consumers periodically commit their current offset (consumer group ID, topic name, partition ID, offset)
+- The offsets are stored and managed per topic-partition combination
+- Each consumer group maintains its offset for each topic-partition it consumes from
 
 ### One Problem
 - Reading data in parallel improves the throughput, but `the consumption order of messages in the same partition cannot be guaranteed`
@@ -191,6 +222,8 @@ ex) Consumer 1, 2 both read from partition 1
 ### Solution
 
 - We can fix this by adding a constraint : `A single partition` can only be consumed `by one consumer` in the same group
+
+<br/>
 
 ## High-Level Architecture
 
@@ -211,6 +244,8 @@ ex) Consumer 1, 2 both read from partition 1
 - Service discovery : brokers are alive
 - Leader election : one of the brokers is selected as the active controller
 - active controller : responsible for assigning partitions
+
+<br/>
 
 # Step 3. Design Deep dive
 
@@ -240,17 +275,21 @@ ex) Consumer 1, 2 both read from partition 1
 ### +) WAL (Write-Ahead Log)
 
 - Providing atomicity and durability in database system
-- Used for crash and transactino recovery
-- All modifications are written to a log before they are applied
+- Used for crash and transaction recovery
+- `All modifications are written to a log before they are applied`
 - Usually both redo and undo information is sotred in the log
-- Allow the page cache to buffer updates to disk-resident pages while ensuring durability semantics in the larger context of a database system
+
+![image](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/ce369ce2-7d97-4d20-b5ae-c3a03de93a41)
+  
 - Persist all operations on disk until the cached copies of pages affected by these operations are synchronized on disk
+
+![image](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/e8e896d6-1bd0-4fc9-a317-75d0df93668f)
+
 
 ### +) Kafka's Commit Log
 - Each broker in a Kafka cluster maintains its own set of logs
 - `The leader broker` : maintaining the active log to which new messages are written
 - `The follower broker` : Replicating this log almost in real-time, maintaining copies of the leader
-- s log to ensure data redundancy and fault tolerance
 
 <br/>
 
@@ -259,6 +298,9 @@ ex) Consumer 1, 2 both read from partition 1
 ![KakaoTalk_Photo_2024-03-26-09-20-26 008](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/7e3c782d-b7fe-48c2-86db-1cecfedbbc4a)
 
 - A file cannot grow infinitely, so it is a good idea to `divide it into segments`
+
+![image](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/5f55ec87-c6fb-4f56-8b57-888d4452f0bf)
+
 - New messages are appended only to the active segment file
 - When the active segment reaches a certain size, a new active segment is created to receive new messages and the currently active segment becomes in active
 - Old non-active segment files can be truncated if they exceed the retention or capacity limit
@@ -272,6 +314,10 @@ ex) Partition-{:partition_id}
 - Only the case for random, the rotational disks are slow
 - `The mordern disk drives` in a RAID configuration could comfortably achieve several hundred MB/sec of read and write speed
 - `A modern OS caches disk` data in main memory very aggressively so much, so that it would happily use all available free memory to cache disk data
+
+<img width="817" alt="Screenshot 2024-03-27 at 10 34 56 AM" src="https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/0fd6211f-08d0-4fd5-a13a-9d5fdc74f592">
+
+<img width="593" alt="Screenshot 2024-03-27 at 10 37 45 AM" src="https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/8862e5c9-02ae-4fc0-9ef3-645221a15496">
 
 <br/>
 
@@ -288,6 +334,7 @@ ex) Partition-{:partition_id}
 - If we need more flexibility, the producer can define its own mapping algorithm to choose partitions
 
 ### Message Value
+
 - The payload of a message
 - It can be plain text or a compressed binary block
 
@@ -313,18 +360,20 @@ ex) Partition-{:partition_id}
 1. Reduced Seek time for HDDs
 2. Optimized I/O Operations : Reducing the overhead of multiple write operations, prefetching larger blocks of data that are likely to be accessed soon can significantly reduce I/O wait times
 3. Efficient Use of disk Cache
-- larger chunk of data can be read from or sritten to the disk in a single operation
+- larger chunk of data can be read from or written to the disk in a single operation
 4. Reduced File System Fragmentation
 5. Enhanced Throughput
 
-### File System Fragmentation
+### +) File System Fragmentation
 
 - File system to lay out the contents of files non-continuously to allow in-place modification of their contents
 - File system fragmentation negatively impacts seek time in spinning storage media
 
+ex) 
+
 ![image](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/bac6aad6-b28b-4efb-bec8-4c0b3a4bb7af)
 
-- Each file is using 10 blocks (4KB) of space
+- Each file is using 10 blocks (4KB per a block) of space
 - If the file B is deleted, a second region of 10 blocks of free space is created
 - a new file called F, which requires 7 blocks of space, also another new file called G, which needs only 3 blocks
 - F needs to be expanded
@@ -333,7 +382,7 @@ ex) Partition-{:partition_id}
 2. Moving files in the way of the expansion elsewhere, to allow F to remain contiguous : impratical for performance
 3. Moving file F so it can be one contiguous file of the new, larger size : no single contiguous free space large enough to hold the new file
 
-### How Disk Cache works
+### +) How Disk Cache works
 
 ![image](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/a1cb6053-a97a-41dc-954d-9e79694f3dd3)
 
@@ -461,17 +510,27 @@ ex) Partition-{:partition_id}
 
 <br/>
 
-## State storage
+## State storage (in the broker)
 
 The state storage stores
 
 - The mapping between partitions and consumers
 - The last consumed offsets of consumer groups for each partition
+- Brokers use this state information to perform tasks such as handling producer and consumer requests, replicating data across partitions and coordinating consumer group rebalancing
+
+ex) health check
 
 ![KakaoTalk_Photo_2024-03-26-09-20-26 020](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/56d4ffa8-c07d-41cc-a846-a17bcacea46b)
 
 - Lots of storage solutions can be used for storing the consumer state data
 - Considering the data consistency and fast read/write requirements a KV store like Zookeeper is a great choice
+
+**+) Consumer group offset storage**
+
+- Within a consumer group, each consumer maintains its offset for each partition it consumes from.
+- Consumers periodically commit their current offset to Kafka, indicating the position in the partition's log up to which they have processed messages.
+
+<br/>
 
 ## Metadata storage
 
@@ -627,6 +686,8 @@ The metadata storage stores
 - During this transitional period, producers only send messages to the remaining partitions, but consumers can still consume from all partitons
 - After the retention period of the decommissioned partition expires, consumer groups need rebalancing
 
+<br/>
+
 # Data delivery semantics
 
 ![image](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/02a812b7-43df-4fa1-a5d2-417135216b54)
@@ -645,6 +706,7 @@ ex) ACK=0
 ## [Exactly once](https://exactly-once.github.io/posts/exactly-once-delivery/)
 - The most difficult delivery sementic to implement
 - It is a popular concept and a desirable
+
 +) [Kafka that claim to support exactly-once semantics.](https://kafka.apache.org/documentation/#semantics)
 
 
