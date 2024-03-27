@@ -92,6 +92,24 @@ ex)
 
 ![KakaoTalk_Photo_2024-03-26-09-20-26 003](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/2426b1d2-ac9b-417a-86a1-46f67ee0eb4d)
 
+- To ensure that all subscribers can receive and process each message, The message is not removed immediatley right after being consumed by consumer
+
+1. Acknowledgement-based Removal
+2. Retention Policy
+3. Durable Subscription : MQTT or AMQP, durable subscriptions
+
+ex) Google Cloud Pub/Sub : Ensure messages are retained until acknowledged by all subscribers
+
++) MQTT (Message Queuing Telemetry Transport)
+- It is widely used iin the Internet of Things applications for machine to machine communication
+- Devices can publish messages to a topic or subscribe to a topic to receive messages
+
++) AMQP (Advanced Message Queuing Protocol)
+- Application Layer of the OSI model
+- It is built around the concept of message queueing, providing a standarized way for applications to send and receive messages, decoupling the message producer from consumers
+
+ex) Rabbit MQ
+
 ### Topic
 
 - The categories used to organize messages
