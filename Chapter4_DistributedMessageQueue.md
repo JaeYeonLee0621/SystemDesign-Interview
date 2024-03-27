@@ -118,6 +118,8 @@ ex) Rabbit MQ
 
 # What if the data volume in a topic is too large for `a single server to handle`
 
+- The place where messages are stored is indeed located on servers
+
 ## Partitions (Sharding)
 
 ![KakaoTalk_Photo_2024-03-26-09-20-26 004](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/0f50300f-5354-44f0-ace2-f3818d235180)
