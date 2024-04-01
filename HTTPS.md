@@ -20,13 +20,11 @@
 
 ## Hashing
 
-- A function that converts an input into a `fixed-sized` string of bytes
-
-- Deterministic : The same input will always result in the same output
-- Fixed Size
+- `Deterministic` : The same input will always result in the `same output`
+- `Fixed Size`
 - Fast Computation
-- Pre-image Resistence : Infeasible to reverse the hash back to the original input
-- Collision Resistance : It should be extremely hard to find two different inputs that produce the same output
+- Pre-image Resistence : `Infeasible to reverse` the hash back to the original input
+- `Collision Resistance` : It should be extremely hard to find two different inputs that produce the same output
 
 ![image](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/f1ce0763-d5a5-4df6-908e-e44ce0b47cef)
 
