@@ -305,10 +305,10 @@ ex) Use a file to hold DNS/IP information for ever service endpoint on the "metr
 
 ## Where aggregation can happen
 
-### Collection agent
+### Collection agent (Client Side)
 - simple aggregation logic
 
-### Ingestion pipeline
+### Ingestion pipeline (Before writing to the storeage)
 - We need stream processing engines such as Flink
 - Advantages : The write volume will be significantly reduced since only the calculated result is written to the DB
 - Disadvantages : Handling lat-arriving events could be a challenge an another downside is existed
