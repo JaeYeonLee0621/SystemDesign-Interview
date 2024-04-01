@@ -41,9 +41,11 @@ example) CPU load
 <br/>
 
 - `write load` : heavy
+
 +) Many time-series data points written at any moment
 
 - `read load` : spiky
+
 +) Visualization and alert services send queries to the DB and depending on the access patterns of the graphs and alerts
 
 <br/>
