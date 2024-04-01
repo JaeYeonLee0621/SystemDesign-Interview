@@ -22,6 +22,8 @@
 
 ex) MD5, SHA-1, SHA-2, SHA-3 etc
 
+<br/>
+
 # Nounce
 
 ![Untitled](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/b899c25e-0a86-4311-83b7-a54e5976febb)
@@ -36,6 +38,8 @@ ex) MD5, SHA-1, SHA-2, SHA-3 etc
 ## +) Preemptive authorization
 
 ![Untitled](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/ebfa863e-4339-4c7e-a5a9-769d98d8f8a4)
+
+<br/>
 
 # HTTPS
 
