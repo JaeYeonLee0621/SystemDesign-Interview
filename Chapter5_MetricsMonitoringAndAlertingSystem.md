@@ -99,6 +99,9 @@ If 80%)
 - Cassandra, Bigtable can both be use for time series
 - However, it would require deep knowledge of the internal workings of each NoSQL
 
++) NoSQL does not use WAL file like RDS
+- except Cassandra, MongoDB, Redis, DynamoDB 
+
 ### Time Series Database
 
 #### OpenTSDB
@@ -116,7 +119,15 @@ If 80%)
 - Handle durability and performance quite well
 ex) 8 core, 32GB RAM > 250,000 writes per second
 
+<br/>
+
 ### +) Carnidality
+
+- In the context of databases, refers to the uniqueness of data values contained in a particular column of a database table
+- **Low Cardinality** : It contains a large number of "repeats" of a small set of unique values
+- **High Cardinality** : Most of all of its values are unique
+
+<br/>
 
 ## High-level design
 
@@ -146,6 +157,10 @@ ex) Use a file to hold DNS/IP information for ever service endpoint on the "metr
 ![KakaoTalk_Photo_2024-04-01-09-44-30 006](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/adddacb8-c886-4def-bedb-080f8c8dc9dc)
 
 ### +) etcd
+- A distributed key-value store
+- store and manage all its cluster data, including configuration data, state data, and the metdata that represents the state of the cluster
+- TTLs for Keys
+- Implementing robust backup and recoverty procedures for etcd data to protect against data loss or corruption
 
 ### Pull Model in detail
 
@@ -199,8 +214,52 @@ ex) Use a file to hold DNS/IP information for ever service endpoint on the "metr
 - Pull : Use TCP
 - `Push` : Use UDP
 
-### +) TCP
-### +) UDP
+<br/>
+
+## +) UDP
+
+![image](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/ca25e9d9-0663-44d0-8f38-f0b6e635cc8a)
+
+**Datagram Structure**
+- It is a self-contained, independent packet of data that includes a header and payload
+
+**+) Packet**
+- It is more generic and is used to describe any enncapsulated data unit that is transmitted across a network
+
+### Memory Use
+
+![Untitled](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/a0bce4ac-e1cf-46f8-8aef-d7f9d375ebe7)
+
+**Socket Buffers**
+- UDP is typically copied into a socket buffer in the kernel space. (TCP as well)
+- The size of these buffers is much smaller compared to TCP, as there's no need to store data for potential retransmission
+
+**Receive Buffer**
+- If this buffer becomes full, incoming datagrams can be discarded
+
+### Data Handling
+
+**No Connection State**
+- It does not maintain a conenction state between endpoints
+- No need for storing information about the connection
+
+**Direct to Application**
+- There's no need for the data to be acknowledged, sequenced or otherwise processed to fit into a stream
+
+**Handling in the Network Stack**
+- UDP packets are processed with minimal interventions
+- After basic checks, the payload is passed directly to the application layer
+
+### Connection Management
+
+**TCP**
+- OS maintains state information about each connection, including sequence numbers for data packets, acknowledgment numbers, window size for flow control and more
+
+**UDP**
+- Each UDP datagram is independent of the others, with minimal header information
+- Th IS does not keep taack of UDP communications the way it does with TCP sessions
+
+<br/>
 
 ### Data authenticity
 - Pull : Application servers to collect metrics from are defined in config files in advance
@@ -267,12 +326,11 @@ ex) Use a file to hold DNS/IP information for ever service endpoint on the "metr
 
 ![KakaoTalk_Photo_2024-04-01-09-44-31 015](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/c8a6afb3-726b-4154-b331-24a34f1a527c)
 
-
 - Just store the difference between the time, instead of the full timestamp of 32 bits
 
-### +) 32 bits
-
-### +) Time stamp data
+### +) 32 bits = Unix Timestamp
+- counts the number of seconds that have elapsed sinze the "`Unix epoch`" (00:00:00 UTC on 1 January 1970)
+- 32-bit Signed Integer :  -2,147,483,648 ~ 2,147,483,647 (−2^31 ~ 2^31-1)
 
 ### Downsampling
 
@@ -286,7 +344,7 @@ ex) Use a file to hold DNS/IP information for ever service endpoint on the "metr
 - The storage of inactive data that is rarely used
 - The financial cost for cold sotrage is much lower
 
-### +) AWS Archeiving
+ex) AWS Glacier
 
 <br/>
 
@@ -308,5 +366,19 @@ ex) Use a file to hold DNS/IP information for ever service endpoint on the "metr
 7. Alert consumers process alert events from Kafka and send notifications over to different channels such as email, text message, PagerDuty or HTTP endpoints
 
 ### +) YAML format
-
-### +) Kafka
+```
+person:
+  name: John Doe
+  age: 30
+  married: true
+  children:
+    - name: Jane Doe
+      age: 10
+    - name: Joe Doe
+      age: 12
+  address:
+    street: "1234 Elm Street"
+    city: "Anytown"
+    state: "Anystate"
+    zipcode: "123456"
+```
