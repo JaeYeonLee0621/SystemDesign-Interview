@@ -216,9 +216,17 @@ ex) Use a file to hold DNS/IP information for ever service endpoint on the "metr
 
 <br/>
 
-## +) UDP
+## +) UDP (User Datagram Protocol)
 
 ![image](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/ca25e9d9-0663-44d0-8f38-f0b6e635cc8a)
+
+### +) NIC (Network Interface Card)
+
+![image](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/1c5911a7-e4a8-46c9-a71b-ba12114a89e7)
+
+### +) DMA (Direct Memory Access)
+
+![Untitled](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/b5644f1c-a287-42ec-97f9-3f5952370e23)
 
 **Datagram Structure**
 - It is a self-contained, independent packet of data that includes a header and payload
