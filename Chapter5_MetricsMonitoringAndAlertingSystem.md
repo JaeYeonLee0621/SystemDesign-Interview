@@ -62,6 +62,34 @@ ex)
 
 ### +) PostgreSQL write logic
 
+**[MVCC (Multi Version Concurrency Contrl)]**
+
+- All row in PostgreSQL are intact
+- Index points the heap page which store the present data
+
+**[Write Amplification]**
+
+- If data is updated and new page is created, that row renews all the indexs which it have
+
+**[Fill Factor]**
+
+- How much data might be filled by a page
+
+If 100%)
+1. Create new page
+2. Create new version row in new page
+3. Change all the index's pointers to new page heap
+
+If 80%)
+1. New version row creates in the same page
+
+= Hot Update
+
+**Advantages**
+
+1. Vacumm less data
+2. Reduce the WAL file size
+
 ### NoSQL
 
 - Cassandra, Bigtable can both be use for time series
