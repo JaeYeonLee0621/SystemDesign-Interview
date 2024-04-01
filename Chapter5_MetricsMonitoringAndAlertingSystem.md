@@ -274,3 +274,5 @@ ex) Use a file to hold DNS/IP information for ever service endpoint on the "metr
 7. Alert consumers process alert events from Kafka and send notifications over to different channels such as email, text message, PagerDuty or HTTP endpoints
 
 ### +) YAML format
+
+### +) Kafka
