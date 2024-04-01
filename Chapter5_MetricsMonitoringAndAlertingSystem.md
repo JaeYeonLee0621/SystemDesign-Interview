@@ -22,18 +22,18 @@
 
 ## Fundamentals
 
-<image: 5-Fundamenetals>
+![KakaoTalk_Photo_2024-04-01-09-44-30 001](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/5befa411-8d47-489d-96bc-519a474fef46)
 
 ## Data model
 - It is recorded as a time series that contains a set of values with their associated timestamps.
 
 example) CPU load
 
-<image: CPU load>
+![KakaoTalk_Photo_2024-04-01-09-44-30 002](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/d5c972c9-5f0c-4bc6-af75-92ee3f05b85a)
 
 ## Data access pattern
 
-<image: Data access pattern>
+![KakaoTalk_Photo_2024-04-01-09-44-30 003](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/70c19de4-ebb1-4c07-86bf-2f333a2ad9f7)
 
 - y-axis : a time series (uniquely identified by the names and labels)
 - x-axis : time
@@ -86,7 +86,7 @@ ex) 8 core, 32GB RAM > 250,000 writes per second
 
 ## High-level design
 
-<image: high-level design>
+![KakaoTalk_Photo_2024-04-01-09-44-30 004](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/c3a39d0f-1747-4289-a6ea-6de304fe505c)
 
 <br/>
 
@@ -94,7 +94,7 @@ ex) 8 core, 32GB RAM > 250,000 writes per second
 
 ## Metrics collection
 
-<image: high-level design>
+![KakaoTalk_Photo_2024-04-01-09-44-30 005](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/819ba835-85d2-49db-aeb4-740e14ef367a)
 
 - It's acceptable for occasional data loss
 
@@ -109,13 +109,13 @@ ex) Use a file to hold DNS/IP information for ever service endpoint on the "metr
 
 - etcd, ZooKeeper etc can be notified by the Service Discovery component whenever the list of service endpoints changes
 
-<image: Service Discovery>
+![KakaoTalk_Photo_2024-04-01-09-44-30 006](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/adddacb8-c886-4def-bedb-080f8c8dc9dc)
 
 ### +) etcd
 
 ### Pull Model in detail
 
-<image: Pull model in detail>
+![KakaoTalk_Photo_2024-04-01-09-44-30 007](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/4784da57-8d5e-42a3-b702-22cdfe72b525)
 
 1. The metric collector fetches configuration metadata of service endpoint from Service Discovery
 2. The metric collector pulls metrics data via a pre-defined HTTP endpoint
@@ -125,13 +125,13 @@ ex) Use a file to hold DNS/IP information for ever service endpoint on the "metr
 - A single metrics collector will not be able to handle thousands of servers
 - Designate each collector to a range in a consistent hash ring, map every single server being monitored by its unique name in the hash ring
 
-<image: Consistent Hashing>
+![KakaoTalk_Photo_2024-04-01-09-44-30 008](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/f2106fdd-23b4-4ecb-ab81-f263bc2ad0be)
 
 <br/>
 
 ## Push Model
 
-<image: Push Model>
+![KakaoTalk_Photo_2024-04-01-09-44-30 009](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/2fd14355-adfd-411b-a7e4-16d28cd72f74)
 
 - A collection agent is commonly installed on every server being monitored
 - The collection agent may also aggregate metrics logically before sending them to metric collectors
@@ -141,7 +141,7 @@ ex) Use a file to hold DNS/IP information for ever service endpoint on the "metr
 - Problem : If the servers are in an auto-scaling group, then holding data locally might result in data loss
 - Solution : The Metric collector should be in an auto-scling cluster with a load balancer in front of it
 
-<image: Load Balancer>
+![KakaoTalk_Photo_2024-04-01-09-44-30 010](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/62dfde4f-24ad-44d5-b365-00168003ea7d)
 
 <br/>
 
@@ -176,7 +176,7 @@ ex) Use a file to hold DNS/IP information for ever service endpoint on the "metr
 
 ## Scale the metrics transmission pipeline
 
-<image: Metrics transmission pipeline>
+![KakaoTalk_Photo_2024-04-01-09-44-30 011](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/d5cb8cb9-060d-4380-93be-2437df0444c6)
 
 - The metrics collector is a cluster of servers
 - The cluster receives enormous amounts of data
@@ -185,7 +185,7 @@ ex) Use a file to hold DNS/IP information for ever service endpoint on the "metr
 ### Queueing components
 - To mitigate data loss
 
-<image: Add Queue>
+![KakaoTalk_Photo_2024-04-01-09-44-31 012](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/58c43e32-8a20-4500-929d-36047186afb7)
 
 1. The metric collector sends metrics data to queueing systems like Kafka
 2. The consumers or streaming processing services push data to the time-series database
@@ -197,7 +197,7 @@ ex) Use a file to hold DNS/IP information for ever service endpoint on the "metr
 
 ### Scale through Kafka
 
-<image: Kafka partition>
+![KakaoTalk_Photo_2024-04-01-09-44-31 013](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/390579f4-5225-4d1a-aecd-e72f8ce29177)
 
 - Configure the number of partitions based on throughput requirements
 - Partition metrics data by metric names, so consumers can aggregate data by metric names
@@ -223,7 +223,7 @@ ex) Use a file to hold DNS/IP information for ever service endpoint on the "metr
 
 ## Cache Layer
 
-<image: Cache Layer>
+![KakaoTalk_Photo_2024-04-01-09-44-31 014](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/52939f0a-bd7e-4920-9d99-6273418be4e4)
 
 <br/>
 
@@ -231,7 +231,8 @@ ex) Use a file to hold DNS/IP information for ever service endpoint on the "metr
 
 ### Data Encoding and Compression
 
-<image: Data Encoding>
+![KakaoTalk_Photo_2024-04-01-09-44-31 015](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/c8a6afb3-726b-4154-b331-24a34f1a527c)
+
 
 - Just store the difference between the time, instead of the full timestamp of 32 bits
 
@@ -243,9 +244,9 @@ ex) Use a file to hold DNS/IP information for ever service endpoint on the "metr
 
 - The process of converting high-resolution data to low-resolution to reduce overall disk usage
 
-<image: 10-second resolution data>
+![KakaoTalk_Photo_2024-04-01-09-44-31 016](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/86f8ec9a-fdc2-4922-a05f-3b1aaa8f013f)
 
-<image: 30-second resolution data>
+![KakaoTalk_Photo_2024-04-01-09-44-31 017](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/99d23b63-fd7c-475d-ac9a-b56c5683d435)
 
 ### Cold storage
 - The storage of inactive data that is rarely used
@@ -257,13 +258,13 @@ ex) Use a file to hold DNS/IP information for ever service endpoint on the "metr
 
 ## Alert System
 
-<image: Alert System>
+![KakaoTalk_Photo_2024-04-01-09-44-31 018](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/ea9017f6-b430-4604-a711-30f367a9a2de)
 
 1. Load config files to cache servers. Rules are defined as configure files on the disk. (ex) YAML format)
 2. The alert manager fetches alery configs from the cache
 3. Based on config rules, the alert manager calls the query service at a predifined interval
 
-<image: Merge alerts>
+![KakaoTalk_Photo_2024-04-01-09-44-31 019](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/5c9512c9-da90-4370-9514-280ca879c7ab)
 
 - Filter, merge and dedupe alerts
 
