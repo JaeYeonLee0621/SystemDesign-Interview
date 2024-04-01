@@ -6,7 +6,7 @@
 
 ![image](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/55ca3f01-da2e-4f25-8559-45e376b89dc4)
 
-- security is vulnerable
+- Security is vulnerable
 - If someone decode the code, they easily get password
 
 <br/>
@@ -30,9 +30,9 @@
 
 ex) MD5, SHA-1, SHA-2, SHA-3 etc
 
-- MD5 : It is now considered broken and vulnerable
-- SHA-1 : It haas been found vulnerable to collision attacks and is no longer recommended for security-sensitive applications
-- SHA-256 and SHA-3 : They are currently considered secure and widely used in various security application and protocols
+- `MD5` : It is now considered broken and vulnerable
+- `SHA-1` : It haas been found vulnerable to collision attacks and is no longer recommended for security-sensitive applications
+- `SHA-256` and `SHA-3` : They are currently considered secure and widely used in various security application and protocols
 
 <br/>
 
@@ -44,7 +44,7 @@ ex) MD5, SHA-1, SHA-2, SHA-3 etc
 - Using HTTP digest Authorization Protocol, adding the Authorization-info to share the `nounce`
 
 ### Problem
-1. Dictionary Attack
+1. Dictionary Attack : Systemically entering every word in a predefined list of words or "dictionary" into the password field
 2. Man-In-The-Middle Attack : Able to be infected middle of the network
 
 ## +) Preemptive authorization
@@ -67,12 +67,22 @@ ex) MD5, SHA-1, SHA-2, SHA-3 etc
 
 - Use `Symmetric Key` And `Asymmetric Key`
 
+### Symmetric Key
+- Uses the same key for both encryption and decryption
+- AES (Advanced Encryption Standard)
+- DES (Data Encryption Standard)
+
+### Asymmetric Key
+- Utilizes a pair of keys - a public key and a private key
+- RSA (Rivest-Shamir-Adleman)
+- ECC (Clliptic Curve Cryptography)
+
 ## +) SSL VS TLS
 
-### SSL
+**SSL**
 - Early version of SSL have been deprecated due to various security vulnerabilities that cannot be fixed
 
-### TLS
+**TLS**
 - The development of TLS was driven by the need for enhanced security, compatibility and extensibility in secure communications over the internet
 - Offer stronger security features compared to SSL
 
@@ -106,6 +116,8 @@ ex) MD5, SHA-1, SHA-2, SHA-3 etc
 
 1. Using Public Key, encrypt and verify data
 2. If verificaion is success, Issue certification is completed
+
+<br/>
 
 # How browser verify the CA
 
