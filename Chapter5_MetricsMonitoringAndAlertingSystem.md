@@ -220,23 +220,21 @@ ex) Use a file to hold DNS/IP information for ever service endpoint on the "metr
 
 ![image](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/ca25e9d9-0663-44d0-8f38-f0b6e635cc8a)
 
-### +) NIC (Network Interface Card)
+**Datagram Structure** : It is a self-contained, independent packet of data that includes a header and payload
 
-![image](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/1c5911a7-e4a8-46c9-a71b-ba12114a89e7)
-
-### +) DMA (Direct Memory Access)
-
-![Untitled](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/b5644f1c-a287-42ec-97f9-3f5952370e23)
-
-**Datagram Structure**
-- It is a self-contained, independent packet of data that includes a header and payload
-
-**+) Packet**
-- It is more generic and is used to describe any enncapsulated data unit that is transmitted across a network
+**+) Packet** : It is more generic and is used to describe any enncapsulated data unit that is transmitted across a network
 
 ### Memory Use
 
 ![Untitled](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/a0bce4ac-e1cf-46f8-8aef-d7f9d375ebe7)
+
+**+) NIC (Network Interface Card)**
+
+![image](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/1c5911a7-e4a8-46c9-a71b-ba12114a89e7)
+
+**+) DMA (Direct Memory Access)**
+
+![Untitled](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/b5644f1c-a287-42ec-97f9-3f5952370e23)
 
 **Socket Buffers**
 - UDP is typically copied into a socket buffer in the kernel space. (TCP as well)
