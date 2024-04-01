@@ -60,6 +60,8 @@ ex)
 - Time-Series Data : computing the moving average in a rolling time window requires complicated SQL that is difficult to read
 - Tagging/Labeling data : Need to add inde
 
+<br/>
+
 ### +) PostgreSQL write logic
 
 **[MVCC (Multi Version Concurrency Contrl)]**
@@ -89,6 +91,8 @@ If 80%)
 
 1. Vacumm less data
 2. Reduce the WAL file size
+   
+<br/>
 
 ### NoSQL
 
