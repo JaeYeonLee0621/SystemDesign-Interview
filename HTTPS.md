@@ -18,9 +18,21 @@
 
 ## Hashing
 
+- A function that converts an input into a `fixed-sized` string of bytes
+
+- Deterministic : The same input will always result in the same output
+- Fixed Size
+- Fast Computation
+- Pre-image Resistence : Infeasible to reverse the hash back to the original input
+- Collision Resistance : It should be extremely hard to find two different inputs that produce the same output
+
 ![image](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/f1ce0763-d5a5-4df6-908e-e44ce0b47cef)
 
 ex) MD5, SHA-1, SHA-2, SHA-3 etc
+
+- MD5 : It is now considered broken and vulnerable
+- SHA-1 : It haas been found vulnerable to collision attacks and is no longer recommended for security-sensitive applications
+- SHA-256 and SHA-3 : They are currently considered secure and widely used in various security application and protocols
 
 <br/>
 
@@ -56,6 +68,13 @@ ex) MD5, SHA-1, SHA-2, SHA-3 etc
 - Use `Symmetric Key` And `Asymmetric Key`
 
 ## +) SSL VS TLS
+
+### SSL
+- Early version of SSL have been deprecated due to various security vulnerabilities that cannot be fixed
+
+### TLS
+- The development of TLS was driven by the need for enhanced security, compatibility and extensibility in secure communications over the internet
+- Offer stronger security features compared to SSL
 
 ### Digital Signature
 
