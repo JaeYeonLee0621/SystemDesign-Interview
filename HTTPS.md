@@ -40,7 +40,7 @@ ex) MD5, SHA-1, SHA-2, SHA-3 etc
 
 ![Untitled](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/b899c25e-0a86-4311-83b7-a54e5976febb)
 
-- Send the nonce which frequently change
+- Send the nonce which is frequently changed
 - Using HTTP digest Authorization Protocol, adding the Authorization-info to share the `nounce`
 
 ### Problem
