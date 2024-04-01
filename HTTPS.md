@@ -9,6 +9,8 @@
 - security is vulnerable
 - If someone decode the code, they easily get password
 
+<br/>
+
 # Diegest Authentication
 
 - Never send the raw password over network
