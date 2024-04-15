@@ -6,7 +6,7 @@
 
 ## RTB Process
 
-[Image: RTB Process]
+![KakaoTalk_Photo_2024-04-15-23-48-24 001](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/3d4bd204-5698-4a20-a44e-3e52e4cd275d)
 
 ### Important Feature
 - The speed : less than a second
@@ -34,7 +34,7 @@
 
 # Data Model
 
-[Image: Comparision]
+![KakaoTalk_Photo_2024-04-15-23-48-24 003](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/f17e6ddf-76e5-4938-bfdb-99fc87d5a26e)
 
 ## Choose the right database
 
@@ -62,7 +62,7 @@
 
 ## Aggregation Data
 
-[Image: Aggregation Workflow]
+![KakaoTalk_Photo_2024-04-15-23-48-24 004](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/0fba86a5-b6c9-4fb2-9e97-5d7ad192b600)
 
 - Time-series in nature
 - The workflow is both read and write heavy
