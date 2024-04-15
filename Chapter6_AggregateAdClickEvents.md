@@ -14,6 +14,8 @@
 
 +) Click-Through Rate (CTR), Conversion Rate (CVR)
 
+<br/>
+
 # Step 1 - Understand the Problem and Establish Design Scope
 
 ### Functional requirements
@@ -29,6 +31,8 @@
 - Peak ad click QPS = 50,000
 - 0.1KB (Single ad click event) x 1 billion (DAU) = 100GB
 - Monthly storage requirement = 100GB X 30 = around 3TB
+
+<br/>
 
 # Step 2 - Propose High-Level Design and Get Buy-In
 
@@ -92,6 +96,8 @@
 > Why we don't write the aggregated results to the database directly?
 - We need the second message queue like Kafka to achieve end-to-end exactly once semantics (atomic commit)
 
+<br/>
+
 # Aggregation Service
 
 ![KakaoTalk_Photo_2024-04-15-23-48-24 008](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/849538e3-0b9f-4912-8227-c3c321b69a2c)
@@ -118,8 +124,6 @@
 
 - Reduce aggregated results from all "Aggregation" nodes to the final results
 
-<br/>
-
 ### DAG model
 - It represents the well-known MapReduce paradigm
 - It is designed to take big data and use distributed computing to turn big data into little or regular sized data
@@ -144,6 +148,8 @@
 - Simple to understand and build
 - Can be reused to create more dimensions in the star schema
 - Accessing data based on filtering criteria is fast because the result is pre-calculated
+
+<br/>
 
 # Step 3 - Design Deep Dive
 
@@ -181,6 +187,8 @@ ex) If we discover a major bug in the aggregation service
 2. Sent to a dedicated aggregation service so that the real-time processing is not impacted by historical data reply
 3. Aggregated results are sent to the second message queue, then updated in the aggregation database
 
+<br/>
+
 # Time
 - Event time: When an ad click happens
 - Processing time : refrrs to the system time of the aggregation machine that process the click event
@@ -194,7 +202,6 @@ ex) If we discover a major bug in the aggregation service
 
 ![KakaoTalk_Photo_2024-04-15-23-48-25 018](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/d02c9c57-9bd8-4d81-8c8e-f7488a7fad66)
 ![KakaoTalk_Photo_2024-04-15-23-48-25 019](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/02e15f1d-e8fb-4908-917a-efd5c3bd8264)
-
 
 - Since data accuracy is very important, Recommend using event time for aggregation 
 
@@ -214,6 +221,8 @@ ex) If we discover a major bug in the aggregation service
 - We can argue that it is not worth the return on investment (ROI) to have a complicated design for low probability events
 - We can always correct the tiny bit of inaccuracy with end-of-day reconciliation
 
+<br/>
+
 # Aggregation Window
 - Tumbling window, Hopping window, Sliding window, Session window
 
@@ -230,6 +239,8 @@ ex) If we discover a major bug in the aggregation service
 
 - Can be an overlapping one
 - Satisfy our second use case; to get the top N most clicked ads during the last M minutes
+
+<br/>
 
 # Delivery guarantees
 
@@ -304,11 +315,11 @@ ex) If we discover a major bug in the aggregation service
 
 ### How do we increase the throughput of the aggregation service?
 
-Option 1: Allocate events with different ad_ids to different threads
+- Option 1: Allocate events with different ad_ids to different threads
 
 ![KakaoTalk_Photo_2024-04-15-23-48-26 030](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/d50815e9-bd51-48d2-b52a-d10fe2e18b18)
 
-Option 2: Deploy aggregation service nodes on resource providers like Apache Hadoop YARN (utilizing multi-processing)
+- Option 2: Deploy aggregation service nodes on resource providers like Apache Hadoop YARN (utilizing multi-processing)
 
 ## Scale the database
 - Cassandra natively support horizontal scaling in a way similar to consistent hashing
@@ -317,6 +328,8 @@ Option 2: Deploy aggregation service nodes on resource providers like Apache Had
 
 - Data is evenly distributed to every node with a proper replication factory
 - Each node saves its own part of the ring based on hashed value and also saves copies from other virtual nodes
+
+<br/>
 
 # Hotspot Issue
 
@@ -332,6 +345,7 @@ Option 2: Deploy aggregation service nodes on resource providers like Apache Had
 - Since aggregation happends in memory, when an aggregation node goes down, the aggregated result is lost as well
 
 ## Solution
+
 ### 1. Replaying data
 - from the beginning of Kayka is slow
 
@@ -342,6 +356,8 @@ Option 2: Deploy aggregation service nodes on resource providers like Apache Had
 - If one aggregation service node fails, we bring up a new node and recover data from the latest snapshot
 
 ![KakaoTalk_Photo_2024-04-15-23-48-36 004](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/b0d97aa2-520e-4e0f-9f7a-cc0751a8aafb)
+
+<br/>
 
 # Data monitoring and correctioness
 
