@@ -62,8 +62,7 @@
 - Put a cap on the size of each file (10GB)
 - Raw data could handle the file rotation when the size cap is reached
 
-+) 📝 [Colummar data format](https://www.upsolver.com/blog/the-file-format-fundamentals-of-big-data)
-
++) 📝 [Colummar data format](https://www.upsolver.com/blog/apache-parquet-why-use)
 ![2](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/6da741db-1ad5-41de-bffe-312008c07b68)
 
 ex) Apache Parquet, Amazon Redshift, Google BigQuery etc
