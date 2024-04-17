@@ -1,3 +1,6 @@
+- [👩‍💻완전히 정복하는 프로세스 vs 스레드 개념](https://inpa.tistory.com/entry/%F0%9F%91%A9%E2%80%8D%F0%9F%92%BB-%ED%94%84%EB%A1%9C%EC%84%B8%EC%8A%A4-%E2%9A%94%EF%B8%8F-%EC%93%B0%EB%A0%88%EB%93%9C-%EC%B0%A8%EC%9D%B4)
+- [🤔 스레드를 많이 쓸수록 항상 성능이 좋아질까?](https://inpa.tistory.com/entry/%F0%9F%91%A9%E2%80%8D%F0%9F%92%BB-Is-more-threads-always-better)
+
 # Program
 
 ## Static Program
@@ -78,3 +81,24 @@
 ## TCB (Thread Control Block)
 
 ![10](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/c8f60e80-834e-4612-ab80-8f2b232c0ea6)
+
+<hr/>
+
+# MultiThreading
+
+![1](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/c4fd2729-6886-4d9b-b710-461d22c08044)
+
+# Application
+
+## CPU Bound Application
+
+![2](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/8ca44025-d63a-4c0e-a147-464e383d83a0)
+
+- A CPU-bound application is one where the speed of the CPU is the primary factor determining the overall speed of the program
+- Optimal Thread Cound = Core Count + 1
+
+## I/O Bound Application
+
+![3](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/6ea8ce12-c8e4-4e40-9d0e-e204a2da90e7)
+
+- Threads can be over twice or three times more than Core Count
