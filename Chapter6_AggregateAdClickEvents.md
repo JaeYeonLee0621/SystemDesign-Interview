@@ -105,6 +105,13 @@
 - Map Reduce framework is a good option to aggregate ad click events
 - The directed acyclic graph (DAG) : The key to the DAG is to break down the system into small computing units
 
++) 📝 Map Reduce Framework
+- A programming model and processing technique designed to efficiently process large volumes of data in parallel across a distributed cluster of computers
+
++) 📝 Directed Acyclic Graph
+- Type of graph that consists of vertices (nodes) connected by difrected edges (arrows), where the edges have a directionality
+- DAG does not contain any cycles ⭐
+
 ## Map node
 
 ![KakaoTalk_Photo_2024-04-15-23-48-25 009](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/a492e8bd-d63d-403f-bffa-01c664f4b0b3)
@@ -176,6 +183,13 @@
 2. Kappa Architecture
 - Handle both real-time data processing and continous data reprocessing using a single stream processing engine
 
++) 📝 Kappa Architecture
+- Real-time data processing
+- A distributed streaming platform
+- Problems (in traditional data processing architetures, such as Lambda architecture) : seperate paths for real-time and barching processing
+- Solution : Advocating for using a single processing path for both real-time and batch data
+
+
 # Data Recalculation
 
 ![KakaoTalk_Photo_2024-04-15-23-48-25 016](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/396c1190-6b3f-45bd-af56-8c1efcc18b4e)
@@ -223,7 +237,7 @@ ex) If we discover a major bug in the aggregation service
 
 <br/>
 
-# Aggregation Window
+# [Aggregation Window](https://microsoft-bitools.blogspot.com/2016/10/azure-understanding-stream-analytics.html)
 - Tumbling window, Hopping window, Sliding window, Session window
 
 ## Tumbling Window
@@ -235,10 +249,26 @@ ex) If we discover a major bug in the aggregation service
 
 ## Sliding Window
 
-![KakaoTalk_Photo_2024-04-15-23-48-25 023](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/3f63abd4-c816-4248-9877-eaa300385167)
+![2](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/c108309b-5904-4f38-b41f-fb03085e2d44)
 
-- Can be an overlapping one
-- Satisfy our second use case; to get the top N most clicked ads during the last M minutes
+- It aggregates the values in the time window every time a new event/measurement occurs or an existing event/measurement falls out of the time window.
+
+ex) moving average
+
+## Hopping Window
+
+![1](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/9a5c3d9c-2f34-4166-b21a-88314778e629)
+
+- Window size + Hopping interval
+- Hopping interval : how often the window moves forward in time
+
+ex) Daily business report over the last seven days
+
+## [Session Window](https://learn.microsoft.com/en-us/stream-analytics-query/session-window-azure-stream-analytics)
+
+<img width="617" alt="3" src="https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/c56e19ae-17db-4130-869a-9450fedf051f">
+
+- Group events that arrive at similar times, filtering out periods of time where there is no data
 
 <br/>
 
