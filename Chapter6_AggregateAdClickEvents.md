@@ -240,11 +240,11 @@ ex) If we discover a major bug in the aggregation service
 
 ### Water Mark
 
-![KakaoTalk_Photo_2024-04-15-23-48-25 020](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/b29ee8a4-efc6-4f54-8c4c-880c998b2110)
-
 - It is commonly utilized to handle slightly delayed events
 
-![KakaoTalk_Photo_2024-04-15-23-48-25 021](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/466c0cfd-36b5-4fcc-aa75-9c7c6fcc389c)
+![Figure_1 07_B16918](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/28f7d9f2-745a-421f-b2f6-5421acb2a2ab)
+
+![Figure_1 13_B16918](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/87146c20-817c-4112-ba00-bd250583f44f)
 
 - The extended rectangular which is regarded as an extension of an aggregation window
 - Using watermark improves data accuracy but increases overall latency due to extneded wait time
