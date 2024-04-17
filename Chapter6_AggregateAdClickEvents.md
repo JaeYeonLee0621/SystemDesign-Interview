@@ -246,8 +246,20 @@ ex) If we discover a major bug in the aggregation service
 
 ![Figure_1 13_B16918](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/87146c20-817c-4112-ba00-bd250583f44f)
 
-- The extended rectangular which is regarded as an extension of an aggregation window
-- Using watermark improves data accuracy but increases overall latency due to extneded wait time
+- It represents a point in time and is used to indicate that the streaming system believes all data up to that point has been receive
+- This allows the system to proceed with processing without waiting indefinitely for late-arriving data.
+
++) 📝 [Water Mark](https://www.databricks.com/blog/feature-deep-dive-watermarking-apache-spark-structured-streaming)
+
+![image](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/7bfbb32d-a021-4e7b-89a1-3fe08ab2fbe4)
+
+- Data that has an event time of 10:53 AM which does not give the correct result
+- We need to define a watermark that will allow this logic to understand when to close the aggregate window and produce the correct aggregate result
+
+![image](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/135193f9-e972-44ca-8880-1b70752e3904)
+
+- The effect of implementing a watermark of 10 minutes
+- 
 
 <br/>
 
