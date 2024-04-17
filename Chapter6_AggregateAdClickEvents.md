@@ -238,7 +238,7 @@ ex) If we discover a major bug in the aggregation service
 
 - Since data accuracy is very important, Recommend using event time for aggregation 
 
-### Water Mark
+### WaterMark
 
 - It is commonly utilized to handle slightly delayed events
 
@@ -246,12 +246,30 @@ ex) If we discover a major bug in the aggregation service
 
 ![Figure_1 13_B16918](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/87146c20-817c-4112-ba00-bd250583f44f)
 
-- It represents a point in time and is used to indicate that the streaming system believes all data up to that point has been receive
-- This allows the system to proceed with processing without waiting indefinitely for late-arriving data.
+- watermark as a standard or guideline that helps determine when a window can be closed and processed in stream processing systems
+- This is because the watermark suggests that all data up to that point in time should have been received
+
++) 📝 Role
+- Closing a Window
+- Triggering Computation
+- Handling Late Data
+
++) 📝 Handling Late Arriving Data Strategy
+- Dropping Late Data
+- Updating Results
+- Side Outputs for Late Data : ome systems direct late data to a separate processing stream or store it for manual review
+
++) 📝 Dynamic Watermark
+- Adjusting automatically based on the actual characteristics of the incoming data
+- They typically involve algorithms that assess the event timestamps of recent data and adapt the watermark accordingly to optimize the balance between latency and completeness
+
+1. Understand Data Characteristics : Arrival Patterns, Latency Variability, Source Reliability
+2. Choose a Watermarking Strategy : Heuristic/Static Watermarks, Dynamic Watermarks
+3. Implement Watermark Logic : Event Time Tracking, Latency Thresholds, Periodic Updates
 
 <br/>
 
-- We can argue that it is not worth the return on investment (ROI) to have a complicated design for low probability events
+- We can argue that it is not worth `ROI (Return On Investment)` to have a complicated design for low probability events
 - We can always correct the tiny bit of inaccuracy with end-of-day reconciliation
 
 <br/>
