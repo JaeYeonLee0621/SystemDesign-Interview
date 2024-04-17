@@ -305,6 +305,10 @@ ex) Daily business report over the last seven days
 
 - Save the offset once we get an acknowledgment back from downstream
 
++)📝[Distributed Transaction](https://developers.redhat.com/articles/2021/09/21/distributed-transaction-patterns-microservices-compared#conclusion)
+
+- When there is a need to quickly update data that is related and spread across the multiple databses or nodes connected in a network
+
 ### Exact Only Processing
 
 ![KakaoTalk_Photo_2024-04-15-23-48-26 027](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/575d33e2-60b0-4284-b001-60c3b14b955a)
