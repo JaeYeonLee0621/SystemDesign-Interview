@@ -62,6 +62,25 @@
 - Put a cap on the size of each file (10GB)
 - Raw data could handle the file rotation when the size cap is reached
 
++) 📝 [Colummar data format](https://www.upsolver.com/blog/the-file-format-fundamentals-of-big-data)
+
+![2](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/6da741db-1ad5-41de-bffe-312008c07b68)
+
+ex) Apache Parquet, Amazon Redshift, Google BigQuery etc
+
+![1](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/a2e277c7-88c8-4aa3-8d10-94d8e1d29cf1)
+
+**[Advantages]**
+
+1. Data Homogeneity : each column holds data for the same type
+2. Improved compression techniques
+- Dictionary engocindg : Replacing repeated values with a smaller reference to an entry in a dictionary table
+- Run Length Encoding : If a column contains many consecutive instances of the same value, RLE stores the value once along with the count of how many times it occurs
+
+3. Reduced I/O for Queries
+- If a query only involves a few columns our of a large set
+
+
 <br/>
 
 ## Aggregation Data
