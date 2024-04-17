@@ -74,7 +74,7 @@ ex) Apache Parquet, Amazon Redshift, Google BigQuery etc
 
 1. Data Homogeneity : each column holds data for the same type
 2. Improved compression techniques
-- Dictionary engocindg : Replacing repeated values with a smaller reference to an entry in a dictionary table
+- Dictionary encoding : Replacing repeated values with a smaller reference to an entry in a dictionary table
 - Run Length Encoding : If a column contains many consecutive instances of the same value, RLE stores the value once along with the count of how many times it occurs
 
 3. Reduced I/O for Queries
