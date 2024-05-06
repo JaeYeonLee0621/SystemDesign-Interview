@@ -475,7 +475,7 @@ v=spf1 ip4:192.0.2.0/24 include:spf.example.com -all
 - include : also check the domain
 - all : accept emails that don't match any of the authorized sources but to treat them with suspicion
 
-### DomainKeys Identified Kail (DKIM)
+### DomainKeys Identified Mail (DKIM)
 
 ![13](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/91e128c2-3e10-4a5e-a2b1-ea8d901c6451)
 
