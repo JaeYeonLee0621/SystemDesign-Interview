@@ -55,7 +55,8 @@ ex) Microsoft Outlook
 ## Domain name service (DNS)
 - It is used to look up the mail exchanger record (MX record) for receipient's domain
 
-[Image: 1]
+![KakaoTalk_Photo_2024-05-06-12-52-40 001](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/862e2eae-d4c8-4d35-99c5-dab443373b6f)
+
 
 ### The priority numbers
 - Preferences where the mail server with a lower priority numbers is more preferred
@@ -69,7 +70,7 @@ ex) Microsoft Outlook
 
 ### Side note: Tranditional mail servers architecture
 
-[Image: 2]
+![KakaoTalk_Photo_2024-05-06-12-52-40 002](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/19cd1d36-3c4f-497e-914f-99c680809aeb)
 
 ## Storage
 - Each email was stored in a seperate file with a unique name
@@ -77,14 +78,14 @@ ex) Microsoft Outlook
 
 ### Maildir
 
-[Image: 3]
+![KakaoTalk_Photo_2024-05-06-12-52-40 003](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/213b3834-410c-4d2e-bb5c-752ab91d71c9)
 
 - As the email volume grew and the file structure became more complex, disk I/O became a bottleneck
 - The local directories also don't satisfy our high avilability and reliabiltiy requirements
 
 ## Distributed mail server architecture
 
-[Image: 4]
+![KakaoTalk_Photo_2024-05-06-12-52-40 004](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/1c10f05c-dd79-4328-b631-f38cc3e05045)
 
 ### Webmail
 - Users use web browsers to receive and send emails
@@ -125,7 +126,7 @@ ex) Microsoft Outlook
 
 ## Email sending flow
 
-[Image: 5]
+![KakaoTalk_Photo_2024-05-06-12-52-41 005](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/43aae2b3-e390-424a-b842-ca4511f3c56b)
 
 ### Basic email validation
 - Each incoming email is checked against pre-defined rules such as email size limit
@@ -144,7 +145,7 @@ ex) Microsoft Outlook
 
 ## Email receiving Flow
 
-[Image: 6]
+![KakaoTalk_Photo_2024-05-06-12-52-41 006](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/0b5874e0-e2be-4a6d-8e3e-5fe93dcab23f)
 
 ### Email Acceptance policy
 - It can be configured and applied at the SMTP-connection level
@@ -235,7 +236,7 @@ ex) user_id, folder_id / email_id (TIMEUUID)
 - This allows uesrs to retrieve all emails associated with one conversation
 - Traditionally : a thread is implemented using algorithms such as JWZ algorithm
 
-[Image: 7]
+![KakaoTalk_Photo_2024-05-06-12-52-41 007](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/13629d07-4ab9-49b8-bae1-628bdbd2ec76)
 
 ## Email deliverability
 - The hard part its to get emails actually delivered to a user's inbox
@@ -269,7 +270,7 @@ ex) According to Amazon Simple Email Service, it takes about 2 to 6 weeks to war
 2. Soft bounce : It indicates an email failed to deliver due to temporary condidions, such as ISPs being too busy
 3. Complaint : A recipient clicks the "report spam" button
 
-[Image: 8]
+![KakaoTalk_Photo_2024-05-06-12-52-41 008](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/54a812f1-18de-4c55-8511-848e67acaa92)
 
 ### Email authentication
 - Some of the common techniques to combat phishing are :
@@ -278,7 +279,7 @@ ex) According to Amazon Simple Email Service, it takes about 2 to 6 weeks to war
 2. DomainKeys Identified Kail (DKIM)
 3. Domain-based Message Authentication, Reporting and Conformance (DMARC)
 
-[Image : 9]
+![KakaoTalk_Photo_2024-05-06-12-52-41 009](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/51de3949-f358-4e2b-9e18-8e54d4c76abc)
 
 ### Search
 - Searching for emails that contains any of the entered keywords in the subject or body
@@ -287,7 +288,7 @@ ex) According to Amazon Simple Email Service, it takes about 2 to 6 weeks to war
 `Option 1 : EalsticSearch`
 - We can group underlying documents to the same nodes using user_id as the partition key
 
-[Image : 10]
+![KakaoTalk_Photo_2024-05-06-12-52-41 010](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/b2205d98-08ca-462c-a360-69f1c5ad86a1)
 
 - A search request is synchronous
 - Reindexing is needed and it can be done with offline jobs
@@ -298,7 +299,7 @@ ex) According to Amazon Simple Email Service, it takes about 2 to 6 weeks to war
 - The main bottleneck of the index server is usually disk I/O
 - Since the process of building the index is write-heavy, a good strategy might be to use Log-Structure Merge-Tree (LSM)
 
-[Image: 11]
+![KakaoTalk_Photo_2024-05-06-12-54-56](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/41038ab5-45c7-43ad-91c8-209f7fc6a0ca)
 
 - The write path is optimized by only performing sequential writes
 - LSM trees are the core data structure behind databases such as BigTable, Cassamdra and RocksDB
@@ -314,4 +315,4 @@ Email data : don't change
 - Replicated across multiple data centers
 - User communicate with a mail server that is physically closer to them in the network topology
 
-[Image: 12]
+![KakaoTalk_Photo_2024-05-06-12-52-46](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/24548713-9146-4409-86d5-55fd0a39116b)
