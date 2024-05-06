@@ -57,17 +57,32 @@ X-Mailer: ExampleMailer v1.0
 
 - SMTP servers are made up of 2 key components
 
-1. Mail Transfer Agents (MTAs)
+1. Mail Transfer Agents (MTAs) = mail server
 - The trasfer of emails between servers, MTAs ensure that your messages reach their intended recipients
+- Comonly using SMTP for transferring mails between mail servers
 
 2. Mail Delivery Agents (MDAs)
 - MDAs play a complementary role to MTAs in the email delivery process
-- MDAs deliver emails to the recipient's mailbox
+- Using POP and Imap to retrieve emails from a mail server and deliver them to a recipient's mailbox
 
 <br/>
 
-- SMTP authentication : security measure that helps prevent spoofing and spamming
+### SMTP authentication 
+- security measure that helps prevent spoofing and spamming
 - SASL (Simple Authentication and Security Layer)
+- Users who want to send emails through an SMTP server are required to provide authentication credentical such as a username and password
+- 
+
+
+<br/>
+
+**+) ESP (Email Service Provider) **
+
+- A company or organization that offers email-related services, tools and infrastructure to businesses, organizations and individuals
+- Offering platforms and tools for creating, sending and managing email campaigns
+
++) Different from mail server
+- mail server is a computer server responsible for sending, receiving and storing email messages
 
 ## Retrieving Emails
 
