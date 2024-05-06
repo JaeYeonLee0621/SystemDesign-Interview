@@ -428,14 +428,14 @@ ex) According to Amazon Simple Email Service, it takes about 2 to 6 weeks to war
 
 - Some of the common techniques to combat phishing are 
 
-`Sender Policy Framework (SPF)`
+### Sender Policy Framework (SPF)
 
 ![12](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/7db66336-5cb6-47f8-bd78-face5136add6)
 
 - Allowing domain owners to specify which mail servers are authorized to send emails on behalf of their domain
 - When the email is received, the recipient's mail server checks the SPF record of the sender's domain to verify that the sending email server is authorized to send emails on behalf of that domain
 
-`DomainKeys Identified Kail (DKIM)`
+### DomainKeys Identified Kail (DKIM)
 
 ![13](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/91e128c2-3e10-4a5e-a2b1-ea8d901c6451)
 
@@ -444,7 +444,7 @@ ex) According to Amazon Simple Email Service, it takes about 2 to 6 weeks to war
 - When sending an email, the sender's mail server signs the email using the private key and adds a DKIM signature header to the message
 - Upon receiving the emails, the recipient's mail server retrieves the DKIM signature from the mssage header and uses the public key published in the DNS record to verify the signature
 
-`Domain-based Message Authentication, Reporting and Conformance (DMARC)`
+### Domain-based Message Authentication, Reporting and Conformance (DMARC)
 
 ![14](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/9fa08f87-69c3-4733-9e05-779b832cd7c4)
 
