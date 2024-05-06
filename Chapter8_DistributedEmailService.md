@@ -432,8 +432,17 @@ ex) According to Amazon Simple Email Service, it takes about 2 to 6 weeks to war
 
 ![12](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/7db66336-5cb6-47f8-bd78-face5136add6)
 
-- Allowing domain owners to specify which mail servers are authorized to send emails on behalf of their domain
-- When the email is received, the recipient's mail server checks the SPF record of the sender's domain to verify that the sending email server is authorized to send emails on behalf of that domain
+- SPF verifies the sending mail server's IP address.
+- It specifies which IP addresses are allowed to send emails on behalf of a particular domain
+- When an email is receivedm the recipient's email server can check the SPF record of the sender's domain to verify if the email came from an authorized server
+
+```cmd
+v=spf1 ip4:192.0.2.0/24 include:spf.example.com -all
+```
+- ipv4 : allowing emails to be sent from the IPv4 address range
+- include : also check the domain
+- all : accept emails that don't match any of the authorized sources but to treat them with suspicion
+- 
 
 ### DomainKeys Identified Kail (DKIM)
 
