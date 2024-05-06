@@ -432,24 +432,29 @@ ex) According to Amazon Simple Email Service, it takes about 2 to 6 weeks to war
 
 ![12](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/7db66336-5cb6-47f8-bd78-face5136add6)
 
-- SPF verifies the sending mail server's IP address.
-- It specifies which IP addresses are allowed to send emails on behalf of a particular domain
-- When an email is receivedm the recipient's email server can check the SPF record of the sender's domain to verify if the email came from an authorized server
+- Verifying whether the mail server sending an email is authorized to send emails on behalf of a specific domain
+- When an email is received the recipient's email server can check the SPF record of the sender's domain to verify if the email came from an authorized server
 
 ```cmd
 v=spf1 ip4:192.0.2.0/24 include:spf.example.com -all
 ```
+
 - ipv4 : allowing emails to be sent from the IPv4 address range
 - include : also check the domain
 - all : accept emails that don't match any of the authorized sources but to treat them with suspicion
-- 
 
 ### DomainKeys Identified Kail (DKIM)
 
 ![13](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/91e128c2-3e10-4a5e-a2b1-ea8d901c6451)
 
+```cmd
+selector1._domainkey.example.com. IN TXT "DKIM key for selector1"
+selector2._domainkey.example.com. IN TXT "DKIM key for selector2"
+```
+
 - Digitally signing email messages to verify their authenticity and integrity
 - The domain owner generates a public-private key pair and publishes the public key in a DNS TXT recrod
+- public key > DMS TXT record / private key > mail server
 - When sending an email, the sender's mail server signs the email using the private key and adds a DKIM signature header to the message
 - Upon receiving the emails, the recipient's mail server retrieves the DKIM signature from the mssage header and uses the public key published in the DNS record to verify the signature
 
