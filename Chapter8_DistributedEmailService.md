@@ -49,6 +49,8 @@ X-Mailer: ExampleMailer v1.0
 
 ### [SMTP (Simple Mail Transfer Protocol)](https://www.afternerd.com/blog/smtp/)
 
+- Layer 7
+
 +) [What is SMTP Server? An In-Depth Guide to Email Delivery in 2023](https://www.ranktracker.com/blog/what-is-smtp-server-an-in-depth-guide-to-email-delivery-in-2023/)
 
 - Standard protocol for sending emails from one mail server to another
@@ -71,8 +73,17 @@ X-Mailer: ExampleMailer v1.0
 - security measure that helps prevent spoofing and spamming
 - SASL (Simple Authentication and Security Layer)
 - Users who want to send emails through an SMTP server are required to provide authentication credentical such as a username and password
-- 
 
+ex) XOAUTH/XOAUTH2
+- It is a basic authentication mechnism in mail servers
+- It is based on OAuth signatures to authenticate users
+
+```cmd
+S: 250-AUTH LOGIN PLAIN XOAUTH XOAUTH2
+C: AUTH XOAUTH2 dXNlcj1zb21ldXNlckBleGFtcGxlLmNvbQFhdXRoPUJlY
+XJlciB5YTI5LnZGOWRmdDRxbVNSbGNrQJoZG1semRHRXVZMjl0Q2cBAQ==
+S: 235 Accepted
+```
 
 <br/>
 
@@ -88,11 +99,13 @@ X-Mailer: ExampleMailer v1.0
 
 ### POP (Post Office Protocol)
 
+- Layer 7
 - [RFC 1939](https://www.ietf.org/rfc/rfc1939.txt)
 - Once emails are `downloaded to your computer or phone`, they are deleted from the email server, which means you can `only access emails on one computer or phone`
 
 ### IMAP (Internet Mail Access Protocol)
 
+- Layer 7
 - [RFC 3501](https://datatracker.ietf.org/doc/html/rfc3501)
 - It only downloads a message when you click it and emails are not deleted from mail servers
 - You can `access emails from multiple devices`
