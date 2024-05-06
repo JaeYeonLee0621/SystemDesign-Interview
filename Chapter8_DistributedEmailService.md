@@ -538,3 +538,31 @@ Email data : don't change
 - User communicate with a mail server that is physically closer to them in the network topology
 
 ![KakaoTalk_Photo_2024-05-06-12-52-46](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/24548713-9146-4409-86d5-55fd0a39116b)
+
+---
+
+# Organizing the terminology
+
+## Sending Emails
+- Use SMTP (Simple Mail Transfer Protocol)
+- SMTP authentication : exchange emails between mail servers
+
++) ESP (Email Service Provider) : offering platforms and tools
+
+## Verifying IPs (ISP)
+- Dedicated IPs
+- Classift emails
+- Warm-up email sending slowly
+
+## Verfying Emails (DNS)
+- SPF (Sender Policy Framework) : SPF record (define IPs, domain name)
+- DKIM (DomainKeys Identified Mail) : TXT record (public key)
+- DMARC (Domain-based Message Authentication, Reporting and Conformance) : additional Domain level verification
+
+## Receiving Emails
+- POP (Post Office Protocol) : download emails, retrieve only at once 
+- IMAP (Internet Mail Access Protocol) : retrieve evertime, everywhere
+- Web Socket : real-time notifiying emails
+
+## Database
+- Sharding, Partitioning, Clustering
