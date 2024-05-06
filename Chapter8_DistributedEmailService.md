@@ -45,6 +45,8 @@ X-Mailer: ExampleMailer v1.0
 
 ![1](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/f933fb84-2cc2-43c9-b042-a60f21df002d)
 
+<br/>
+
 ## Sending Emails
 
 ### [SMTP (Simple Mail Transfer Protocol)](https://www.afternerd.com/blog/smtp/)
@@ -250,6 +252,8 @@ Authoritative answers can be found from:
 
 - The recipent's mail server is unavailable : In this case, we need to retry sending the email at a later time
 - Not enough consumers to send emails : We may need more consumers to reduce the processing time
+
+<br/>
 
 ## Email receiving Flow
 
