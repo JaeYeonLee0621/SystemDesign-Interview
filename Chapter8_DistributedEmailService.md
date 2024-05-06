@@ -89,7 +89,7 @@ S: 235 Accepted
 
 <br/>
 
-**+) ESP (Email Service Provider) **
+**+) ESP (Email Service Provider)**
 
 - A company or organization that offers email-related services, tools and infrastructure to businesses, organizations and individuals
 - Offering platforms and tools for creating, sending and managing email campaigns
