@@ -541,6 +541,70 @@ Email data : don't change
 
 ---
 
+## The Limitations of Traditional Storage
+
+- As data grows, B-trees encounter challenges that impact voth performance and efficiency
+- When updates or inserts occur, B-tree need to rewrite entire blocks of data, leading to substantial write amplification
+
+# [LSM (Log Structured Merge)](https://medium.com/@mndpsngh21/understanding-the-log-structured-merge-lsm-tree-a-deep-dive-into-efficient-data-storage-d7ef3a7562ba)
+
+- LSM Tree uses an append-only approach
+- Incoming data is first written to an in-memory structure known aas the `MemTable`
+- This enables lightning-fast write operations, as data is placed in memory without the need for disk access
+
+## Structure of LSM Tree
+
+[Image: 1]
+
+### MemTable
+- As a temprary sorting area for data
+- As it fills up it contents are flushed to disk in a batch of sorted data structures called Sorted String Tables (SSTables)
+
+### Sorted String Tables (SSTables) :star:
+- They store data in sorted order, enabling efficient queries and range scans
+- Each SSTable represents a snapshot of data at a specific point in time
+
+### Levels
+- To manage data efficiently, SSTables are organized into levels
+- Lower levels contain more recent data, while higher levels store compacted data
+- This hierarchical approach balanced read and write performance, preventing bottlenecks
+
+## Write Path and Compaction
+- Multiple SSTables accumulate, Compaction, a vital feature of the LSM Tree, merges these SSTables, removing duplicates and outdated entries
+
+## Read Path and Bloom Filters
+- Bloom Filter : A space efficient data structure that quickly dtermines whether a key might exist in an SSTable
+- If Bloom Filter indicates a possible match, the LSM Tree fetches the SSTable containing the desired data
+
+# [Bloom Filter](https://www.spiceworks.com/tech/big-data/articles/what-is-a-bloom-filter/#:~:text=Bloom%20filter%20is%20a%20data,Insertion%2C%20Lookup%2C%20and%20Search%20Result)
+
+- It is a data structure used to check whether an element is most definitely not in a dataset by using one or more hashing functions and an array of bbits
+
+[Image: 2]
+
+- Inserting the hash value into an array of a fixed size and "remembers" that the hash value is entered
+
+## Procedure
+
+1. Accept the input
+2. Calculate the hash value
+ex) Jhon Doe > 1355
+3. Mod the hash by the array length
+ex) 1355 % 19 = 6
+4. Insert the hash
+ex) the sixth position in the array goes from 0 to 1
+5. Search for the value (i.e. lookup)
+
+## False positives
+- Yeidling an outcome wherein the value of the key is not present in the array
+- Looking for an element that does not exist can return an incorrect result
+- When a hashing algorithm generates an identical hash value for two different data elements.
+- Multiple hash functions can be used to minimize the collision rate. 
+- Instead of setting a single bit for a single input, several bits are set. 
+- However, this can slow down the algorithm.
+
+---
+
 # Organizing the terminology
 
 ## Sending Emails
