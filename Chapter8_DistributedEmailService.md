@@ -63,13 +63,15 @@ X-Mailer: ExampleMailer v1.0
 
 ![image](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/95259cd6-f430-4739-8d02-78e39a4979ca)
 
-1. Mail Transfer Agents (MTAs) = mail server
+### Mail Transfer Agents (MTAs) = mail server
 - The trasfer of emails between servers, MTAs ensure that your messages reach their intended recipients
 - Comonly using SMTP for transferring mails between mail servers
 
-2. Mail Delivery Agents (MDAs)
+### Mail Delivery Agents (MDAs)
 - MDAs play a complementary role to MTAs in the email delivery process
 - Using POP and Imap to retrieve emails from a mail server and deliver them to a recipient's mailbox
+
+<br/>
 
 ## SMTP authentication 
 - security measure that helps prevent spoofing and spamming
@@ -127,7 +129,7 @@ ex) Microsoft Outlook
 - It is used to look up the mail exchanger record (MX record) for receipient's domain
 
 ```cmd
- nslookup
+ nslookup # DNS lookup
 > set q=MX
 > gmail.com
 Server:		210.220.163.82
@@ -144,19 +146,20 @@ Authoritative answers can be found from:
 ```
 
 - `# 53 = port 53` is indeed the standard port for DNS traffic
-- `100.100.100.100` is indeed the IP address of the DNS server, but dummy value for demonstration or educational purpose
 
 ## DNS IP
 
 <img width="655" alt="3" src="https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/a0520773-ce75-499f-88df-6b3c9aca7ef8">
 
-- DNS servers can be configured manually or obtained automatically from a DHCP server
+- DNS servers can be configured manually or obtained automatically from a DHCP (Dynamic Host Configuration Protocol) server
 
 ## The priority numbers
 
-- Preferences where the mail server with a lower priority numbers is more preferred
+- Preferences where the mail server with `a lower priority numbers is more preferred`
 - A sending mail server will attempt to connect and send messages to this mail server first
 - If the connection fails, the sending mail server will attempt to connect to the mail server with the next lowest priority
+
+<br/>
 
 # Attachment
 
@@ -165,8 +168,7 @@ Authoritative answers can be found from:
 ![5](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/f23c8fe4-76f9-4661-8c07-3eacd0627d0e)
 
 - A size limit for an email attachment is highly configurable and varies from individual to corporate accounts
-- Multipurpose Internet Mail Extension (MIME) is a specification that allows the attachment to be sent over the internet
-- [ISO-8859-1](https://en.wikipedia.org/wiki/ISO/IEC_8859-1)
+- `Multipurpose Internet Mail Extension (MIME)` is a specification that allows the attachment to be sent over the internet ([ISO-8859-1](https://en.wikipedia.org/wiki/ISO/IEC_8859-1))
 
 <br/>
 
@@ -174,42 +176,53 @@ Authoritative answers can be found from:
 
 ![KakaoTalk_Photo_2024-05-06-12-52-40 002](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/19cd1d36-3c4f-497e-914f-99c680809aeb)
 
-# Storage
+
+### Storage
 
 - Each email was stored in a seperate file with a unique name
 - Each user maintained a user directory to store configuration data and mailboxes
-
-## Maildir
 
 ![KakaoTalk_Photo_2024-05-06-12-52-40 003](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/213b3834-410c-4d2e-bb5c-752ab91d71c9)
 
 - As the email volume grew and the file structure became more complex, disk I/O became a bottleneck
 - The local directories also don't satisfy our high avilability and reliabiltiy requirements
 
+<br/>
+
 # Distributed mail server architecture
 
 ![KakaoTalk_Photo_2024-05-06-12-52-40 004](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/1c10f05c-dd79-4328-b631-f38cc3e05045)
 
+<br/>
+
 ## Webmail
 - Users use web browsers to receive and send emails
 
+<br/>
+
 ## Web servers
 - Web servers are public-facing request/response services/API, used to manage features
+
+<br/>
 
 ## Real-time servers
 - It is responsible for pushing new email updates to clients in real-time
 - These are stateful servers because they need to maintain persistent connections
 
-### Websocket
+### [Websocket](https://github.com/JaeYeonLee0621/a-mixed-knowledge/blob/master/Chapter2_NearbyFriends.md#websocket-servers)
 - advantage : elegant solution / drawback : browser compatibility
 - To relieve the drawback, establishing a Websocket connection whenever possible and to use long-polling as a fallback
+
+<br/>
 
 ## Metadata database
 - The database stores mail metadata including mail subject, body, from users etc
 
+<br/>
+
 ## Attachment store
 
-`Amazon Simple Storage Service (S3)`
+### Amazon Simple Storage Service (S3)
 - It is a scalable storage infrastructure that's suitable for storing large files
 
 ### NoSQL
@@ -220,15 +233,21 @@ Authoritative answers can be found from:
 - Cassandra supports blob data type and its maximum theoretical size for a blob is 2 GB, `The practical limit is less than 1MB`
 - We can't use a row cache as attachments take `too much memory space`
 
+<br/>
+
 ## Distributed cache
 - Since the most recent emails are repeatedly loaded by a client, caching recent emails in memory significantly improves the load time
 - using `Redis` because it offers rich features such as lists and it is easy to scale
 
+<br/>
+
 ## Search store
 - The search store is a distributed document store
-- Inverted index that supports very fast full text searches
+- `Inverted index` that supports very fast full text searches
 
 ![7](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/6cb868cb-b181-4257-8f3b-4a03862ecfc3)
+
+<br/><hr/><br/>
 
 # Email sending flow
 
@@ -248,12 +267,12 @@ Authoritative answers can be found from:
 - A distributed message queue is a critical component that allows asynchronous mail processing
 - By decoupling SMTP outgoing workers from the web servers, we can scale SMTP outgoing workers independently
 
-## Monitoring the size of the outgoing queue
+### Monitoring the size of the outgoing queue
 
 - The recipent's mail server is unavailable : In this case, we need to retry sending the email at a later time
 - Not enough consumers to send emails : We may need more consumers to reduce the processing time
 
-<br/>
+<br/><hr/><br/>
 
 # Email receiving Flow
 
@@ -269,15 +288,15 @@ ex) Invalid emails are bounced to avoid unnecessary email processing
 
 - If the attachement of an email is too large to put into the queue, we can put it into the `attachment store (S3)`
 
-## Online/Offline
+## Push Notification
 
-If the receiver is currently `online`
-- the email is pushed to real-time servers
-- Real-time servers are WebSocket servers that allow clients to receive new emails in real-time
+### Online users
+- The email is pushed to real-time servers
+- Real-time servers are `WebSocket servers` that allow clients to receive new emails in real-time
 
-For `offline` users
-- emails are stored in the storage layer. 
-- When a user comes back online, the webmail client connects to web servers via RESTful API
+### Offline users
+- Emails are stored in the storage layer.
+- When a user comes back online, the webmail client connects to web servers via `RESTful API`
 - Web servers pull new emails from the storage layer and return them to the client
 
 <br/><hr/><br/>
@@ -288,8 +307,8 @@ For `offline` users
 
 ## Characteristics of email metadata
 
-- Email headers are usually small and frequently accessed
-- Email body sizes can range from small to big but are infrequently accessed. `You normally only read an email once.`
+- Email headers : usually small and frequently accessed
+- Email body sizes : can range from small to big but are infrequently accessed. `You normally only read an email once.`
 - Mails owned by a user are only accessible by that users and all the mail operations are performed by the same user
 - `Data recency impacts data usage` : 82% of read queries are for data younger than 16 days
 
@@ -328,6 +347,8 @@ For `offline` users
 
 ### CONS
 - Bigtable is not opensourced an how email search is implemented remains a mystery
+
+<br/>
 
 # Data model
 
@@ -399,6 +420,8 @@ ex) user_id, folder_id / email_id (TIMEUUID)
 - client-Side Threading
 - Hybrid Approaches
 
+<br/>
+
 # Email deliverability
 
 - The hard part its to get emails actually delivered to a user's inbox
@@ -408,18 +431,20 @@ ex) user_id, folder_id / email_id (TIMEUUID)
 ## Dedicated IPs
 
 - Dedicated IP addresses for sending emails
-- Email providers are less liekly to accept emails from new IP addresses that have no history
+- Email providers are less liekly to accept emails from `new IP addresses that have no history`
 
 ## Classify emails
 
 - Send different categories of emails from different IP addresses
 
-ex) avoiding sending marketing and important emails from the same servers because it might make ISPs mark all emails as promotional
+ex) Avoiding sending marketing and important emails from the same servers because it might make ISPs mark all emails as promotional
 
 ## Warm-up email sending slowly
 
 - Warm-up new IP addresses to build a reputation with providers
+
 ex) According to Amazon Simple Email Service, it takes about 2 to 6 weeks to warm up a new IP address
+
 - ISPs closly monitor the sending behavior from the new IP address
 
 ### +) Internet Service Provider (ISPs)
@@ -456,7 +481,9 @@ ex) According to Amazon Simple Email Service, it takes about 2 to 6 weeks to war
 
 ![KakaoTalk_Photo_2024-05-06-12-52-41 008](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/54a812f1-18de-4c55-8511-848e67acaa92)
 
-## Email authentication
+<br/>
+
+# Email authentication
 
 ![KakaoTalk_Photo_2024-05-06-12-52-41 009](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/51de3949-f358-4e2b-9e18-8e54d4c76abc)
 
@@ -500,12 +527,14 @@ selector2._domainkey.example.com. IN TXT "DKIM key for selector2"
 - Domain owners can specify policies for how their emails should be handled if they fail SPF or DKIM checks
 - DMARC also allows domain owners to specify where to send aggregate and forensic reports detailing email authentication results 
 
-## Search
+<br/>
+
+# Search
 
 - Searching for emails that contains any of the entered keywords in the subject or body
 - The search features in email systems has a lot more writes than reads
 
-### Option 1 : EalsticSearch
+## Option 1 : EalsticSearch
 
 ![8](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/d457a44a-8dce-47a3-913f-785c84ebd16b)
 
@@ -518,7 +547,7 @@ selector2._domainkey.example.com. IN TXT "DKIM key for selector2"
 - Kafka is used in the design to decouple services that trigger reindexing from services that actually perform reindexing
 - One challenge of adding Elasticsearch is to keep out primary email store in synch with it
 
-### Option 2: Custom Search Solution
+## Option 2: Custom Search Solution
 
 - The main bottleneck of the index server is usually disk I/O
 - Since the process of building the index is write-heavy, a good strategy might be to use Log-Structure Merge-Tree (LSM)
@@ -535,11 +564,15 @@ Email data : don't change
 
 > A general rule of thumb is that for a smaller scale email system, Elastic search is a good option
 
+<br/>
+
 # Scalability and availability
 - Replicated across multiple data centers
 - User communicate with a mail server that is physically closer to them in the network topology
 
 ![KakaoTalk_Photo_2024-05-06-12-52-46](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/24548713-9146-4409-86d5-55fd0a39116b)
+
+<br/>
 
 # The Limitations of Traditional Storage
 
