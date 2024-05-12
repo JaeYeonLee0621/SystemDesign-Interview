@@ -493,8 +493,8 @@ ex) According to Amazon Simple Email Service, it takes about 2 to 6 weeks to war
 
 ![12](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/7db66336-5cb6-47f8-bd78-face5136add6)
 
-- Verifying whether the mail server sending an email is authorized to send emails on behalf of a specific domain
-- When an email is received the recipient's email server can check the SPF record of the sender's domain to verify if the email came from an authorized server
+1. When an email is received, the recipient's email server performs a DNS query to retrieve the SPF (Sender Policy Framework) record for the sender's domain.
+2. The recipient's email server then compares the IP address of the sender's mail server with the list of authorized IP addresses or domains specified in the SPF record.
 
 ```cmd
 v=spf1 ip4:192.0.2.0/24 include:spf.example.com -all
@@ -513,19 +513,26 @@ selector1._domainkey.example.com. IN TXT "DKIM key for selector1"
 selector2._domainkey.example.com. IN TXT "DKIM key for selector2"
 ```
 
-- Digitally signing email messages to verify their authenticity and integrity
-- The domain owner generates a public-private key pair and publishes the public key in a DNS TXT recrod
-- public key > DMS TXT record / private key > mail server
-- When sending an email, the sender's mail server signs the email using the private key and adds a DKIM signature header to the message
-- Upon receiving the emails, the recipient's mail server retrieves the DKIM signature from the mssage header and uses the public key published in the DNS record to verify the signature
+1. When an email is sent from a domain that has DKIM enabled, the sending email server adds a digital signature to the email header. 
+2. The sending domain publishes a public key in its DNS records. (DNS TXT recrod)
+3. Using the public key obtained from the DNS query, the recipient's mail server decrypts the DKIM signature included in the email header. 
 
 ## Domain-based Message Authentication, Reporting and Conformance (DMARC)
 
 ![14](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/9fa08f87-69c3-4733-9e05-779b832cd7c4)
 
-- It builds upon SPF and DKIM to provide additional controls and reporting capabilities for email authnetication
-- Domain owners can specify policies for how their emails should be handled if they fail SPF or DKIM checks
-- DMARC also allows domain owners to specify where to send aggregate and forensic reports detailing email authentication results 
+```
+_dmarc.example.com.    IN    TXT    "v=DMARC1; p=quarantine; rua=mailto:dmarc@example.com;"
+```
+
+1. The domain owner publishes a DMARC policy in the DNS records for their domain.
+2. When an email is received by a recipient's email server, the server checks the DMARC policy specified in the email header.
+
+### Policy Type
+- It specifies how receiving email servers should handle emails that fail DMARC checks.
+- `none` : No action
+- `quarantine` : Emails that fail DMARC checks are treated as suspicious and may be delivered to the recipient's spam or quarantine folder
+- `reject` : Emails that fail DMARC checks are rejected outright, preventing them from reaching the recipient's inbox
 
 <br/>
 
@@ -534,7 +541,7 @@ selector2._domainkey.example.com. IN TXT "DKIM key for selector2"
 - Searching for emails that contains any of the entered keywords in the subject or body
 - The search features in email systems has a lot more writes than reads
 
-## Option 1 : EalsticSearch
+## Option 1 : Elastic Search
 
 ![8](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/d457a44a-8dce-47a3-913f-785c84ebd16b)
 
@@ -542,7 +549,7 @@ selector2._domainkey.example.com. IN TXT "DKIM key for selector2"
 
 ![KakaoTalk_Photo_2024-05-06-12-52-41 010](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/b2205d98-08ca-462c-a360-69f1c5ad86a1)
 
-- A search request is synchronous
+- A search request is `synchronous`
 - Reindexing is needed and it can be done with offline jobs
 - Kafka is used in the design to decouple services that trigger reindexing from services that actually perform reindexing
 - One challenge of adding Elasticsearch is to keep out primary email store in synch with it
@@ -550,41 +557,31 @@ selector2._domainkey.example.com. IN TXT "DKIM key for selector2"
 ## Option 2: Custom Search Solution
 
 - The main bottleneck of the index server is usually disk I/O
-- Since the process of building the index is write-heavy, a good strategy might be to use Log-Structure Merge-Tree (LSM)
+- Since the process of building the index is `write-heavy`, a good strategy might be to use `Log-Structure Merge-Tree (LSM)`
 
 ![KakaoTalk_Photo_2024-05-06-12-54-56](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/41038ab5-45c7-43ad-91c8-209f7fc6a0ca)
 
-- The write path is optimized by only performing sequential writes
-- LSM trees are the core data structure behind databases such as BigTable, Cassamdra and RocksDB
-- When a new email arrives, it is first added to level 0 in memory cache, and when data size in memory reaches the predefined threshold, data is merged to the next level
-- LSM is to seperate data that change frequently from those that don;t
-
-ex) Folder metadata : change more often due to different filter rules
-Email data : don't change
-
 > A general rule of thumb is that for a smaller scale email system, Elastic search is a good option
+
+### +) The Limitations of Traditional Storage
+
+- As data grows, B-trees encounter challenges that impact both performance and efficiency
+- When updates or inserts occur, B-tree need to rewrite entire blocks of data, leading to substantial write amplification
 
 <br/>
 
 # Scalability and availability
+
 - Replicated across multiple data centers
 - User communicate with a mail server that is physically closer to them in the network topology
 
 ![KakaoTalk_Photo_2024-05-06-12-52-46](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/24548713-9146-4409-86d5-55fd0a39116b)
 
-<br/>
-
-# The Limitations of Traditional Storage
-
-- As data grows, B-trees encounter challenges that impact voth performance and efficiency
-- When updates or inserts occur, B-tree need to rewrite entire blocks of data, leading to substantial write amplification
-
 <br/><hr/><br/>
 
 # [LSM (Log Structured Merge)](https://medium.com/@mndpsngh21/understanding-the-log-structured-merge-lsm-tree-a-deep-dive-into-efficient-data-storage-d7ef3a7562ba)
 
-- LSM Tree uses an append-only approach
-- Incoming data is first written to an in-memory structure known as the `MemTable`
+- LSM Tree uses an `append-only approach`
 - This enables `lightning-fast write operations`, as data is placed in memory without the need for disk access
 
 ## Structure of LSM Tree
@@ -593,11 +590,11 @@ Email data : don't change
 
 ### MemTable
 - As a temprary sorting area for data
-- As it fills up it contents are flushed to disk in a batch of sorted data structures called Sorted String Tables (SSTables)
+- As it fills up it contents are flushed to disk in a batch of sorted data structures called SSTables
 
 ### Sorted String Tables (SSTables) :star:
 - They store data in sorted order, enabling efficient queries and range scans
-- SSTables are ever modified, they are later merged into new SSTables or deleted as data is updated (= append-only file)
+- SSTables are later merged into new SSTables or deleted as data is updated (= append-only file)
 
 ### Levels
 - To manage data efficiently, SSTables are organized into levels
@@ -608,7 +605,7 @@ Email data : don't change
 - Multiple SSTables accumulate, compaction, a vital feature of the LSM Tree, merges these SSTables, removing duplicates and outdated entries
 
 ## Read Path and Bloom Filters
-- `Bloom Filter` : A space efficient data structure that quickly dtermines whether a key might exist in an SSTable
+- `Bloom Filter` : A space efficient data structure that quickly determine whether a key might exist in an SSTable
 - If Bloom Filter indicates a possible match, the LSM Tree fetches the SSTable containing the desired data
 
 <br/><hr/><br/>
@@ -633,10 +630,10 @@ ex) the sixth position in the array goes from 0 to 1
 5. Search for the value (i.e. lookup)
 
 ## False positives
-- Yeidling an outcome wherein the value of the key is not present in the array
+- Yeilding an outcome wherein the value of the key is not present in the array
 - Looking for an element that does not exist can return an incorrect result
-- When a hashing algorithm generates an identical hash value for two different data elements.
-- Multiple hash functions can be used to minimize the collision rate. 
+- When a hashing algorithm `generates an identical hash value` for two different data elements
+-`Multiple hash functions can be used to minimize the collision rate`
 - Instead of setting a single bit for a single input, several bits are set. 
 - However, this can slow down the algorithm.
 
