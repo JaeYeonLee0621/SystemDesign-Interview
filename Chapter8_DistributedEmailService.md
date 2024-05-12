@@ -61,6 +61,8 @@ X-Mailer: ExampleMailer v1.0
 
 - SMTP servers are made up of 2 key components
 
+![image](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/95259cd6-f430-4739-8d02-78e39a4979ca)
+
 1. Mail Transfer Agents (MTAs) = mail server
 - The trasfer of emails between servers, MTAs ensure that your messages reach their intended recipients
 - Comonly using SMTP for transferring mails between mail servers
