@@ -451,7 +451,7 @@ ex) According to Amazon Simple Email Service, it takes about 2 to 6 weeks to war
 
 - Managing the flow of email traffic across the internet
 - They act as gatekeepers, responsible for filtering and delivering emails to their users' inboxes
-- ISPs typically operate their own mail server infrastructure consists of servers
+- `ISPs typically operate their own mail server infrastructure consists of servers`
 
 ### +) ISP Validation
 
