@@ -1,5 +1,7 @@
 # Chapter 9. S3-like Object Storage
 
+<br/>
+
 # Storage System 101
 
 ![KakaoTalk_Photo_2024-05-13-10-54-35 001](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/a57826d1-f1e5-4462-8c98-2f955f742196)
@@ -31,10 +33,14 @@ ex) Amazone S3, Google block stoage, Azure blob storage
 
 # Terminology
 
+<br/>
+
 ## Bucket
 - A logical container for objects
 - The bucket name is globally unique
 - To upload data to S3, we must first create a bucket
+
+<br/>
 
 ## Object
 - It is an individual piece of data we store in a bucket
@@ -42,16 +48,23 @@ ex) Amazone S3, Google block stoage, Azure blob storage
 
 ### +) Object data
 - It can be any sequence of bytes we want to store
+
 ### +) Metadata
 - It is a set of name-value pairs that describe the object
+
+<br/>
 
 ## Versioning
 - A feature that keeps multiple variants of an object in same bucket
 - It is enabled at bucket-level
 - The users to recover objects that are deleted or overwritten by accident
 
+<br/>
+
 ## Uniform Resource Identifier (URI)
 - Each resource is uniquely identified by its URI
+
+<br/>
 
 ## Service-level agreement (SLA)
 - It is a contract between a service provider and a client
@@ -88,7 +101,11 @@ ex) Amazon S3
 - (10^11 x 0.4)/(0.2 x 0.5MB + 0.6 x 32MB + 0.2 x 200MB) = 0.68 billion objects
 - If we assume the metadata of an object is about 1KB in size, we need 0.68TB space to store all metadata information
 
+<br/>
+
 # Step 2. Propose High-LEvel Design and Get Buy-In
+
+<br/>
 
 # Characteristics of object storage
 
@@ -96,13 +113,21 @@ ex) Amazon S3
 - The main difference between objects storage and the other two types of storaage systems is that objects stored inside of `object storage are immutable`
 - Delete them or replace them entirely with a new version
 
+<br/>
+
 ## Key-value store
 - The object URI is the key and object data is the value
+
+<br/>
 
 ## Write once, read many times
 - According to the research done by LinkedIn, 95% of requests are read operation
 
+<br/>
+
 ## Support both small and large objects
+
+<br/>
 
 # Design philosophy of object storage
 
@@ -110,17 +135,25 @@ ex) Amazon S3
 
 - It is very similar to that of `the UNIX file system`
 
+<br/>
+
 ## Unix
 - the filename is stored in a data structure called inode
 - the file data is stored in different disk locations
+
+<br/>
 
 ### Inode
 - A list of file block pointers that point to the disk locations of the file data
 - We first fetch the metadata in the inode, read the file data by following the file block pointers to the actual disk location
 
+<br/>
+
 ## Object Storage
 
 ![KakaoTalk_Photo_2024-05-13-10-54-36 003](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/bfc1085c-6478-4a1b-b550-6338b4027a38)
+
+<br/>
 
 # High-Level Design
 
@@ -132,6 +165,8 @@ ex) Amazon S3
 
 - Stores and retrieves the actual data
 - All data-related operations are based on `object ID (UUID)`
+
+<br/>
 
 # Uploading an Object
 
@@ -147,6 +182,8 @@ ex) Amazon S3
 2. The API service calls the IAM to ensure the user is authorized and has WRITE permission
 3. The API service sends the objects data in the HTTP PUT payload to the data store and returns the UUID of the objects.
 4. The API service calls the metadata store to create a new entry in the metadata database.
+
+<br/>
 
 # Downloading an object
 
@@ -166,8 +203,12 @@ ex) Amazon S3
 
 ![KakaoTalk_Photo_2024-05-13-10-54-36 008](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/1301f33c-7044-4193-bcdd-6c455987d4b7)
 
+<br/>
+
 ## Data Routing Service
 - The data routing service provides RESTful or gRPC APIs to the data node cluster
+
+<br/>
 
 ## Placement Service
 - It determines which data nodes should be chosen to store an object
@@ -179,6 +220,8 @@ ex) Amazon S3
 
 ### Consensus Protocol
 - It ensures that as long as more than half of the node are healthy, the service as a whole continues to work
+
+<br/>
 
 ## Data Node
 - It stores the actual object data
@@ -194,6 +237,8 @@ ex) Amazon S3
 - The virtual cluster map
 - Where to replicate data
 
+<br/>
+
 # Data Persistence flow
 
 ![KakaoTalk_Photo_2024-05-13-10-54-36 010](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/92a0e6e2-7dc7-44e5-84c3-fcd3d06f0f3a)
@@ -208,10 +253,14 @@ ex) Amazon S3
 
 ![KakaoTalk_Photo_2024-05-13-10-54-36 011](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/ebd1441f-5162-4f0b-9331-3c1c033102d2)
 
+<br/>
+
 # How data is organized
 
 - Store each object in a stand-alone file
 - This works, but the performance sufferes `when there are many small files`
+
+<br/>
 
 # Too many small files on a file system
 
@@ -226,9 +275,11 @@ ex) Amazon S3
 - For most file systems, the number of inode is fixed when the disk is initialized
 - The OS system does not handle a large number of inodes very well
 
+<br/>
+
 ## Solutions
 
-### 1. We can merge many small objects into a large file
+### Merging many small objects into a large file
 - It works conceptually like a `WAL (Write Ahead Log)`
 
 ### +) WAL (Write Ahead Log)
@@ -237,6 +288,8 @@ ex) Amazon S3
 
 - When we save an object, it is appended to an existing read-write file
 - When the read-write file reaches its capacity threshold - usually set to a few GBs - the read-write file is marked as read-only, and a new read-write file is created to receive new objects
+
+<br/>
 
 ## Serialized Data
 
@@ -248,10 +301,14 @@ ex) Amazon S3
 ### Solution
 - To fix this, we could provide `dedicated read-write files`, one for each core processing incoming requests
 
+<br/>
+
 # Object lookup
 
 ## NoSQL
 - Fast for writes but slower for reads
+
+<br/>
 
 ## Relational DataBase
 - Fast for reads but slower for writes :check:
@@ -262,9 +319,13 @@ ex) Amazon S3
 
 > SQLite is a good choice here = file-based relational database with a solid reputation
 
+<br/>
+
 # Updated data persistence flow
 
 ![KakaoTalk_Photo_2024-05-13-10-54-37 013](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/1cbc6792-5708-4d14-a21d-4ae2279bb941)
+
+<br/>
 
 # Durability
 
@@ -276,6 +337,8 @@ ex) Amazon S3
 - Assume, spinning hard drive has an annual failure rate of 0.81%
 - Making 3 copies of data gives us 1-(0.0081)^3 ~= 0.999999 reliability
 
+<br/>
+
 ## 2. Failure domain
 - In a modern data center, a server is usually put into a rack, and the racks are grouped into rows/floors/rooms
 - Since each rack shares network switches and power, all the servers in a rack are in a `rack-level failure domain`
@@ -286,6 +349,8 @@ ex) Data centers divide infrastructure that shares nothing into different Availa
 
 - The choice of failure domain level doesn't directly increase the durability of data, but it will result in better reliability in extreme cases, such as large-scale power outages, cooling system failures, nature disasters, etc
 
+<br/>
+
 ## 3. Erase Coding
 
 ![KakaoTalk_Photo_2024-05-13-10-54-37 015](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/4f515b42-31b2-45d7-ad1e-fad41af9152c)
@@ -293,6 +358,8 @@ ex) Data centers divide infrastructure that shares nothing into different Availa
 - It deals with data durability differently
 - It chunks data into smaller pieces and creates parities for redundancy
 - In the event failures, we can use chunk data and parities to reconstruct the data
+
+<br/>
 
 # Data corruption
 
@@ -312,6 +379,8 @@ ex) Data centers divide infrastructure that shares nothing into different Availa
 1. Fetch the object data and the checksum
 2. Compute the checksum against the data received
 
+<br/>
+
 # Object Versioning
 
 - Keeping multiple versions of an object in a bucket
@@ -324,6 +393,8 @@ ex) Data centers divide infrastructure that shares nothing into different Availa
 
 ![KakaoTalk_Photo_2024-05-13-10-54-37 019](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/94c92cdb-7efa-4e3b-8e7e-b1eaba1b7374)
 
+<br/>
+
 # Optimizing uploads of large files
 - It is possible to upload such a large object file directly, but it could take a long time
 
@@ -334,6 +405,8 @@ ex) Data centers divide infrastructure that shares nothing into different Availa
 - Slicing a large object into smaller parts and upload them independently
 - After all the parts are uploaded, the object store re-assembles the object from the parts
 - ETag : MD5 checksum of that part, verifying multipart uploads
+
+<br/>
 
 # Garbage collection
 - It is the process of automatically reclaimoing storage space that is no longer used
