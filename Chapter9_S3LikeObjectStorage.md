@@ -213,7 +213,6 @@ ex) Amazon S3
 
 # How data is organized
 
-# 1. A Simple solution
 - Store each object in a stand-alone file
 - This works, but the performance sufferes `when there are many small files`
 
