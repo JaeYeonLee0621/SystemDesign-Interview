@@ -183,14 +183,11 @@ ex) Amazon S3
 ## Data Node
 - It stores the actual object data
 - Each data node has a data service daemon running on it, which continuously sends heartbeats to the placement service
+- When the placment service receives the heartbeat for the first time, it assings an ID for this data node, adds it to the virtual cluster map, and returns the following information
 
 ### +) Heartbeat Message
 - How many disk drives does the data node manage?
 - How much data is stored in each drive?
-
-<br/>
-
-- When the placment service receives the heartbeat for the first time, it assings an ID for this data node, adds it to the virtual cluster map, and returns the following information
 
 ### +) Return information
 - A unique ID of the data node
