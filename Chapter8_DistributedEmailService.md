@@ -47,6 +47,21 @@ X-Mailer: ExampleMailer v1.0
 
 ![1](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/f933fb84-2cc2-43c9-b042-a60f21df002d)
 
+### Port 465 (SMTPS)
+- Originally designated for SMTPS
+- Establishing a secure SSL/TLS connection
+
+### Port 587 (SMTP with STARTTLS)
+- STARTTLS : upgrading a plaintext SMTP connection to a secure SSL/TLS connection
+
+### Port 2525 (Alternative SMTP Submission)
+- SMTP with STARTTLS
+
+**+) A few reasons why ports 2525 and 587 might be used separately**
+
+- Some organzations or seervice providers may have already been using port 2525 for similar puporses before port 587 was standarized
+
+
 # Sending Emails
 
 ## [SMTP (Simple Mail Transfer Protocol)](https://www.afternerd.com/blog/smtp/)
@@ -638,6 +653,8 @@ ex) the sixth position in the array goes from 0 to 1
 - However, this can slow down the algorithm.
 
 <br/><hr/><br/>
+
+<img width="831" alt="Screenshot 2024-05-22 at 10 55 09 AM" src="https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/9ceb6c50-5f15-4745-a012-ccd91ad93a72">
 
 # Organizing the terminology
 
