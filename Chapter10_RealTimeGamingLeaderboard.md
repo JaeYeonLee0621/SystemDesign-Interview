@@ -1,4 +1,4 @@
-# Chapter 10. Real-time Gaming Leaderboard
+![image](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/b977bf0a-ccba-4237-9669-bd82e9fc9c11)# Chapter 10. Real-time Gaming Leaderboard
 
 ## What is Leaderboards
 - Showing who is leading a particular tournament or competition
@@ -68,29 +68,72 @@ b. the rank of the player on the leaderboard
 ### 1. Unencrypted Connection
 
 #### [ARP Spoofing](https://www.invicti.com/learn/mitm-arp-spoofing/)
+
+![image](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/767f3395-8119-4900-a163-9080877ec795)
+
 - An attacker sends false ARP packets pretending to be the gateway
 - Your computer connects to the attacker's computer thinking that it is the gateway to the internet
 
 #### [IP spoofing](https://www.invicti.com/learn/mitm-ip-spoofing-ip-address-spoofing/)
+
+![image](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/ed6dc4fd-ce7e-4f1f-b9be-345adecbdc17)
+
 - The attacker can intercept an ongoing TCP/IP connection with the gateway by injecting TCP packets
 
 #### [DNS spoofing](https://www.invicti.com/learn/mitm-dns-spoofing-dns-cache-poisoning/)
+
+![image](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/1d608820-ccfb-490e-9ea9-6c504fa03317)
+
 - As long as you connect to a vulnerable DNS cache (DNS resolver), the attacker injects false information into the DNS resolver and your computer connects to the server controlled by the attacker
 
 #### [Web browser bar spoofing](https://www.invicti.com/blog/web-security/web-browser-address-bar-spoofing/)
+
+![image](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/ea0c5734-d372-40fc-8245-136de6e78569)
+
 - The attacker registers a domain name that looks very much like the domain that you want to connect to.
 - Then they deliver the false URL to your using other techniques such as phishing
 
 ### 2. Encrypted Connection
 
 #### [SSL hijacking](https://www.invicti.com/learn/mitm-ssl-hijacking/)
+
+![image](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/34b0f569-09d4-4eea-84b5-67fe30e88e68)
+
 - This requires control of your computer
 - The attacker adds a trusted CA to your computer
-- When you attempt to connecto to a secure site, the MiTM agent serves you a false website signed using this CA
+- When you attempt to connec to a secure site, the MiTM agent serves you a false website signed using this CA
 - CA is added to your computer, there is no alarm
+- hijacks a user’s legitimate session and pretends to be that user
 
-#### [SSL stripping](https://www.invicti.com/learn/mitm-ssl-stripping/)
+#### [SSL stripping](https://www.invicti.com/learn/mitm-ssl-stripping/) (=HTTPS hijacking)
+
+![image](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/72cf2e71-9b2e-4dc2-9277-9710dd5a8385)
+
 - The MiTM agent makes your computer believe that an HTTPS connection is not available and that HTTP must used
+
+1. Initial Client Request
+- The client atempts to connect to a secure website using HTTPS
+
+2. Interception of Request
+- The attacker intercepts the client's rquest before it reaches the intended server
+
+3. Presenting a Fake Cretificate
+- The attacker `intercepts the SSL handshake process`
+- The server is supposed to send its SSL certificate to the client
+- The attacker generates a fake certificate
+
+4. Client accepts this certificate
+- Proceeds to establish an encrypted connection with the attacker
+
+4-1. User-Induce Acceptance
+- Modern browser will typically display a security warning
+- However users can be tricked into accpeting these certificates
+
+4-2. Installing a Malicious Root Certificate
+- Installing a malicious root certificate on the victim's device (ex) Physical access, malware, software installation)
+
+5. Decryption of Data by Attacker
+- The attacker encrypts and decrypts the data using fake cretificate they presented
 
 #### Attacks on old SSL ciphers
 - Connect to is using a vulnerable cipher
