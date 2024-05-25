@@ -1,4 +1,4 @@
-![image](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/b977bf0a-ccba-4237-9669-bd82e9fc9c11)# Chapter 10. Real-time Gaming Leaderboard
+# Chapter 10. Real-time Gaming Leaderboard
 
 ## What is Leaderboards
 - Showing who is leading a particular tournament or competition
