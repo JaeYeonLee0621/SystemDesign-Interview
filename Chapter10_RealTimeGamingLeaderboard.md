@@ -36,7 +36,7 @@
 3. Game Server -> Leaderboard Service : Updating the score
 4. Leaderboard service -> Leaderboard Store : Updating the user's score
 5. Client -> Leaderboard Service : Fetching leaderboard data
-a. top 10 leaderboard
+Sa. top 10 leaderboard
 b. the rank of the player on the leaderboard
 
 # Can client calculate score and request to leaderboard service directly?
@@ -262,11 +262,6 @@ zlbytes | zltail | zllen | Prevlen(0) | Encoding(string) | "banana" | Prevlen(7)
 
 ex) [CRC16(key) % 16384](https://redis.io/docs/latest/operate/oss_and_stack/reference/cluster-spec/)
 
-![16](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/8a645469-01f1-419d-b735-d86ae37cbe54)
-
-- Fetch : Scatter-Gather
-- We need to gather the top 10 players from each shard, have the application sort the data
-
 ### +) Redis Slot (=Shard) : Why 16384 (2^14)
 
 - Normal heartbeat packets carry the full configuration of a node, that can be replaced in an idempotent way with the old in order to update an old config
@@ -281,6 +276,16 @@ ex) [CRC16(key) % 16384](https://redis.io/docs/latest/operate/oss_and_stack/refe
 +) 65k = `8` * 8 (8 bit/byte) * 1024(1k) = 8K bitmap size
 
 - So `2K bitmap size (=Save 2000 node information)` was in the right range to ensure enough slots per master with a max of `1000 mater nodes`
+
+### +) Gossip Protocol
+- Redis Cluster nodes communicate with each other using a gossip protocol
+- Nodes exchange information about their state, status, and cluster topology regularly
+
+### Fetch : Scatter-Gather
+
+![16](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/8a645469-01f1-419d-b735-d86ae37cbe54)
+
+- We need to gather the top 10 players from each shard, have the application sort the data
 
 ## Sizing a Redis node
 - Write-heavy applications require much more avilable memory, since we need to be able to accomodate all of the writes to create the snpshot in case of a failure
