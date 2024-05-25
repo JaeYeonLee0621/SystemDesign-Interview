@@ -112,7 +112,7 @@ b. the rank of the player on the leaderboard
 
 ## +) What are Sorted Sets?
 
-[Image : 8]
+![8](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/a325f8b4-e421-4089-96e9-bf5f4be5c490)
 
 - Members are UNIQUE and ORDERED
 
@@ -122,7 +122,7 @@ b. the rank of the player on the leaderboard
 - A compact, memory-efficient data structure
 - Time complexity = normal array regarding insertion and deletion operation (=O(n))
 
-[Image : 7]
+![7](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/c2b90a00-190e-457c-b002-46ef099da48a)
 
 - `A` : Hash Table for organizing Redis DB Key
 - `value of dictEntry` : pointing redisObject
@@ -164,7 +164,7 @@ zlbytes | zltail | zllen | Prevlen(6) | Encoding(string) | "banana" | Prevlen(7)
 
 ## 2. [Skip List (ZADD)](http://redisgate.kr/redis/configuration/internal_skiplist.php)
 
-[Image: 9]
+![9](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/a9ec632d-7a7c-4c29-8c15-487c255910e1)
 
 - The main data structure for `Zset`
 - a list structure that allows for fast search (O(logN))
@@ -173,13 +173,13 @@ zlbytes | zltail | zllen | Prevlen(6) | Encoding(string) | "banana" | Prevlen(7)
 
 ![4](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/455beb6e-fc7d-4c58-8b1a-cb1d19bad0e1)
 
-
 - Each node have defined levels to decrease the number of comparing
 - `Problem` : Whenever nodes are inserted and deleted, need to convert all nodes' levels
 
 ### 2. Applying probability of flipping coin
 
-[Image : 5]
+![5](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/2f341695-e4ed-45f5-867a-8ccb10d0f15d)
+
 - Span : index of next node
 
 #### Node 1
@@ -202,7 +202,7 @@ zlbytes | zltail | zllen | Prevlen(6) | Encoding(string) | "banana" | Prevlen(7)
 ### 3. Applying probability of throwing the Dice 
 - Decrease 1/2 to 1/6
 
-[Image : 6]
+![6](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/9cf6b05a-d4a9-4cd1-82d7-62a921585bbb)
 
 - 1/e is the fatest probability but have minor difference between 1/4
 
@@ -212,7 +212,7 @@ zlbytes | zltail | zllen | Prevlen(6) | Encoding(string) | "banana" | Prevlen(7)
 
 ### Example) Searching 45
 
-[Image : 10]
+![10](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/27038a0d-e363-4c4a-9754-cd139ba276de)
 
 <br/><hr/><br/>
 
@@ -220,7 +220,7 @@ zlbytes | zltail | zllen | Prevlen(6) | Encoding(string) | "banana" | Prevlen(7)
 
 # 1. Manage our own services
 
-[Image : 11]
+![11](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/39bc49be-5843-442e-869c-d480994f63a0)
 
 # 2. Build on the cloud
 - Assuming our existing infrastructure is built on aWS
@@ -229,13 +229,13 @@ zlbytes | zltail | zllen | Prevlen(6) | Encoding(string) | "banana" | Prevlen(7)
 
 - Managed Service for HTTP & REST and WebSocket Endpoints
 
-[Image : 12]
+![12](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/9f5016a0-fb35-411f-a014-f8161005a967)
 
 ## AWS Lambda
 - Allowing you to run code without having to provision or manage the servers yourself
 - It runs only when needed and will scale automatically based on traffic
 
-[Image : 13]
+![13](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/28becd89-be4a-4d43-85a0-448a6e4fd9af)
 
 # Scaling Redis
 
@@ -247,18 +247,18 @@ zlbytes | zltail | zllen | Prevlen(6) | Encoding(string) | "banana" | Prevlen(7)
 
 ### 1. Fixed Partition
 
-[Image : 14]
+![14](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/b71cdf81-fa64-485f-849d-f9d8df600f23)
 
 - We need to adjust the score range in each shard to make sure of a `relatively even distribution`
 - Update : When a user increases their score and moves between shards
 
 ### 2. Hashed Partition
 
-[Image : 15]
+![15](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/d239a2ac-aa85-48ab-b56d-d27a0a213c39)
 
 ex) CRC16(key) % 16384
 
-[Image : 16]
+![16](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/8a645469-01f1-419d-b735-d86ae37cbe54)
 
 - Fetch : Scatter-Gather
 - We need to gather the top 10 players from each shard, have the application sort the data
@@ -272,7 +272,7 @@ ex) CRC16(key) % 16384
 
 1. Year-Month
 
-[Image : 17]
+![17](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/7583b5c7-6786-4df3-977e-5ed5046485e6)
 
 - Partition key = `game_name#{year-month}`
 - Sort key = score
@@ -280,13 +280,13 @@ ex) CRC16(key) % 16384
 
 2. User ID
 
-[Image : 18]
+![18](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/e171a260-af0d-41be-8d74-f7d90a7d7c95)
 
 - Partition key = `user_id % number_of_partition` 
 - Write sharding
 
 3. Ideal Prtition Key
 
-[Image : 19]
+![19](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/19a97e36-993c-427e-b5a5-b772232985a7)
 
 - Partition Key = `game_name#{year-month}#p{partition_number}`
