@@ -39,13 +39,13 @@
 a. top 10 leaderboard
 b. the rank of the player on the leaderboard
 
-# Should the client talk to the leaderboard service directly?
+# Can client calculate score and request to leaderboard service directly?
 
 ![2](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/151d9861-8fde-4230-a629-93dd29afdba3)
 
 
 ## Alternative Design
-- The score is set by the client :finger: `Man in the middle attack`
+- The score is set by the client 👉 `Man in the middle attack`
 - Players can put in a proxy and change scores at will
 
 > We need the score to be set on the server-side
