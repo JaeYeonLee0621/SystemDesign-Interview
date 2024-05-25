@@ -269,15 +269,15 @@ ex) [CRC16(key) % 16384](https://redis.io/docs/latest/operate/oss_and_stack/refe
 
 ### +) Redis Slot (=Shard) : Why 16384 (2^14)
 
-![image](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/50d60930-92be-43d4-9afe-1b0777ac7f16)
-
 - Normal heartbeat packets carry the full configuration of a node, that can be replaced in an idempotent way with the old in order to update an old config
 - This means they contain `the slots (shards) configuration for a node (redis server)`
 
 - 16384 (2^14) messages only occupy 2k
+
 +) 16k = `2` * 8 (8 bit/byte) * 1024(1k) = 2K bitmap size
 
 - while 65535 (CRC 16 = 2^16 - 1) would require 8k
+
 +) 65k = `8` * 8 (8 bit/byte) * 1024(1k) = 8K bitmap size
 
 - So `2K bitmap size (=Save 2000 node information)` was in the right range to ensure enough slots per master with a max of `1000 mater nodes`
