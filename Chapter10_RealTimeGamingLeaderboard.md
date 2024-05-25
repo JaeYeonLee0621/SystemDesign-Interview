@@ -260,7 +260,7 @@ zlbytes | zltail | zllen | Prevlen(0) | Encoding(string) | "banana" | Prevlen(7)
 
 ![15](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/d239a2ac-aa85-48ab-b56d-d27a0a213c39)
 
-ex) CRC16(key) % 16384
+ex) [CRC16(key) % 16384](https://redis.io/docs/latest/operate/oss_and_stack/reference/cluster-spec/)
 
 ![16](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/8a645469-01f1-419d-b735-d86ae37cbe54)
 
