@@ -276,7 +276,7 @@ ex) [CRC16(key) % 16384](https://redis.io/docs/latest/operate/oss_and_stack/refe
 
 1. Year-Month
 
-![17](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/7583b5c7-6786-4df3-977e-5ed5046485e6)
+![18](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/e171a260-af0d-41be-8d74-f7d90a7d7c95)
 
 - Partition key = `game_name#{year-month}`
 - Sort key = score
@@ -284,7 +284,7 @@ ex) [CRC16(key) % 16384](https://redis.io/docs/latest/operate/oss_and_stack/refe
 
 2. User ID
 
-![18](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/e171a260-af0d-41be-8d74-f7d90a7d7c95)
+![17](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/7583b5c7-6786-4df3-977e-5ed5046485e6)
 
 - Partition key = `user_id % number_of_partition` 
 - Write sharding
