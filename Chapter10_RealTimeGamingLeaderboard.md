@@ -262,6 +262,10 @@ zlbytes | zltail | zllen | Prevlen(0) | Encoding(string) | "banana" | Prevlen(7)
 
 ex) [CRC16(key) % 16384](https://redis.io/docs/latest/operate/oss_and_stack/reference/cluster-spec/)
 
+### +) CRC 16 (Cyclic Redundancy Check)
+- Error-detecting code (ex) digital network, storage device)
+- generates a 16-bit (2^16 = 65536) checksum based on the input data
+
 ### +) Redis Slot (=Shard) : Why 16384 (2^14)
 
 - Normal heartbeat packets carry the full configuration of a node, that can be replaced in an idempotent way with the old in order to update an old config
