@@ -110,7 +110,7 @@ b. the rank of the player on the leaderboard
 
 ## 2. Redis solution
 - It is an in-memory data store supporting key-value pairs and ⭐`sorted sets`⭐, allowing for fast reads and writes
-- It is not going back to Skip List to Zip List to prevent `flipping effects
+- It is not going back to Skip List to Zip List to prevent `flipping effects`
 
 <br/><hr/><br/>
 
@@ -155,13 +155,13 @@ zlbytes | zltail | zllen | Prevlen(0) | Encoding(string) | "apple" | zlend
 
 2. LPUSH banana
 ```
-zlbytes | zltail | zllen | Prevlen(6) | Encoding(string) | "banana" | Prevlen(0) | Encoding(string) | "apple" | zlend
+zlbytes | zltail | zllen | Prevlen(0) | Encoding(string) | "banana" | Prevlen(7) | Encoding(string) | "apple" | zlend
 ```
 - Prevlen(6byte) = length('apple\0')
 
 3. RPUSH cherry
 ```
-zlbytes | zltail | zllen | Prevlen(6) | Encoding(string) | "banana" | Prevlen(7) | Encoding(string) | "cherry" | Prevlen(0) | Encoding(string) | "apple" | zlend
+zlbytes | zltail | zllen | Prevlen(0) | Encoding(string) | "banana" | Prevlen(7) | Encoding(string) | "cherry" | Prevlen(6) | Encoding(string) | "apple" | zlend
 ```
 
 - When the size of a dataset in Redis `exceeds the thresholds` for ziplist encoding, Redis will `convert the entire dataset` to a more suitable data structure
