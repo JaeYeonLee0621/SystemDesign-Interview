@@ -3,7 +3,7 @@
 ## What is Leaderboards
 - Showing who is leading a particular tournament or competition
 
-![1](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/f212e04b-b45d-49f8-8d9e-12e0153277e1)
+![image](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/6e8f84fb-fd09-4cdd-8cd3-8a5dcae11076)
 
 # Step 1. Understand the Problem and Establish Design Scope
 
@@ -28,7 +28,8 @@
 
 # High-level architecture
 
-![2](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/151d9861-8fde-4230-a629-93dd29afdba3)
+![1](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/f212e04b-b45d-49f8-8d9e-12e0153277e1)
+
 
 1. Client -> Game Server : A player wins a game,
 2. Game Server : Checking the validation of the win
@@ -40,7 +41,8 @@ b. the rank of the player on the leaderboard
 
 # Should the client talk to the leaderboard service directly?
 
-![3](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/09737885-e1ac-4911-99de-4c755934908b)
+![2](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/151d9861-8fde-4230-a629-93dd29afdba3)
+
 
 ## Alternative Design
 - The score is set by the client :finger: `Man in the middle attack`
@@ -51,6 +53,8 @@ b. the rank of the player on the leaderboard
 <br/><hr/><br/>
 
 ## +) [MiTM (Man in the middle)](https://www.invicti.com/blog/web-security/man-in-the-middle-attack-how-avoid/)
+
+![3](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/09737885-e1ac-4911-99de-4c755934908b)
 
 ### Where is the MiTM?
 1. Public networks (ex) Public Wifi connections, WiFi hotspots, free WiFi at cafes)
@@ -105,7 +109,7 @@ b. the rank of the player on the leaderboard
 - SQL databases are not performant when we have to process large amounts of continuously changing information
 
 ## 2. Redis solution
-- It is an in-memory data store supporting key-value pairs and sorted sets, allowing for fast reads and writes
+- It is an in-memory data store supporting key-value pairs and ⭐`sorted sets`⭐, allowing for fast reads and writes
 - It is not going back to Skip List to Zip List to prevent `flipping effects
 
 <br/><hr/><br/>
