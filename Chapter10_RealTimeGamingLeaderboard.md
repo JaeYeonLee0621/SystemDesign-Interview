@@ -267,17 +267,18 @@ ex) [CRC16(key) % 16384](https://redis.io/docs/latest/operate/oss_and_stack/refe
 - Fetch : Scatter-Gather
 - We need to gather the top 10 players from each shard, have the application sort the data
 
-### +) Redis slot : Why 16384 (or 0 – 16383)6384
-- 16384 messages only occupy 2k,
+### +) Redis Slot (=Shard) : Why 16384 (2^14)
+
+- Normal heartbeat packets carry the full configuration of a node, that can be replaced in an idempotent way with the old in order to update an old config
+- This means they contain `the slots (shards) configuration for a node (redis server)`
+
+- 16384 (2^14) messages only occupy 2k
 +) 16k = `2` * 8 (8 bit/byte) * 1024(1k) = 2K bitmap size
+
 - while 65535 (CRC 16 = 2^16 - 1) would require 8k
 +) 65k = `8` * 8 (8 bit/byte) * 1024(1k) = 8K bitmap size
 
-
-- Normal heartbeat packets carry the full configuration of a node, that can be replaced in an idempotent way with the old in order to update an old config.
-
-- This means they contain `the slots configuration for a node`, in raw form, that uses 2k of space with 16k slots, but would use a prohibitive 8k of space using 65k slots. ()
-- At the same time it is unlikely that Redis Cluster would scale to more than 1000 mater nodes because of other design tradeoffs.
+- So `2K bitmap size (=Save 2000 node information)` was in the right range to ensure enough slots per master with a max of `1000 mater nodes`
 
 ## Sizing a Redis node
 - Write-heavy applications require much more avilable memory, since we need to be able to accomodate all of the writes to create the snpshot in case of a failure
