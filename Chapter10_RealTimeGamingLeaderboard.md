@@ -71,8 +71,7 @@ b. the rank of the player on the leaderboard
 
 ![image](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/767f3395-8119-4900-a163-9080877ec795)
 
-- An attacker sends false ARP packets pretending to be the gateway
-- Your computer connects to the attacker's computer thinking that it is the gateway to the internet
+- the attacker sends forged ARP (Address Resolution Protocol) messages to associate their own MAC address with the IP address of the legitimate LAN gateway (usually the router) on the local network.
 
 #### [IP spoofing](https://www.invicti.com/learn/mitm-ip-spoofing-ip-address-spoofing/)
 
@@ -84,7 +83,13 @@ b. the rank of the player on the leaderboard
 
 ![image](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/1d608820-ccfb-490e-9ea9-6c504fa03317)
 
-- As long as you connect to a vulnerable DNS cache (DNS resolver), the attacker injects false information into the DNS resolver and your computer connects to the server controlled by the attacker
+- A malicious actor may use address resolution protocol (ARP) to access router traffic and alter the domain name resolution records.
+- The attacker can modify an authoritative DNS server’s records, redirecting traffic to the fraudulent website.
+
+1. A user’s device (client) sends a `DNS query to a DNS server to resolve a domain name into an IP address.`
+2. An attacker `intercepts this DNS query` and responds to it before the legitimate DNS server can.
+3. The attacker crafts a `fake DNS response`, which includes a falsified IP address pointing to a malicious server controlled by the attacker instead of the legitimate IP address.
+4. If the forged response reaches the DNS server before the legitimate one, `the DNS server caches the malicious IP address.`
 
 #### [Web browser bar spoofing](https://www.invicti.com/blog/web-security/web-browser-address-bar-spoofing/)
 
