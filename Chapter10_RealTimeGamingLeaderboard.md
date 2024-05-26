@@ -52,29 +52,29 @@ b. the rank of the player on the leaderboard
 
 <br/><hr/><br/>
 
-## +) [MiTM (Man in the middle)](https://www.invicti.com/blog/web-security/man-in-the-middle-attack-how-avoid/)
+# +) [MiTM (Man in the middle)](https://www.invicti.com/blog/web-security/man-in-the-middle-attack-how-avoid/)
 
 ![3](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/09737885-e1ac-4911-99de-4c755934908b)
 
-### Where is the MiTM?
+## Where is the MiTM?
 1. Public networks (ex) Public Wifi connections, WiFi hotspots, free WiFi at cafes)
 2. Own computer (ex) MiTM browser)
 3. Home router 
 - Home router supplied by ISPs use default admin credential
 - Their firmware is often outdated
 
-### How do MiTM attacks work?
+## How do MiTM attacks work?
 
-### 1. Unencrypted Connection
+## 1. Unencrypted Connection
 
-### 1-1. [ARP (Address Resolution Protocol) Spoofing](https://www.invicti.com/learn/mitm-arp-spoofing/)
+## 1-1. [ARP (Address Resolution Protocol) Spoofing](https://www.invicti.com/learn/mitm-arp-spoofing/)
 
 ![Screenshot 2024-05-26 at 2 57 38 PM](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/1785f9c9-69b1-4c21-82f5-8c1286c6aac1)
 
 - the attacker sends forged ARP (Address Resolution Protocol) messages to associate their own MAC address with the IP address of the legitimate LAN gateway (usually the router) on the local network.
 - ARP process with Routers : Device A wants to communicate with a device outside its local network
 
-### +) ARP Procedures
+## +) ARP Procedures
 
 ![Untitled Diagram (1)](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/d0951fef-052b-4993-b9cb-652ac3886740)
 
@@ -83,13 +83,13 @@ b. the rank of the player on the leaderboard
 1. `IP` Address Resolution : using UDP Procotol (connect with `DHCP`)
 2. `MAC` Address Resolution : using `ARP` Protocol
 
-### 1-2. [IP spoofing](https://www.invicti.com/learn/mitm-ip-spoofing-ip-address-spoofing/)
+## 1-2. [IP spoofing](https://www.invicti.com/learn/mitm-ip-spoofing-ip-address-spoofing/)
 
 ![Screenshot 2024-05-26 at 2 58 56 PM](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/30697ed5-6765-4d7c-9cf0-104ebf2fbaa6)
 
 - The attacker can intercept an ongoing TCP/IP connection with the gateway by injecting TCP packets
 
-### 1-3. [DNS spoofing](https://www.invicti.com/learn/mitm-dns-spoofing-dns-cache-poisoning/)
+## 1-3. [DNS spoofing](https://www.invicti.com/learn/mitm-dns-spoofing-dns-cache-poisoning/)
 
 - ⭐ After successfully performing ARP spoofing ⭐
 - The attacker can modify an authoritative `DNS server’s records`, redirecting traffic to the fraudulent website.
@@ -101,7 +101,7 @@ b. the rank of the player on the leaderboard
 2. The attacker crafts a `fake DNS response`, which includes a falsified IP address pointing to a malicious server controlled by the attacker instead of the legitimate IP address.
 3. If the forged response reaches the DNS server before the legitimate one, `the DNS server caches the malicious IP address.`
 
-### +) DNS Query Procedure
+## +) DNS Query Procedure
 
 ![Untitled Diagram](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/5c5f0ed4-be89-4fc8-b9d3-f2aec02d40d2)
 
@@ -110,16 +110,16 @@ b. the rank of the player on the leaderboard
 - DNS servers are often located `outside of the local network segment or broadcast domain`
 - Communication Across Networks 👉  the communication usually goes through a `router` or `gateway`
 
-### 1-4. [Web browser bar spoofing](https://www.invicti.com/blog/web-security/web-browser-address-bar-spoofing/)
+## 1-4. [Web browser bar spoofing](https://www.invicti.com/blog/web-security/web-browser-address-bar-spoofing/)
 
 ![image](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/ea0c5734-d372-40fc-8245-136de6e78569)
 
 - The attacker registers a domain name that looks very much like the domain that you want to connect to.
 - Then they deliver the false URL to your using other techniques such as phishing
 
-### 2. Encrypted Connection
+## 2. Encrypted Connection
 
-### 2-1. [SSL hijacking](https://www.invicti.com/learn/mitm-ssl-hijacking/)
+## 2-1. [SSL hijacking](https://www.invicti.com/learn/mitm-ssl-hijacking/)
 
 ![image](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/34b0f569-09d4-4eea-84b5-67fe30e88e68)
 
@@ -129,11 +129,11 @@ b. the rank of the player on the leaderboard
 - CA is added to your computer, there is no alarm
 - hijacks a user’s legitimate session and pretends to be that user
 
-### +) CA Procedure
+## +) CA Procedure
 
 ![Untitled Diagram (2)](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/d919be85-9193-44be-83ef-458082fd66d0)
 
-### 2-2. [SSL stripping](https://www.invicti.com/learn/mitm-ssl-stripping/) (=HTTPS hijacking)
+## 2-2. [SSL stripping](https://www.invicti.com/learn/mitm-ssl-stripping/) (=HTTPS hijacking)
 
 ![image](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/72cf2e71-9b2e-4dc2-9277-9710dd5a8385)
 
@@ -163,7 +163,7 @@ b. the rank of the player on the leaderboard
 5. Decryption of Data by Attacker
 - The attacker encrypts and decrypts the data using fake cretificate they presented
 
-### 2-3. Attacks on old SSL ciphers
+## 2-3. Attacks on old SSL ciphers
 - Connect to is using a vulnerable cipher
 
 <br/><hr/><br/>
