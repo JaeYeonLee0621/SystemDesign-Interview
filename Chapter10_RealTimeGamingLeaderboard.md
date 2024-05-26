@@ -273,6 +273,9 @@ zlbytes | zltail | zllen | Prevlen(0) | Encoding(string) | "banana" | Prevlen(7)
 
 ![10](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/27038a0d-e363-4c4a-9754-cd139ba276de)
 
+- The algorithm starts at the highest level
+- If the value of the current node is not right, it moves down to the next level  and continues the search
+
 <br/><hr/><br/>
 
 # Step 3. Design Deep Dive
