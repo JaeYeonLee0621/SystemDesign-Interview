@@ -76,6 +76,8 @@ b. the rank of the player on the leaderboard
 
 ### +) ARP Procedures
 
+![Screenshot 2024-05-26 at 3 03 05 PM](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/331506ff-f3b1-4881-b600-209fb07b171e)
+
 1. When a Device Joins the LAN (let's call it Device A)
 - Being assigned an IP address : 1) Manually 2) automatically via DHCP (Dynamic Host Configuration Protocol)
 - When Device A wants to send a packet to another IP address, it needs to know the MAC address corresponding to that IP
