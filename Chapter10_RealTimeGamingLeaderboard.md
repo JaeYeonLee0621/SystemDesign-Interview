@@ -123,22 +123,6 @@ b. the rank of the player on the leaderboard
 
 ![image](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/34b0f569-09d4-4eea-84b5-67fe30e88e68)
 
-- Sending the wrong certification
-
-![image](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/4e4d5c18-26e8-4e89-9898-0ba523e3a79b)
-
-- Users just ignore the warning sign
-
-## +) CA Procedure
-
-![Untitled Diagram (2)](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/d919be85-9193-44be-83ef-458082fd66d0)
-
-## 2-2. [SSL stripping](https://www.invicti.com/learn/mitm-ssl-stripping/) (=HTTPS hijacking)
-
-![image](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/72cf2e71-9b2e-4dc2-9277-9710dd5a8385)
-
-- The MiTM agent makes your computer believe that an HTTPS connection is not available and that HTTP must used
-
 1. Initial Client Request
 - The client atempts to connect to a secure website using HTTPS
 
@@ -162,6 +146,16 @@ b. the rank of the player on the leaderboard
 
 5. Decryption of Data by Attacker
 - The attacker encrypts and decrypts the data using fake cretificate they presented
+
+## +) CA Procedure
+
+![Untitled Diagram (2)](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/d919be85-9193-44be-83ef-458082fd66d0)
+
+## 2-2. [SSL stripping](https://www.invicti.com/learn/mitm-ssl-stripping/) (=HTTPS hijacking)
+
+![image](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/72cf2e71-9b2e-4dc2-9277-9710dd5a8385)
+
+- The MiTM agent makes your computer believe that an HTTPS connection is not available and that HTTP must used
 
 ## 2-3. Attacks on old SSL ciphers
 - Connect to is using a vulnerable cipher
