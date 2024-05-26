@@ -67,19 +67,26 @@ b. the rank of the player on the leaderboard
 
 ### 1. Unencrypted Connection
 
-#### [ARP (Address Resolution Protocol) Spoofing](https://www.invicti.com/learn/mitm-arp-spoofing/)
+### 1-1. [ARP (Address Resolution Protocol) Spoofing](https://www.invicti.com/learn/mitm-arp-spoofing/)
 
 ![image](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/767f3395-8119-4900-a163-9080877ec795)
 
 - the attacker sends forged ARP (Address Resolution Protocol) messages to associate their own MAC address with the IP address of the legitimate LAN gateway (usually the router) on the local network.
 
-#### [IP spoofing](https://www.invicti.com/learn/mitm-ip-spoofing-ip-address-spoofing/)
+### +) ARP Procedures
+
+1. When a Device Joins the LAN (let's call it Device A)
+- Being assigned an IP address : 1) Manually 2) automatically via DHCP (Dynamic Host Configuration Protocol)
+- When Device A wants to send a packet to another IP address, it needs to know the MAC address corresponding to that IP
+2. ARP Request : Device A will broadcast an ARP request packet to all devices in the LAN
+
+### 1-2. [IP spoofing](https://www.invicti.com/learn/mitm-ip-spoofing-ip-address-spoofing/)
 
 ![image](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/ed6dc4fd-ce7e-4f1f-b9be-345adecbdc17)
 
 - The attacker can intercept an ongoing TCP/IP connection with the gateway by injecting TCP packets
 
-#### [DNS spoofing](https://www.invicti.com/learn/mitm-dns-spoofing-dns-cache-poisoning/)
+### 1-3. [DNS spoofing](https://www.invicti.com/learn/mitm-dns-spoofing-dns-cache-poisoning/)
 
 ![image](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/1d608820-ccfb-490e-9ea9-6c504fa03317)
 
@@ -91,7 +98,7 @@ b. the rank of the player on the leaderboard
 3. The attacker crafts a `fake DNS response`, which includes a falsified IP address pointing to a malicious server controlled by the attacker instead of the legitimate IP address.
 4. If the forged response reaches the DNS server before the legitimate one, `the DNS server caches the malicious IP address.`
 
-#### [Web browser bar spoofing](https://www.invicti.com/blog/web-security/web-browser-address-bar-spoofing/)
+### 1-4. [Web browser bar spoofing](https://www.invicti.com/blog/web-security/web-browser-address-bar-spoofing/)
 
 ![image](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/ea0c5734-d372-40fc-8245-136de6e78569)
 
@@ -100,7 +107,7 @@ b. the rank of the player on the leaderboard
 
 ### 2. Encrypted Connection
 
-#### [SSL hijacking](https://www.invicti.com/learn/mitm-ssl-hijacking/)
+### 2-1. [SSL hijacking](https://www.invicti.com/learn/mitm-ssl-hijacking/)
 
 ![image](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/34b0f569-09d4-4eea-84b5-67fe30e88e68)
 
@@ -110,7 +117,7 @@ b. the rank of the player on the leaderboard
 - CA is added to your computer, there is no alarm
 - hijacks a user’s legitimate session and pretends to be that user
 
-#### [SSL stripping](https://www.invicti.com/learn/mitm-ssl-stripping/) (=HTTPS hijacking)
+### 2-2. [SSL stripping](https://www.invicti.com/learn/mitm-ssl-stripping/) (=HTTPS hijacking)
 
 ![image](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/72cf2e71-9b2e-4dc2-9277-9710dd5a8385)
 
@@ -140,7 +147,7 @@ b. the rank of the player on the leaderboard
 5. Decryption of Data by Attacker
 - The attacker encrypts and decrypts the data using fake cretificate they presented
 
-#### Attacks on old SSL ciphers
+### 2-3. Attacks on old SSL ciphers
 - Connect to is using a vulnerable cipher
 
 <br/><hr/><br/>
