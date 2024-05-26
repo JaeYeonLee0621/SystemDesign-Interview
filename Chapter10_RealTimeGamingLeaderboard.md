@@ -79,8 +79,13 @@ b. the rank of the player on the leaderboard
 ![Untitled Diagram](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/98c3c198-5105-4e18-9dda-1facd3982545)
 
 1. When a Device Joins the LAN (let's call it Device A)
-- Being assigned an IP address : 1) Manually 2) automatically via DHCP (Dynamic Host Configuration Protocol)
+- Being assigned an IP address
+
+1) Manually
+2) automatically via DHCP (Dynamic Host Configuration Protocol)
+
 - When Device A wants to send a packet to another IP address, it needs to know the MAC address corresponding to that IP
+
 2. ARP Request : Device A will broadcast an ARP request packet to all devices in the LAN
 
 ### 1-2. [IP spoofing](https://www.invicti.com/learn/mitm-ip-spoofing-ip-address-spoofing/)
