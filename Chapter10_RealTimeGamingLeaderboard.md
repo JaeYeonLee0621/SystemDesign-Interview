@@ -115,6 +115,10 @@ ex)
 3. The attacker crafts a `fake DNS response`, which includes a falsified IP address pointing to a malicious server controlled by the attacker instead of the legitimate IP address.
 4. If the forged response reaches the DNS server before the legitimate one, `the DNS server caches the malicious IP address.`
 
+### +) DNS Query Procedure
+
+![Untitled Diagram](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/5c5f0ed4-be89-4fc8-b9d3-f2aec02d40d2)
+
 ### 1-4. [Web browser bar spoofing](https://www.invicti.com/blog/web-security/web-browser-address-bar-spoofing/)
 
 ![image](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/ea0c5734-d372-40fc-8245-136de6e78569)
