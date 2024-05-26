@@ -131,7 +131,7 @@ b. the rank of the player on the leaderboard
 
 ### +) CA Procedure
 
-![Untitled Diagram](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/9fccdb10-899b-41ab-a97a-ec0ee62bd7db)
+![Untitled Diagram (1)](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/33c5c3db-bf60-4b6c-9cd6-62256c883355)
 
 ### 2-2. [SSL stripping](https://www.invicti.com/learn/mitm-ssl-stripping/) (=HTTPS hijacking)
 
