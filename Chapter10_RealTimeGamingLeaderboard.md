@@ -105,7 +105,7 @@ b. the rank of the player on the leaderboard
 
 ![Untitled Diagram](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/5c5f0ed4-be89-4fc8-b9d3-f2aec02d40d2)
 
-> Why don't we need to search for the DNS Server's MAC address
+🗒️ Why don't we need to search for the DNS Server's MAC address ❓
 
 - DNS servers are often located `outside of the local network segment or broadcast domain`
 - Communication Across Networks 👉  the communication usually goes through a `router` or `gateway`
