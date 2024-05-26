@@ -91,7 +91,7 @@ b. the rank of the player on the leaderboard
 
 ### 1-3. [DNS spoofing](https://www.invicti.com/learn/mitm-dns-spoofing-dns-cache-poisoning/)
 
-- After successfully performing ARP spoofing
+- ⭐ After successfully performing ARP spoofing ⭐
 - The attacker can modify an authoritative `DNS server’s records`, redirecting traffic to the fraudulent website.
 - `DNS Query` : DNS server to resolve a domain name into an IP address
 
@@ -104,6 +104,11 @@ b. the rank of the player on the leaderboard
 ### +) DNS Query Procedure
 
 ![Untitled Diagram](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/5c5f0ed4-be89-4fc8-b9d3-f2aec02d40d2)
+
+> Why don't we need to search for the DNS Server's MAC address
+
+- DNS servers are often located `outside of the local network segment or broadcast domain`
+- Communication Across Networks 👉  the communication usually goes through a `router` or `gateway`
 
 ### 1-4. [Web browser bar spoofing](https://www.invicti.com/blog/web-security/web-browser-address-bar-spoofing/)
 
