@@ -67,7 +67,7 @@ b. the rank of the player on the leaderboard
 
 ### 1. Unencrypted Connection
 
-#### [ARP Spoofing](https://www.invicti.com/learn/mitm-arp-spoofing/)
+#### [ARP (Address Resolution Protocol) Spoofing](https://www.invicti.com/learn/mitm-arp-spoofing/)
 
 ![image](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/767f3395-8119-4900-a163-9080877ec795)
 
