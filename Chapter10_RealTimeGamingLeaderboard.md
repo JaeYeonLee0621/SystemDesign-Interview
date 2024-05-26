@@ -76,7 +76,7 @@ b. the rank of the player on the leaderboard
 
 ### +) ARP Procedures
 
-![Untitled Diagram](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/151c330a-f02f-4bdb-9fc4-9ba09bf9187c)
+![Untitled Diagram (1)](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/d0951fef-052b-4993-b9cb-652ac3886740)
 
 1. When a Device Joins the LAN (let's call it Device A)
 - Being assigned an IP address
