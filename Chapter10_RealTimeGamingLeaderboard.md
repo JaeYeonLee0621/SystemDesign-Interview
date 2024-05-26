@@ -129,6 +129,10 @@ b. the rank of the player on the leaderboard
 - CA is added to your computer, there is no alarm
 - hijacks a user’s legitimate session and pretends to be that user
 
+### +) CA Procedure
+
+![Untitled Diagram (1)](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/59eac8c8-0f70-4079-b6c8-0f393b841419)
+
 ### 2-2. [SSL stripping](https://www.invicti.com/learn/mitm-ssl-stripping/) (=HTTPS hijacking)
 
 ![image](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/72cf2e71-9b2e-4dc2-9277-9710dd5a8385)
