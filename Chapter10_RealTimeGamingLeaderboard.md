@@ -88,6 +88,15 @@ b. the rank of the player on the leaderboard
 
 2. ARP Request : Device A will broadcast an ARP request packet to all devices in the LAN
 
+⭐ Side node ⭐
+
+1. `IP` Address Resolution : using UDP Procotol (connect with `DHCP`)
+2. `MAC` Address Resolution : using `ARP` Protocol
+
+ex) 
+- DNS server's IP : DHCP (When computer start to connect with switch)
+- DNS server's MAC : ARP request
+
 ### 1-2. [IP spoofing](https://www.invicti.com/learn/mitm-ip-spoofing-ip-address-spoofing/)
 
 ![Screenshot 2024-05-26 at 2 58 56 PM](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/30697ed5-6765-4d7c-9cf0-104ebf2fbaa6)
