@@ -69,7 +69,7 @@ b. the rank of the player on the leaderboard
 
 ### 1-1. [ARP (Address Resolution Protocol) Spoofing](https://www.invicti.com/learn/mitm-arp-spoofing/)
 
-![Screenshot 2024-05-26 at 2 57 38 PM](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/9cf245dd-616f-4d7e-88fd-8406572cab55)
+![Untitled Diagram](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/98c3c198-5105-4e18-9dda-1facd3982545)
 
 - the attacker sends forged ARP (Address Resolution Protocol) messages to associate their own MAC address with the IP address of the legitimate LAN gateway (usually the router) on the local network.
 - ARP process with Routers : Device A wants to communicate with a device outside its local network
