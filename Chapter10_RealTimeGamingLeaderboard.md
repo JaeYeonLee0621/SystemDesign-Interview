@@ -83,7 +83,7 @@ b. the rank of the player on the leaderboard
 
 ### 1-2. [IP spoofing](https://www.invicti.com/learn/mitm-ip-spoofing-ip-address-spoofing/)
 
-![image](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/ed6dc4fd-ce7e-4f1f-b9be-345adecbdc17)
+![Screenshot 2024-05-26 at 2 58 56 PM](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/30697ed5-6765-4d7c-9cf0-104ebf2fbaa6)
 
 - The attacker can intercept an ongoing TCP/IP connection with the gateway by injecting TCP packets
 
