@@ -123,29 +123,8 @@ b. the rank of the player on the leaderboard
 
 ![image](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/34b0f569-09d4-4eea-84b5-67fe30e88e68)
 
-1. Initial Client Request
-- The client atempts to connect to a secure website using HTTPS
-
-2. Interception of Request
-- The attacker intercepts the client's rquest before it reaches the intended server
-
-3. Presenting a Fake Cretificate
-- The attacker `intercepts the SSL handshake process`
-- The server is supposed to send its SSL certificate to the client
-- The attacker generates a fake certificate
-
-4. Client accepts this certificate
-- Proceeds to establish an encrypted connection with the attacker
-
-4-1. User-Induce Acceptance
-- Modern browser will typically display a security warning
-- However users can be tricked into accpeting these certificates
-
-4-2. Installing a Malicious Root Certificate
-- Installing a malicious root certificate on the victim's device (ex) Physical access, malware, software installation)
-
-5. Decryption of Data by Attacker
-- The attacker encrypts and decrypts the data using fake cretificate they presented
+- Sending a spoofed (fake) SSL certificate to the user's browser
+- Making the user accept and save it in their browser cache
 
 ## +) CA Procedure
 
@@ -156,6 +135,17 @@ b. the rank of the player on the leaderboard
 ![image](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/72cf2e71-9b2e-4dc2-9277-9710dd5a8385)
 
 - The MiTM agent makes your computer believe that an HTTPS connection is not available and that HTTP must used
+
+1. Initial Client Request
+- The client atempts to connect to a secure website using HTTPS
+
+2. Interception of Request
+- The attacker intercepts the client's rquest before it reaches the intended server
+
+3. Responding with a redirect to an HTTP version of the website
+
+4. Client accepts downgrade
+- Modern browser will typically display a security warning but ignore and accept to downgrade
 
 ## 2-3. Attacks on old SSL ciphers
 - Connect to is using a vulnerable cipher
