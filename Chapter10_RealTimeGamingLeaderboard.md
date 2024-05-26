@@ -78,24 +78,10 @@ b. the rank of the player on the leaderboard
 
 ![Untitled Diagram (1)](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/d0951fef-052b-4993-b9cb-652ac3886740)
 
-1. When a Device Joins the LAN (let's call it Device A)
-- Being assigned an IP address
-
-1) Manually
-2) automatically via DHCP (Dynamic Host Configuration Protocol)
-
-- When Device A wants to send a packet to another IP address, it needs to know the MAC address corresponding to that IP
-
-2. ARP Request : Device A will broadcast an ARP request packet to all devices in the LAN
-
 ⭐ Side node ⭐
 
 1. `IP` Address Resolution : using UDP Procotol (connect with `DHCP`)
 2. `MAC` Address Resolution : using `ARP` Protocol
-
-ex) 
-- DNS server's IP : DHCP (When computer start to connect with switch)
-- DNS server's MAC : ARP request
 
 ### 1-2. [IP spoofing](https://www.invicti.com/learn/mitm-ip-spoofing-ip-address-spoofing/)
 
@@ -105,15 +91,15 @@ ex)
 
 ### 1-3. [DNS spoofing](https://www.invicti.com/learn/mitm-dns-spoofing-dns-cache-poisoning/)
 
+- After successfully performing ARP spoofing
+- The attacker can modify an authoritative `DNS server’s records`, redirecting traffic to the fraudulent website.
+- `DNS Query` : DNS server to resolve a domain name into an IP address
+
 ![image](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/1d608820-ccfb-490e-9ea9-6c504fa03317)
 
-- A malicious actor may use address resolution protocol (ARP) to access router traffic and alter the domain name resolution records.
-- The attacker can modify an authoritative DNS server’s records, redirecting traffic to the fraudulent website.
-
-1. A user’s device (client) sends a `DNS query to a DNS server to resolve a domain name into an IP address.`
-2. An attacker `intercepts this DNS query` and responds to it before the legitimate DNS server can.
-3. The attacker crafts a `fake DNS response`, which includes a falsified IP address pointing to a malicious server controlled by the attacker instead of the legitimate IP address.
-4. If the forged response reaches the DNS server before the legitimate one, `the DNS server caches the malicious IP address.`
+1. An attacker `intercepts this DNS query` and responds to it before the legitimate DNS server can.
+2. The attacker crafts a `fake DNS response`, which includes a falsified IP address pointing to a malicious server controlled by the attacker instead of the legitimate IP address.
+3. If the forged response reaches the DNS server before the legitimate one, `the DNS server caches the malicious IP address.`
 
 ### +) DNS Query Procedure
 
