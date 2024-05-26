@@ -123,11 +123,11 @@ b. the rank of the player on the leaderboard
 
 ![image](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/34b0f569-09d4-4eea-84b5-67fe30e88e68)
 
-- This requires control of your computer
-- The attacker adds a trusted CA to your computer
-- When you attempt to connec to a secure site, the MiTM agent serves you a false website signed using this CA
-- CA is added to your computer, there is no alarm
-- hijacks a user’s legitimate session and pretends to be that user
+- Sending the wrong certification
+
+![image](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/4e4d5c18-26e8-4e89-9898-0ba523e3a79b)
+
+- Users just ignore the warning sign
 
 ## +) CA Procedure
 
