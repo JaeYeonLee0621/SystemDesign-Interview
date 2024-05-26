@@ -124,6 +124,9 @@ b. the rank of the player on the leaderboard
 ![image](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/34b0f569-09d4-4eea-84b5-67fe30e88e68)
 
 - Sending a spoofed (fake) SSL certificate to the user's browser
+
+![KakaoTalk_Photo_2024-05-26-18-33-42 002](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/413beb68-5ca2-4c4b-8f2f-c5749a4632fc)
+
 - Making the user accept and save it in their browser cache
 
 ## +) CA Procedure
@@ -145,6 +148,9 @@ b. the rank of the player on the leaderboard
 3. Responding with a redirect to an HTTP version of the website
 
 4. Client accepts downgrade
+
+![KakaoTalk_Photo_2024-05-26-18-33-41 001](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/d80aa0b4-5544-4e11-9d0b-c807fa1f052b)
+
 - Modern browser will typically display a security warning but ignore and accept to downgrade
 
 ## 2-3. Attacks on old SSL ciphers
