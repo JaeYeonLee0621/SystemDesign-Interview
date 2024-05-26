@@ -72,6 +72,7 @@ b. the rank of the player on the leaderboard
 ![image](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/767f3395-8119-4900-a163-9080877ec795)
 
 - the attacker sends forged ARP (Address Resolution Protocol) messages to associate their own MAC address with the IP address of the legitimate LAN gateway (usually the router) on the local network.
+- ARP process with Routers : Device A wants to communicate with a device outside its local network
 
 ### +) ARP Procedures
 
