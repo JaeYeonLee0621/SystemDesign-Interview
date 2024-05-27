@@ -1,4 +1,4 @@
-# Chapter 11. Payment System
+![KakaoTalk_Photo_2024-05-27-23-51-02 009](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/5e46cf6a-164e-4d5e-a98b-0bc87e744876)# Chapter 11. Payment System
 
 ## Payment System
 - It is any system used to settle financial transactions through the transfer of monetary value. This includes the institutions, instruments, people, rules, procedures, standard, and technologies that make its exchage possible.
@@ -20,11 +20,11 @@
 
 # Step 2. Propose High-Level Design and Get Buy-In
 
-[Image : 1]
+![KakaoTalk_Photo_2024-05-27-23-51-01 001](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/3c701ba3-0142-455b-93ec-a0b27d1e727d)
 
 # Pay-In Flow
 
-[Image : 2]
+![KakaoTalk_Photo_2024-05-27-23-51-01 002](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/a1f4bd15-9840-47c0-b303-5a81950a29ac)
 
 ## Payment Service
 - Accepting payment events from users and coordinates they payment process
@@ -71,7 +71,7 @@ To avoid handling credit card informaation
 1. Web site : A widget or an ifram
 2. Application : A pre-built page from the payment SDK
 
-[Image : 3]
+![KakaoTalk_Photo_2024-05-27-23-51-02 003](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/5baf2698-a852-4166-88b9-5f7d869bc413)
 
 # Step 3. Design Deep Dive
 
@@ -80,7 +80,7 @@ To avoid handling credit card informaation
 1. Using API : Can safely store sensitive payment information
 2. Hosted Payment Page : Not to store sensitive payment information due to complex regulations and security concerns
 
-[Image : 4]
+![KakaoTalk_Photo_2024-05-27-23-51-02 004](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/633671fe-680f-42bd-ba35-a13952babfb9)
 
 1. User -> Payment Service : click the "checkout" button
 
@@ -104,7 +104,7 @@ ex) Payment information (ex) amountcurrency, expiration date, redirect URL, UUID
 
 ## Reconsiliation
 
-[Image : 5]
+![KakaoTalk_Photo_2024-05-27-23-51-02 005](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/118bcdca-3a28-4791-a515-dd2275c01c61)
 
 ### Problem
 - When system components communicate asynchronously
@@ -151,11 +151,11 @@ ex) Payment information (ex) amountcurrency, expiration date, redirect URL, UUID
 ### 2. Asynchronous communication
 1. Single receiver : Once a message is processed, it gets removed from the queue
 
-[Image : 6]
+![KakaoTalk_Photo_2024-05-27-23-51-02 006](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/166d9e0a-65f7-4e30-be7e-ce0effe90861)
 
 2. Multiple receivers : Each request is processed by multiple receivers
 
-[Image : 7]
+![KakaoTalk_Photo_2024-05-27-23-51-02 007](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/44249013-3133-4e03-bf4e-1814aa9ce4b4)
 
 ## Handling failed payments
 
@@ -164,7 +164,7 @@ ex) Payment information (ex) amountcurrency, expiration date, redirect URL, UUID
 
 ### 2. Retry queue and dead letter queue
 
-[Image : 8]
+![KakaoTalk_Photo_2024-05-27-23-51-02 008](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/30665ca1-cd9b-40b1-be89-e2af616c2ce5)
 
 ## Exactly-Once delivery
 - Double charge a customer
@@ -177,7 +177,7 @@ ex) Payment information (ex) amountcurrency, expiration date, redirect URL, UUID
 
 - Providing at-least-once guarantee
 
-[Image : 9]
+![KakaoTalk_Photo_2024-05-27-23-51-02 009](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/609f06be-102e-419a-955a-3b43970504b7)
 
 **Retry Strategy**
 
@@ -199,7 +199,7 @@ ex) Payment information (ex) amountcurrency, expiration date, redirect URL, UUID
 
 **Potential Scenario**
 
-[Image : 10]
+![KakaoTalk_Photo_2024-05-27-23-51-03 010](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/88ddf8b4-7a71-4c24-9f1b-a59c85da032b)
 
 - Only one request is processed
 - The others receive the "429 too Many Requests"
