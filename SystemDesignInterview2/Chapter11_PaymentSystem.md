@@ -78,8 +78,10 @@ To avoid handling credit card informaation
 
 # PSP integration
 
-1. Using API : Can safely store sensitive payment information
-2. Hosted Payment Page : Not to store sensitive payment information due to complex regulations and security concerns
+1. Using `API` : Can safely store sensitive payment information
+2. `Hosted Payment Page` : Not to store sensitive payment information due to complex regulations and security concerns
+
+<br/>
 
 ![KakaoTalk_Photo_2024-05-27-23-51-02 004](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/633671fe-680f-42bd-ba35-a13952babfb9)
 
