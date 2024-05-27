@@ -83,7 +83,9 @@ To avoid handling credit card informaation
 
 ![KakaoTalk_Photo_2024-05-27-23-51-02 004](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/633671fe-680f-42bd-ba35-a13952babfb9)
 
-1. User -> Payment Service : click the "checkout" button
+1. User -> Payment Service : Click the "checkout" button
+
+![KakaoTalk_Photo_2024-05-27-23-54-21 002](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/0c8e180e-d586-4a30-939a-c3f9bcb652c1)
 
 2. Payment Service -> PSP : Sending payment registration request
 
@@ -95,6 +97,8 @@ ex) Payment information (ex) amountcurrency, expiration date, redirect URL, UUID
 
 4. Payment Service -> Database : Storing the token
 5. User : Seeing the PSP-hosted payment page and filling in the payment details
+
+![KakaoTalk_Photo_2024-05-27-23-54-21 003](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/f10ddc24-c0fd-4506-a2ca-5ff641f07200)
 
 5-1. PSP side token :  The PSP's javascript code uses the token to retrieve detailed information about payment request from the PSP's backend.
 5-2. Redirect URL : Calling when the payment is complete
@@ -221,15 +225,12 @@ ex) Payment information (ex) amountcurrency, expiration date, redirect URL, UUID
 
 ## Payment Security
 
-### `Request/Response eavesdropping` - `Use HTTPS`
-### `Data tampering` - `Enforcing encrypting and integrity monitoring`
-- Data tampering : the act of deliberately modifying (destroying, manipulating, or editing) data through unauthorized channels
-### `Man-in-the-middle attack` - `Using SSL with certificate pinning`
-### `Store passwrods` - `Adding salt to hashing`
-### `Data loss` - `Database replication across multiple regions and take snapshots of data`
-### `Distributed denial-of-service attack` - `Rate limiting and firewall`
-### `Card theft` - `Tokenization`
-### `PCI compliance` - `PCI DSS is an information security standrad for organizations that handle branded credit cards`
-- PCI (Payment Card Industry Compliance) : The technical and operational standars that businesses follow to secure and protect credit card data provided by cardholders and transmitted through card processing transactions
-- PCI DSS (Payment Card Industry Data Security Standard) : A set of rules and guidelines designed to help organizations that handle credit card information keep that information safe and secure
-### `Fraud` - `Address verification, card verification value (CVV), user behavior analysis etc`
+![KakaoTalk_Photo_2024-05-27-23-55-01](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/ae3e1b21-444a-4630-9416-cfeca331885c)
++) `Request/Response eavesdropping` - `Use HTTPS`
+
+### Data tampering
+- the act of deliberately modifying (destroying, manipulating, or editing) data through unauthorized channels
+### PCI (Payment Card Industry Compliance)
+- The technical and operational standars that businesses follow to secure and protect credit card data provided by cardholders and transmitted through card processing transactions
+### PCI DSS (Payment Card Industry Data Security Standard)
+- A set of rules and guidelines designed to help organizations that handle credit card information keep that information safe and secure
