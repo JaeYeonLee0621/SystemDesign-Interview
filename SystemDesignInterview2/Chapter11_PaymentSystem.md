@@ -1,7 +1,8 @@
 # Chapter 11. Payment System
 
 ## Payment System
-- It is any system used to settle financial transactions through the transfer of monetary value. This includes the institutions, instruments, people, rules, procedures, standard, and technologies that make its exchage possible.
+- It is any system used to settle financial transactions through the transfer of monetary value.
+- This includes the institutions, instruments, people, rules, procedures, standard, and technologies that make its exchage possible.
 
 # Step 1. Understand the problem and establish design scope
 
