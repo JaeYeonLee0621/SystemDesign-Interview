@@ -1,4 +1,4 @@
-![KakaoTalk_Photo_2024-05-27-23-51-02 009](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/5e46cf6a-164e-4d5e-a98b-0bc87e744876)# Chapter 11. Payment System
+# Chapter 11. Payment System
 
 ## Payment System
 - It is any system used to settle financial transactions through the transfer of monetary value. This includes the institutions, instruments, people, rules, procedures, standard, and technologies that make its exchage possible.
