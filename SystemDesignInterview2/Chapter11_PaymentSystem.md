@@ -83,11 +83,13 @@ To avoid handling credit card informaation
 
 <br/>
 
+![KakaoTalk_Photo_2024-05-28-01-00-15](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/d84fc89a-aa48-442d-82d6-19765ea7065b)
+
 1. User -> Payment Service : Click the "checkout" button
 
 2. Payment Service -> PSP : Sending payment registration request
 
-ex) Payment information (ex) amountcurrency, expiration date, redirect URL, UUID (-> Exactly-once registration))
+ex) Payment information (ex) amount, currency, expiration date, redirect URL, UUID (-> Exactly-once registration))
 
 +) UUID = nonce
 
@@ -96,14 +98,17 @@ ex) Payment information (ex) amountcurrency, expiration date, redirect URL, UUID
 4. Payment Service -> Database : Storing the token
 5. User : Seeing the PSP-hosted payment page and filling in the payment details
 
-![KakaoTalk_Photo_2024-05-27-23-54-21 003](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/f10ddc24-c0fd-4506-a2ca-5ff641f07200)
-
 5-1. PSP side token :  The PSP's javascript code uses the token to retrieve detailed information about payment request from the PSP's backend.
+
 5-2. Redirect URL : Calling when the payment is complete
 
 6. USer -> PSP : Executing payment
 7. PSP -> User : Returning and The web page is now redirected to the redirect URL with payment status
 9. PSP -> Payment Service : Asynchronously calling via a webhook
+
+### +) Payment Process
+
+![Toss 단건 결제](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/faed0e1f-549f-4f06-b208-9753ff6ba212)
 
 ## Reconsiliation
 
