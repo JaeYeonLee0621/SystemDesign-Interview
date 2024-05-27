@@ -83,11 +83,7 @@ To avoid handling credit card informaation
 
 <br/>
 
-![KakaoTalk_Photo_2024-05-27-23-51-02 004](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/633671fe-680f-42bd-ba35-a13952babfb9)
-
 1. User -> Payment Service : Click the "checkout" button
-
-![KakaoTalk_Photo_2024-05-27-23-54-21 002](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/0c8e180e-d586-4a30-939a-c3f9bcb652c1)
 
 2. Payment Service -> PSP : Sending payment registration request
 
