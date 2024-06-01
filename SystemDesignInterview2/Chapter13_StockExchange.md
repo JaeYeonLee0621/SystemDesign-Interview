@@ -52,23 +52,21 @@ ex) hudge fund (earning income via commission rebates)
 
 ### L1
 
-[Image:1]
+![KakaoTalk_Photo_2024-06-01-14-02-12 001](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/416b9ae2-9443-4419-8f7f-b001e841d0db)
 
 ### L2
 
-[Image:2]
+![KakaoTalk_Photo_2024-06-01-14-02-12 002](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/c84240d7-1acd-42a1-a6b1-d72a9942c0d2)
 
 ### L3
 
-[Image:3]
+![KakaoTalk_Photo_2024-06-01-14-02-12 003](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/361dd9a9-3326-4121-a6ea-58f1e68c45cf)
 
 ## Candlestick chart
 
-[Image:4]
+![KakaoTalk_Photo_2024-06-01-14-02-12 004](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/c5b9bd32-eb39-47d2-bf1c-48e441042ed9)
 
 ## FIX (Financial Information eXchange) Protocol
-
-[Image:5]
 
 - A vender-neutral communication protocol for exchanging securities transaction information
 
@@ -78,7 +76,7 @@ ex) hudge fund (earning income via commission rebates)
 
 # High Level Design
 
-[Image:6]
+![KakaoTalk_Photo_2024-06-01-14-02-13 005](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/7fe00633-eb86-44d9-bd06-a352305689cc)
 
 Step 3: Client gateway
 - Input validation, rate limiting, authentication, normalization, etc
@@ -124,7 +122,7 @@ Step R1-R2 (Reporting flow)
 
 ## Sequencer
 
-[Image:6]
+![KakaoTalk_Photo_2024-06-01-14-02-13 006](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/e359cad2-83cd-4145-9654-7f88bb7c399b)
 
 - Make the matching engine deterministic
 - Stamp every incoming order with a sequence ID before it is processed by the matching engine
@@ -148,14 +146,12 @@ Step R1-R2 (Reporting flow)
 
 ## Client Gateway
 
-[Image:7]
+![KakaoTalk_Photo_2024-06-01-14-02-13 007](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/989f7ab1-b1f7-44f7-ad9b-3b020e41aa2e)
 
 - Gatekeeper for the exchange
 - Crtical path, latency-sensitive, lightweight
 
 ex) 
-
-[Image:8]
 
 ### Colocation (colo) Engine
 - Trading engine software running on some servers rented by broker in the exchange's data center
@@ -163,7 +159,7 @@ ex)
 
 ## Market Data Flow
 
-[Image:9]
+![KakaoTalk_Photo_2024-06-01-14-02-13 008](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/6c246442-ec14-44a0-acee-6c58f8309be0)
 
 ### MDP (Market Data Publisher)
 - Receive executions (files) from the matching engine
@@ -171,7 +167,7 @@ ex)
 
 ## Reporting Flow
 
-[Image:10]
+![KakaoTalk_Photo_2024-06-01-14-02-13 009](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/bd394ab6-0482-445a-8b9b-7a8e9e80e604)
 
 - Provide trading history, tax reporting, compliance reporting, settlements etc
 - Less sensitive to latency
@@ -183,7 +179,7 @@ ex)
 - Order : The inbound instruction for a buy or sell order
 - Execution (= a fill) : The outbound matched result, not every order has an execution
 
-[Image:11]
+![KakaoTalk_Photo_2024-06-01-14-06-39](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/e77a6a3b-e4a8-4750-9d66-3d6079db915a)
 
 - Orders and executions are not stored in a database but stored in `the sequencer` for fast recovery, data is archived after the market closes
 - The reporter writes orders and executions to the database for reporting use cases like reconciliation and tax reporting
@@ -195,7 +191,7 @@ ex)
 
 ex)
 
-[Image:12]
+![KakaoTalk_Photo_2024-06-01-14-07-39](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/356efe5f-1582-4be1-9190-29ba322599d8)
 
 ### Requirements
 - Constant lookup time
@@ -204,7 +200,7 @@ ex)
 
 ### O(1)
 
-[Image:13]
+![KakaoTalk_Photo_2024-06-01-14-02-13 010](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/ec1d4671-5c09-42af-bbb7-167ca43e98c0)
 
 - Doubly-linked List : deletion type of operation is also O(1)
 
@@ -258,7 +254,7 @@ gateway -> order manager -> sequencer -> matching engine
 
 ## Single Server Architecture
 
-[Image:14]
+![KakaoTalk_Photo_2024-06-01-14-02-13 011](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/dc562fd4-6ecd-4292-863b-50672d551016)
 
 ### Application Loop
 
@@ -268,7 +264,7 @@ gateway -> order manager -> sequencer -> matching engine
 
 ### Component
 
-[Image:15]
+![KakaoTalk_Photo_2024-06-01-14-02-13 012](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/24a5d36a-b0c2-4b98-9510-ba86b54ec8a1)
 
 - Process on the server
 - To maximize CPU efficiency, each application loop is single-thread
@@ -301,7 +297,7 @@ gateway -> order manager -> sequencer -> matching engine
 
 ### Event sourcing
 
-[Image:16]
+![KakaoTalk_Photo_2024-06-01-14-02-13 013](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/285d532f-fd3e-41e5-a353-3ba8efb640ee)
 
 **[Problems]**
 - Traditional application : States are persisted in a database
@@ -311,7 +307,7 @@ gateway -> order manager -> sequencer -> matching engine
 - Immutable log of all state-hanging events
 - These events are the golden source of truth
 
-[Image:17]
+![KakaoTalk_Photo_2024-06-01-14-02-13 014](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/5e9c5313-2c1e-44dd-b86d-5534a815954b)
 
 - FIX over Simple Binary Encoding (SBE) for fast and compact encoding and sends (Pre-defined format)
 
@@ -331,7 +327,7 @@ gateway -> order manager -> sequencer -> matching engine
 - They will fight for the right to write to the event store
 - A lot of time would be wasted on lock contention
 
-[Image:18]
+![KakaoTalk_Photo_2024-06-01-14-02-13 015](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/e648409a-5ef1-464e-a4ac-64f64da357e4)
 
 - The sequencer pulls events from the ring buffer that is local to each component
 - It stamps a sequence ID on the event and sends it to the event store
@@ -350,7 +346,7 @@ gateway -> order manager -> sequencer -> matching engine
 - Stateless service (ex) Client gateway) : horizontally scale by adding more servers
 - Stateful components (ex) Order manager, Matching machine) : can copy state data across replica
 
-[Image:19]
+![KakaoTalk_Photo_2024-06-01-14-02-13 016](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/a2387bd8-5884-4e52-b87b-07acd6a56b0a)
 
 - Hot matching engine : works as the primary instance
 - Warm matching engine : receive and process the exact same events
@@ -384,14 +380,14 @@ ex) Ensure system confidence using Chaos engineering
 
 ### Battle-tested leader-election algorithms
 
-[Image:20]
+![KakaoTalk_Photo_2024-06-01-14-02-13 017](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/d7d4d96e-5b40-4240-a76a-fef6eff2ccfe)
 
 1. Leader sends data to all the other instances (followers)
 2. Minimum number of votes required to perform an operation is (N/2+1) (e.g., N = the number of members in the cluster)
 
 ex) Raft
 
-[Image:21]
+![KakaoTalk_Photo_2024-06-01-14-02-13 018](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/57984547-9d2e-4c16-93a7-264f2cdc1917)
 
 **[Select next leader]**
 
@@ -440,7 +436,7 @@ ex) CME Website, Dark pool
 ## Functional Determinism
 - The design choices we make, such as sequencer, event sourcing, guarantee that if the events are replayed in the same order, the results will be the same
 
-[Image:22]
+![KakaoTalk_Photo_2024-06-01-14-02-14 019](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/b2883610-6a32-4481-a8b3-6e30701f55c3)
 
 - The actual time when the event happen does not matter most of the time
 - What matter is the order of the events
@@ -448,6 +444,9 @@ ex) CME Website, Dark pool
 - The time spent on replay/recovery can be greatly reduced
 
 ## Latency Determinism
+
+![KakaoTalk_Photo_2024-06-01-14-02-14 020](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/01f82726-d093-4ff1-9d36-f58faf2e7d26)
+
 - Having almost the same latency through the system for each trade
 - We can leaverage Hdrhistogram to calculate latency
 - If the 99th percentile lateny is low, the exchange offers stable performance across almost all the trades
@@ -471,7 +470,7 @@ ex) A retail client
 - It can only view 5 levels of L2 data by default and needs to pay extra to get 10 levels
 - MDP's memory cannot expand forever, so we need to have an upper limit on the candlestick
 
-[Image:23]
+![KakaoTalk_Photo_2024-06-01-14-02-14 019](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/40fab665-e459-44ad-b58c-d93f782b5710)
 
 - Ring buffer = Circular buffer : fixed-size queue with the head connected to the tail
 - A producer continously produces data
