@@ -11,19 +11,25 @@
 
 ## Back-of-the-envelope estimation
 
-- 100 Symbols
-- 1 billion orders per day
-- NYSE Stock exchange is open Monday~Friday (09:30~16:00)
 - QPS = 1 billion / 6.5 / 3600 ~= 43,000
-- Peak QPS = 5 x QPS = 215,000
+- 1 billion orders per day
+- NYSE Stock exchange is open Monday ~ Friday (09:30 ~ 16:00)
+
+> Peak QPS = 5 x QPS = 215,000
 
 # Step 2. Propose High-Level Design and Get Buy-In
 
 # Business Knowledge 101
 
 ## Broker
+
+![image](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/ef6fe0a0-08d0-43ad-8ebc-1f638d90bf0e)
+
 - Most retail clients trade with an exchange via a broker
-- These brokers provide a `friendly user interface` for retail users to place trades and view market data
+
+![image](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/41578006-f230-4675-a25f-54fd0d4783c1)
+
+- These brokers provide a friendly user interface for retail users to place trades and view market data
 
 ## Institutional Client
 - Trading in large volumes using specialized trading software
@@ -38,29 +44,50 @@ ex) hudge fund (earning income via commission rebates)
 - they can't simply view market data on a web page or a mobile app, as retail clients do
 
 ## Limit Order
+
+![image](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/affd096b-8893-448c-af1c-d205bc99671a)
+
 - buy or sell order with a fixed price
 - It might not find a match immediately, or it might just be partially matched
 
 ## Market Order
+
+![image](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/511e0aa4-c9e0-40dc-b79c-3289fc87b1cd)
+
 - Doesn't specify a price
 - Prevailing market price immediately
 
 ## Market data levels
 
-- `Bid price` : the highest price a buyer is willing to pay for a stock
-- `Ask price` : the lowest price a seller is wiling to sell the stock
+### Bid price
+- The highest price `a buyer is willing to pay` for a stock
+
+### Ask price
+- The lowest price `a seller is wiling to sell` the stock
 
 ### L1
 
 ![KakaoTalk_Photo_2024-06-01-14-02-12 001](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/416b9ae2-9443-4419-8f7f-b001e841d0db)
 
+- Basic Information
+
+1. Bid and Ask Prices
+2. Last Trade : The most recent trade
+3. Volume : Total number of shares traded during a given period
+4. Summary Statistics
+
 ### L2
 
 ![KakaoTalk_Photo_2024-06-01-14-02-12 002](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/c84240d7-1acd-42a1-a6b1-d72a9942c0d2)
 
+- Order Book : Real-time bids and asks from market participants at different price levels
+- Better Transparency : more informed decision-making
+
 ### L3
 
 ![KakaoTalk_Photo_2024-06-01-14-02-12 003](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/361dd9a9-3326-4121-a6ea-58f1e68c45cf)
+
+- Full Market View, Order Book Details, Market Maker Activity, Best for Professional
 
 ## Candlestick chart
 
@@ -68,11 +95,15 @@ ex) hudge fund (earning income via commission rebates)
 
 ## FIX (Financial Information eXchange) Protocol
 
+![image](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/5db084b0-67be-4a6c-8c97-692aab564909)
+
 - A vender-neutral communication protocol for exchanging securities transaction information
 
 ```
 8=FIX.4.2|9=65|35=A|49=SERVER|56=CLIENT|34=177|52=20090107-18:15:16|98=0|108=30|10=062|
 ```
+
+<br/>
 
 # High Level Design
 
@@ -108,8 +139,7 @@ Step R1-R2 (Reporting flow)
 
 # Trading flow
 
-## Matching machine
-- called the cross engine
+## Matching machine (called cross engine)
 
 ### Responsibilities
 1. Maintaining the roder book for each symbol
@@ -150,8 +180,6 @@ Step R1-R2 (Reporting flow)
 
 - Gatekeeper for the exchange
 - Crtical path, latency-sensitive, lightweight
-
-ex) 
 
 ### Colocation (colo) Engine
 - Trading engine software running on some servers rented by broker in the exchange's data center
