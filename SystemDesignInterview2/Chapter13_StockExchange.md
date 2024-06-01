@@ -152,7 +152,7 @@ Step R1-R2 (Reporting flow)
 
 ## Sequencer
 
-![KakaoTalk_Photo_2024-06-01-14-02-13 006](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/e359cad2-83cd-4145-9654-7f88bb7c399b)
+![KakaoTalk_Photo_2024-06-01-16-48-25](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/1c16c346-8601-4515-bdb8-a6c359461923)
 
 - Make the matching engine deterministic
 - Stamp every incoming order with a sequence ID before it is processed by the matching engine
@@ -176,7 +176,7 @@ Step R1-R2 (Reporting flow)
 
 ## Client Gateway
 
-![KakaoTalk_Photo_2024-06-01-14-02-13 007](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/989f7ab1-b1f7-44f7-ad9b-3b020e41aa2e)
+![KakaoTalk_Photo_2024-06-01-14-02-13 006](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/e359cad2-83cd-4145-9654-7f88bb7c399b)
 
 - Gatekeeper for the exchange
 - Crtical path, latency-sensitive, lightweight
