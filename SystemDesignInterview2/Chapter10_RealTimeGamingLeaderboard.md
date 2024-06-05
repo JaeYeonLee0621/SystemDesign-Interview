@@ -52,6 +52,36 @@ b. the rank of the player on the leaderboard
 
 <br/><hr/><br/>
 
+# How to assign MAC Address?
+
+- Standarlization : OUI (Organizationally Unique Identifier) Assignment from IEEE (The Institute of Electrical and Electronics Engineers)
+
+## Company Rules
+1. OUI Management : Each company manages its alloated OUI(s).
+2. Sequential Allocation
+3. Record Keeping : Traking and managing devices, ensuring no 2 devices get the same MAC address
+
+ex)
+
+```
+ jaeyeonlee@JAEs-MacBook-Pro  ~  ifconfig
+```
+
++) `en0` is typically associated with the `network interface card`
+
+- `MAC Address` : ether
+- `IP Address` : inet
+- `Broadcast` : broadcast
+
+```
+ jaeyeonlee@JAEs-MacBook-Pro  ~  ipconfig getpacket en0
+```
+
+- `yiaddr` : IP address assigned to your device
+- `server_identifier` : DHCP IP Address
+
+<br/><hr/><br/>
+
 # +) [MiTM (Man in the middle)](https://www.invicti.com/blog/web-security/man-in-the-middle-attack-how-avoid/)
 
 ![3](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/09737885-e1ac-4911-99de-4c755934908b)
