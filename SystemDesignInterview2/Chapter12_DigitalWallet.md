@@ -77,6 +77,16 @@ ex) Database node : 1,000 TPS / (Reaching : 1 million TPS x 2 operations) = 1,00
 
 ![KakaoTalk_Photo_2024-06-19-11-39-54 005](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/13d042fd-f7fb-41fd-a091-2340d3416614)
 
+### Two-Phase Commit Protocol
+
+1. **Preparation Phase (Phase 1)**:
+    - **Coordinator sends prepare request**: The coordinator sends a "prepare" message to all participants, asking if they are ready to commit the transaction.
+    - **Participants vote**: Each participant performs the necessary checks to determine if they can commit the transaction (e.g., checking constraints, ensuring resources are available). Each participant then responds to the coordinator with either a "yes" (prepared to commit) or a "no" (unable to commit).
+
+2. **Commit Phase (Phase 2)**:
+    - **Coordinator makes a decision**: If all participants vote "yes," the coordinator sends a "commit" message to all participants, instructing them to commit the transaction. If any participant votes "no," the coordinator sends an "abort" message to all participants, instructing them to roll back the transaction.
+    - **Participants commit or abort**: Based on the coordinator's decision, participants either commit or abort the transaction.
+
 # A-2) Distributed transaction: Try Confirm/Cancel (TC/C)
 
 - Type of compensating transaction
