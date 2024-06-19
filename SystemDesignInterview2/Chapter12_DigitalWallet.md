@@ -173,6 +173,36 @@ ex)
 2. Operations are executed `from the first to the last`. When one operation has fininshed, the nest operation is triggered
 3. When an operation has failed, `the entire process starts to roll back` from the current operation to the first operation in reverse order, using compensating transactions. So if a distributed transaction has operations, we need to perpare opreations: fot the normal case and another for the compenstaing transaction during rollback
 
+<br/>
+
+1. Initialization:
+
+The saga begins with the initial request being sent to the first service/node.
+
+2. Forward Execution:
+
+Each node receives a command, executes it, and then forwards the next command in the sequence to the subsequent node.
+Each node also keeps track of the compensation (rollback) action for the command it has executed.
+
+3. Tracking State:
+
+Each node needs to report back the success or failure of its operation to a central saga coordinator or to the preceding node in the sequence.
+The coordinator or preceding node records the state of each operation.
+
+4. Failure Detection:
+
+If any node fails to execute its command, it immediately reports the failure back to the coordinator or to the previous node.
+
+5. Compensation Execution:
+
+Upon detecting a failure, the coordinator triggers the compensation process.
+Compensation commands are sent in reverse order of the successful commands to each respective node.
+Each node executes its compensation command to undo its previous operation.
+
+6. Completion:
+
+Once all compensations are successfully executed, the saga is considered fully rolled back.
+
 ### 1. Choreography
 
 - In a microservice architecture, all the services involved in the Saga distributed transaction do their jobs by subscribing to other services' events. So it is fuly decentralized coordination
