@@ -1,6 +1,6 @@
 # Chapter 12. Digital Wallet
 
-![KakaoTalk_Photo_2024-06-19-11-39-54 011](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/605bdd76-1c50-4254-9f48-80dd1c0eaa05)
+![KakaoTalk_Photo_2024-06-19-11-39-53 001](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/2d279f81-9881-4b68-bff7-5c917a185c69)
 
 - Digital wallet can store money and spend it later
 
