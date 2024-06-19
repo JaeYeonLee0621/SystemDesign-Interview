@@ -1,6 +1,6 @@
 # Chapter 12. Digital Wallet
 
-[Image : 1]
+![KakaoTalk_Photo_2024-06-19-11-39-54 011](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/605bdd76-1c50-4254-9f48-80dd1c0eaa05)
 
 - Digital wallet can store money and spend it later
 
@@ -50,7 +50,7 @@ ex) Database node : 1,000 TPS / (Reaching : 1 million TPS x 2 operations) = 1,00
 
 ### Transfer commands = Wallet Service
 
-[Image : 2]
+![KakaoTalk_Photo_2024-06-19-11-41-45](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/88eac6b7-cc5d-42a9-bc54-a2e5f92b8611)
 
 1. Receiving the transfer command
 2. Validating the transfer command
@@ -66,16 +66,16 @@ ex) Database node : 1,000 TPS / (Reaching : 1 million TPS x 2 operations) = 1,00
 
 - Replacing each redis node with a transactional relational database node
 
-[Image : 3]
+![KakaoTalk_Photo_2024-06-19-11-39-53 003](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/2a1fc5d1-c3e9-4c3c-8ff9-7a5e21c5faa2)
 
 - Using `transactional databases` only solves part of the problem
 - There is no guarantee that 2 update operations will be handled at exactly the same time
 
 # A-1) Distributed Transaction: 2 phase commit (2PC)
 
-[Image : 4]
+![KakaoTalk_Photo_2024-06-19-11-39-54 004](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/38888508-462c-4f4e-bc8e-a66395bbdbb6)
 
-[Image : 5]
+![KakaoTalk_Photo_2024-06-19-11-39-54 005](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/13d042fd-f7fb-41fd-a091-2340d3416614)
 
 # A-2) Distributed transaction: Try Confirm/Cancel (TC/C)
 
@@ -94,7 +94,7 @@ ex)
 
 1. Try
 
-[Image : 6]
+![KakaoTalk_Photo_2024-06-19-11-39-54 006](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/edcec023-3fd0-4c50-a561-349ae4e5d292)
 
 - For the database that contains account C, the coordinator gives it a NOP (no operation)
 - Let's assume the coordinator sends to this database a NOP command
@@ -102,13 +102,13 @@ ex)
 
 2. Confirm
 
-[Image : 7]
+![KakaoTalk_Photo_2024-06-19-11-39-54 007](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/01cd5ed2-24be-4cb1-828f-4e5b2a11ac76)
 
 - If both databases reply "yes", the wallet service starts the next Confirm phase
 
 3. Cancel
 
-[Image : 8]
+![KakaoTalk_Photo_2024-06-19-11-39-54 008](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/aa4833a5-6417-4e87-8ad4-43c2173a89af)
 
 # Potential problems
 
@@ -117,7 +117,7 @@ ex)
 - Q) If the wallet service restarted right after it updated the first account balance, how can we make sure the second account will be updated as well?
 - We can store the progress of a TC/C as phase status in a transactional table
 
-[Image : 9]
+![KakaoTalk_Photo_2024-06-19-11-39-54 009](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/2dfe91b9-f888-4f4f-8e27-fe21d6a38d0b)
 
 ## 2. Unbalanced balance
 
@@ -131,7 +131,7 @@ ex)
 
 ## 3. Data discrepancy
 
-[Image : 10]
+![KakaoTalk_Photo_2024-06-19-11-39-54 010](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/eefb1ceb-478a-4d1e-a7f4-32d985696b63)
 
 - This discrepancies might be transparent to us because lower-level systems such as databases already fixed the discrepancies
 - If not we have to handle it ourselves
@@ -142,7 +142,7 @@ ex)
 
 - One side effect of TC/C is the out-of-order execution
 
-[Image : 11]
+![KakaoTalk_Photo_2024-06-19-11-39-54 011](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/6beb4242-d1da-485b-93ca-44ea17700196)
 
 ### Solutions
 
@@ -157,11 +157,11 @@ ex)
 - There is another popular distributed transaction solution
 - Saga is the de-facto standard in a microsservice architecture
 
+![KakaoTalk_Photo_2024-06-19-11-39-54 012](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/8a6a39f0-cd86-459e-8bfe-6b13ff2b3178)
+
 1. All operations are ordered `in a sequence`. Each operation is `an independent transaction` on its own database.
 2. Operations are executed `from the first to the last`. When one operation has fininshed, the nest operation is triggered
 3. When an operation has failed, `the entire process starts to roll back` from the current operation to the first operation in reverse order, using compensating transactions. So if a distributed transaction has operations, we need to perpare opreations: fot the normal case and another for the compenstaing transaction during rollback
-
-[Image : 12]
 
 ### 1. Choreography
 
@@ -232,17 +232,17 @@ ex) A command must be validated before we do anything about it => It is valid an
 - Event sourcing requires the behavior of the State Machine to be deterministic
 - Therefore, the State Machine itself should never contain any randomness
 
-[Image]
+![KakaoTalk_Photo_2024-06-19-11-39-54 013](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/a35ad22d-3da3-42b8-8c82-3c7927955ab1)
 
 - The state machine is responsible for converting the Command to an Event and for applying the Event
 
-[Image]
+![KakaoTalk_Photo_2024-06-19-11-39-54 014](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/c541e2ec-b882-4a7d-bd50-00a24e126823)
 
 <br/>
 
 ex) The state machine works
 
-[Image]
+![KakaoTalk_Photo_2024-06-19-11-39-54 015](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/04c1d820-6e58-48ab-92ac-247848acbb8f)
 
 1. Read command from the command queue (usually Kafka)
 2. Read balance state from the database
@@ -254,7 +254,7 @@ ex) The state machine works
 
 ### Advantages of Event sourcing : Reproducibility
 
-[Image]
+![KakaoTalk_Photo_2024-06-19-11-39-54 016](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/5aa91bf7-bb60-4916-ba1a-4fbfa4e6679d)
 
 - All changes are saved first as immutable history
 - The database is only used as an updated view of what balance looks like at any given point in time
@@ -265,7 +265,7 @@ ex) The state machine works
 - Pushlishing all the events
 - The external world could rebuild any customized state itself
 
-[Image]
+![KakaoTalk_Photo_2024-06-19-11-39-54 017](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/bc7450d7-56a7-4829-a3aa-6c89f669e185)
 
 - The read-only State Machines lag behind to some extent, but will always catch up
 - The architecture design is `eventually consistent`
@@ -288,7 +288,7 @@ ex) The state machine works
 
 ## 1-2. Cache Recent commands and Events in memory
 
-[Image]
+![KakaoTalk_Photo_2024-06-19-11-39-54 018](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/887723a9-13b0-40ea-bf3d-74f2f29933a6)
 
 - We process Command and Event right after they are persisted
 - We may cache them in memory to save the time of loading them back from the local disk
@@ -301,7 +301,7 @@ ex) The state machine works
 
 ## 1-3. File-based State
 
-[Image]
+![KakaoTalk_Photo_2024-06-19-11-39-54 019](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/cca122b0-7de3-4a4c-8b08-38b34c3912a8)
 
 - State information can be saved to the local disk
 - We can use `SQLite` which is a file-based local relational database which is a local file-based key-value store
@@ -313,7 +313,7 @@ ex) The state machine works
 
 ## 1-4. Snapshot
 
-[Image]
+![KakaoTalk_Photo_2024-06-19-11-39-54 020](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/634de101-94db-4594-a487-d503e86c6017)
 
 - How to acceleate the reproductibility process
 - A snapshot is an immutable view of a historical State
@@ -341,7 +341,7 @@ ex) The state machine works
 
 ### Reliable solution
 
-[Image]
+![KakaoTalk_Photo_2024-06-19-11-39-54 021](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/a6beb0e9-09be-472f-b3cc-be1774edad18)
 
 1. Process
 
@@ -366,19 +366,17 @@ ex) The state machine works
 
 ### pull
 
-[Image]
+![KakaoTalk_Photo_2024-06-19-11-39-55 022](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/478a58e4-8ae1-414d-af42-e244b52a9cc6)
 
 - An external user periodically pulls execution status from the read-only State Machine
 - This model is not real-time and may overload the wallet service if the pulling frequency is set too high
 
-[Image]
+![KakaoTalk_Photo_2024-06-19-11-39-55 023](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/2cd64e66-fdf8-41e1-b4aa-161f646d9c5a)
 
 - It can be improved by adding a `reverse proxy` between the external user and the Event Sourcing node
 - The external user sends a Command to Event Sourcing nodes and periodically pulls the execution status
 
 ### push
-
-[Image]
 
 - We could make the response faster by modifying the read-only State Machine
 - State Machine pushes execution status back to the reverse proxy, as soon as it receives the Event
@@ -388,7 +386,7 @@ ex) The state machine works
 
 - We can reuse the distributed transaction solution (ex) TC/C or Saga)
 
-[Image]
+![KakaoTalk_Photo_2024-06-19-11-39-55 024](https://github.com/JaeYeonLee0621/a-mixed-knowledge/assets/32635539/564eacba-1a54-4392-9be6-4258f7e43e1d)
 
 1. User A sends a distributed transaction to the Saga coordinator
 2. Saga coordinator creates a record in the Phase Status Table to trace the status of a transaction
