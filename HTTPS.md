@@ -132,3 +132,6 @@ ex) MD5, SHA-1, SHA-2, SHA-3 etc
 **[Browser trust store updates]**
 - Trust Store Updates : Browsers and OS regularly update their trust stores through software updates
 - `Trust store` : Pre-installed set of trusted CA certificatiions
+
+![image](https://github.com/user-attachments/assets/49eb0355-9c1b-4378-aa52-c4a55e4bb9dc)
+
